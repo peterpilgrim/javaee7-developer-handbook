@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC
+        "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN"
+        "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+    <!--
+    <jdbc-resource pool-name="ArquillianEmbeddedDerbyPool"
+                   jndi-name="jdbc/arquillian"/>
+    <jdbc-connection-pool name="ArquillianEmbeddedDerbyPool"
+                          res-type="javax.sql.DataSource"
+                          datasource-classname="org.apache.derby.jdbc.EmbeddedDataSource"
+                          is-isolation-level-guaranteed="false">
+        <property name="databaseName" value="build/databases/derby"/>
+        <property name="createDatabase" value="create"/>
+    </jdbc-connection-pool>
+    -->
+
+    <!--
+    <jdbc-resource pool-name="ArquillianEmbeddedH2Pool"
+                   jndi-name="jdbc/arquillian"/>
+    <jdbc-connection-pool name="ArquillianEmbeddedH2Pool"
+                          res-type="javax.sql.DataSource"
+                          datasource-classname="org.h2.jdbcx.JdbcDataSource">
+        <property name="user" value="sa"/>
+        <property name="password" value=""/>
+        <property name="url" value="jdbc:h2:file:build/databases/h2/db"/>
+    </jdbc-connection-pool>
+    -->
+
+    <!--
+        HsqlDB configuration
+            https://github.com/arquillian/arquillian-extension-persistence/blob/master/int-tests-testng/src/test/resources-glassfish-3.1-hsqldb/glassfish-resources.xml#L6
+    -->
+    <!--
+    <jdbc-connection-pool
+            name="ArquillianHsqlDbInMemoryPool"
+            is-isolation-level-guaranteed="false" driver-classname="org.hsqldb.jdbcDriver"
+            res-type="java.sql.Driver" >
+        <property name="PortNumber" value="9001" />
+        <property name="serverName" value="localhost" />
+        <property name="URL" value="jdbc:hsqldb:mem:arquillian" />
+        <property name="user" value="sa" />
+        <property name="password" value="" />
+    </jdbc-connection-pool>
+
+    <jdbc-resource jndi-name="jdbc/arquillian" pool-name="ArquillianHsqlDbInMemoryPool" />
+    -->
+</resources>

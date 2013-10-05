@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns="http://jboss.org/schema/arquillian"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="
+        http://jboss.org/schema/arquillian
+        http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+    <container qualifier="remote-gf4">
+        <configuration>
+            <property name="adminUser">admin</property>
+            <property name="adminPassword"></property>
+            <property name="adminHttps">false</property>
+            <property name="adminHost">localhost</property>
+            <property name="adminPort">4848</property>
+            <property name="serverHttps">false</property>
+            <property name="target">ejb-instance</property>
+        </configuration>
+    </container>
+
+    <!--
+    <container qualifier="glassfish-embedded" default="true">
+        <configuration>
+            <property name="resourcesXml">
+                src/test/resources-glassfish-embedded/glassfish-resources.xml
+            </property>
+        </configuration>
+    </container>
+    -->
+    <!--
+    <container qualifier="glassfish-managed">
+        <configuration>
+            <property name="glassFishHome">/opt/glassfish-4.0.1-b01-05_30_2013</property>
+            <property name="adminHost">localhost</property>
+            <property name="adminPort">4848</property>
+            <property name="adminUser">admin</property>
+            <property name="adminPassword"></property>
+        </configuration>
+    </container>
+    -->
+
+</arquillian>

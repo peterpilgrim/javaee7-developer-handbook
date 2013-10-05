@@ -1,0 +1,123 @@
+/*******************************************************************************
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright (c) 2013,2014 by Peter Pilgrim, Addiscombe, Surrey, XeNoNiQUe UK
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU GPL v3.0
+ * which accompanies this distribution, and is available at:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ *
+ * Developers:
+ * Peter Pilgrim -- design, development and implementation
+ *               -- Blog: http://www.xenonique.co.uk/blog/
+ *               -- Twitter: @peter_pilgrim
+ *
+ * Contributors:
+ *
+ *******************************************************************************/
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+// Define equivalent Maven GAV coordinates.
+group = 'je7hb.intro.xentracker'
+archivesBaseName = 'xentracker-basic'
+version = '1.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'https://maven.java.net/content/groups/promoted'
+    }
+    maven {
+        url 'http://repository.jboss.org/nexus/content/groups/public'
+    }
+}
+
+
+dependencies {
+    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+    providedCompile 'javax:javaee-api:7.0'
+    providedCompile 'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+
+    /*
+    compile     'javax.enterprise:cdi-api:1.1-PFD'
+    compile     'com.sun.faces:jsf-api:2.0.3-b05'
+    compile     'javax.validation:validation-api:1.1.0.CR3'
+    compile     'org.hibernate:hibernate-validator:5.0.0.CR4'
+    */
+
+    compile     'joda-time:joda-time:2.2'
+    compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+
+    testCompile 'org.slf4j:slf4j-simple:1.6.4'
+    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
+    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT'
+
+    /*
+    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
+    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
+    
+    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
+    testCompile 'org.jboss.arquillian.extension:arquillian-persistence-api:1.0.0.Alpha6'
+    testCompile 'org.jboss.arquillian.extension:arquillian-persistence-impl:1.0.0.Alpha6'
+    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-remote-3.1:1.0.0.CR4'
+    */
+
+    testCompile 'junit:junit:4.11'
+}
+
+war {
+    // classpath  configurations.extralibs
+    // webXml = file("src/main/webapp/WEB-INF/web.xml")
+    // baseXml = "servlet-webapp"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.6'
+}
+
+// Override Gradle defaults - a force an exploded JAR view
+sourceSets {
+    main {
+        output.resourcesDir = 'build/classes/main'
+        output.classesDir   = 'build/classes/main'
+    }
+    test {
+        resources {
+            srcDir 'src/test/resources'
+        }
+        resources {
+            srcDir 'src/test/resources-glassfish-embedded'
+        }
+
+        output.resourcesDir = 'build/classes/test'
+        output.classesDir   = 'build/classes/test'
+    }
+}
+
+task(run, dependsOn: 'classes', type: JavaExec) {
+    description = 'Runs the main application'
+    main = 'je7hb.intro.xentracker.App'
+    classpath = sourceSets.main.runtimeClasspath
+    args 'Mary', 'Peter', 'Jane'
+    standardInput = System.in
+}
+
+task(generateScript, dependon: 'classes') {
+    description = 'Generates UNIX bash script that launches the program.'
+    if (!System.properties['os.name'].toLowerCase().contains('windows')) {
+        // Not Microsoft Windows
+        new File("SampleRunner").withWriter { out ->
+            out.println("#!/bin/bash")
+            out.println("java -cp ${sourceSets.main.runtimeClasspath.getAsPath()}  je7hb.intro.xentracker.App")
+        }
+        "chmod 755 SampleRunner".execute()
+    }
+}
+

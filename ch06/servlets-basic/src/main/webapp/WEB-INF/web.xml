@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0"
+        metadata-complete="false">
+    <!--
+    <display-name>A Simple Application</display-name>
+    <servlet>
+        <servlet-name>simple</servlet-name>
+        <servlet-class>
+            je7hb.servlets.simple.SimpleServlet
+        </servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>simple</servlet-name>
+        <url-pattern>/simple</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>initparams</servlet-name>
+        <servlet-class>
+            je7hb.servlets.simple.SimpleServletWithInitParams
+        </servlet-class>
+        <init-param>
+            <param-name>source</param-name>
+            <param-value>Liverpool Central</param-value>
+        </init-param>
+        <init-param>
+            <param-name>target</param-name>
+            <param-value>London Euston</param-value>
+        </init-param>
+        <init-param>
+            <param-name>time</param-name>
+            <param-value>17:45:00</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>initparams</servlet-name>
+        <url-pattern>/initparams</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+    <mime-mapping>
+        <extension>csv</extension>
+        <mime-type>application/csv</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>pdf</extension>
+        <mime-type>application/pdf</mime-type>
+    </mime-mapping>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+    </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errors/404.html</location>
+    </error-page>
+
+
+    <filter>
+        <filter-name>MySimpleFilterLogger</filter-name>
+        <filter-class>je7hb.servlets.simple.SimpleLoggingFilter</filter-class>
+        <init-param>
+            <param-name>fruit</param-name>
+            <param-value>strawberry</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>MySimpleFilterLogger</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    -->
+</web-app>

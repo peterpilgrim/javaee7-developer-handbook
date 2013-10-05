@@ -1,0 +1,89 @@
+/*******************************************************************************
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright (c) 2013,2014 by Peter Pilgrim, Addiscombe, Surrey, XeNoNiQUe UK
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU GPL v3.0
+ * which accompanies this distribution, and is available at:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ *
+ * Developers:
+ * Peter Pilgrim -- design, development and implementation
+ *               -- Blog: http://www.xenonique.co.uk/blog/
+ *               -- Twitter: @peter_pilgrim
+ *
+ * Contributors:
+ *
+ *******************************************************************************/
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+// Define equivalent Maven GAV coordinates.
+group = 'je7hb.appendix.utilities'
+archivesBaseName = 'json-examples'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    ivy {
+        url "http://maven.java.net/content/groups/promoted/"
+    }
+    maven {
+        url 'https://maven.java.net/content/groups/promoted'
+    }
+    maven {
+        url 'http://repository.jboss.org/nexus/content/groups/public'
+    }
+}
+
+
+dependencies {
+    //    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+
+    compile     'javax.enterprise:cdi-api:1.1-PFD'
+    compile     'javax:javaee-api:7.0'
+
+    runtime     'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+
+    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
+    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT'
+
+    testCompile 'junit:junit:4.11'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.6'
+}
+
+// Override Gradle defaults - a force an exploded JAR view
+sourceSets {
+    main {
+        output.resourcesDir = 'build/classes/main'
+        output.classesDir   = 'build/classes/main'
+    }
+    test {
+        resources {
+            srcDir 'src/test/resources'
+        }
+        resources {
+            srcDir 'src/test/resources-glassfish-embedded'
+        }
+
+        output.resourcesDir = 'build/classes/test'
+        output.classesDir   = 'build/classes/test'
+    }
+}
+
+
+task(run, dependsOn: 'classes', type: JavaExec) {
+    description = 'Runs the main application'
+    main = 'je7hb.appendix.utilities.jsondemos.App'
+    classpath = sourceSets.main.runtimeClasspath
+    args 'Mary', 'Peter', 'Jane'
+    standardInput = System.in
+}
+

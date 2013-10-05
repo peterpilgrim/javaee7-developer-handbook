@@ -1,0 +1,73 @@
+/*******************************************************************************
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright (c) 2013,2014 by Peter Pilgrim, Addiscombe, Surrey, XeNoNiQUe UK
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU GPL v3.0
+ * which accompanies this distribution, and is available at:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ *
+ * Developers:
+ * Peter Pilgrim -- design, development and implementation
+ *               -- Blog: http://www.xenonique.co.uk/blog/
+ *               -- Twitter: @peter_pilgrim
+ *
+ * Contributors:
+ *
+ *******************************************************************************/
+
+// Packt Publishing and Peter A. Pilgrim present the
+// ================================================================================
+//    J A V A    E E   7    D E V E L O P E R     H A N D B O O K
+// ================================================================================
+//
+// This Gradle build is the root and does compile any software explicitly
+// 
+
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+// Define equivalent Maven GAV coordinates.
+group = 'je7hb.root'
+archivesBaseName = 'jeh7hb-root'
+version = '1.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'https://maven.java.net/content/groups/promoted'
+    }
+    maven {
+        url 'http://repository.jboss.org/nexus/content/groups/public'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.6'
+}
+
+task myZip(type: Zip) {
+    description = "Creates a ZIP distribution of the `${archivesBaseName}' project."
+    from '.'
+    into "${archivesBaseName}-sources-${version}"
+    include '**/src/**'
+    include '**/*.xml'
+    include '**/*.gradle'
+    include '**/*.txt'
+    exclude '**/.gradle/**'
+    exclude '**/build/**'
+    exclude '**/out/**'
+    exclude '**/target/**'
+    exclude '**/ch08-olde/**'
+    /*
+    exclude {
+        details ->
+            details.file.name.equals('.gradle')
+    }
+    */
+}
+
+
