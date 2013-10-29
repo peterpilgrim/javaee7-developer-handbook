@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0"
+                 xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+    <description>Mapping persistent entity in XML.</description>
+    <entity name="SpyThriller" class="SpyThriller" access="FIELD">
+        <table name="SPY_THRILLER_BOOK" />
+        <attributes>
+            <id name="id">
+                <generated-value strategy="AUTO" />
+                <column name="BOOK_ID" nullable="false"
+                        unique="true" insertable="true"
+                        updatable="true"
+                        table="SPY_THRILLER_BOOK" />
+            </id>
+            <basic name="writer">
+                <column name="AUTHORS" nullable="false"/>
+            </basic>
+            <basic name="year">
+                <column name="BOOK_YEAR"  nullable="false"/>
+            </basic>
+            <basic name="title">
+                <column name="TITLE"  nullable="false"/>
+            </basic>
+            <transient name="secretCode"/>
+        </attributes>
+    </entity>
+</entity-mappings>

@@ -31,15 +31,15 @@ import java.util.*;
  * @author Peter Pilgrim (peter)
  */
 @NamedQueries({
-        @NamedQuery(name="Project.findAllProjects",
-                query = "select p from Project p order by p.name"),
-        @NamedQuery(name="Project.findProjectById",
-                query = "select p from Project p where p.id = :id"),
-        @NamedQuery(name="Project.findTaskById",
-                query = "select t from Task t where t.id = :id"),
-        @NamedQuery(name="Project.findTasksByProjectId",
-                query = "select t from Project p, Task t " +
-                        "where p.id = :id and t.project = p"),
+    @NamedQuery(name="Project.findAllProjects",
+        query = "select p from Project p order by p.name"),
+    @NamedQuery(name="Project.findProjectById",
+        query = "select p from Project p where p.id = :id"),
+    @NamedQuery(name="Project.findTaskById",
+        query = "select t from Task t where t.id = :id "),
+    @NamedQuery(name="Project.findTasksByProjectId",
+        query = "select t from Project p, Task t " +
+                "where p.id = :id and t.project = p"),
 })
 @Entity
 public class Project {

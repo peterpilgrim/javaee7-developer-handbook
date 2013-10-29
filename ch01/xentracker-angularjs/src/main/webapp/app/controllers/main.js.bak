@@ -1,0 +1,152 @@
+var myApp = angular.module('app', ['ui.bootstrap', 'masterview','newproject'])
+    .controller('ProjectController', function ($scope, $http) {
+        var self = this;
+        $scope.projects = [
+            {name: "Digital Moves"},
+            {name: "Counsellor"},
+            {name: "Offspring"}
+        ];
+
+        this.addProject = function () {
+        };
+
+        this.addTaskToProject = function () {
+        };
+
+        this.getProjects = function () {
+            $http.get('rest/projects/list').success(function(data) {
+                console.log("data="+data);
+                $scope.projectsAjax = data;
+                $scope.projects = data;
+            });
+        }
+
+        // Retrieve the initial list of projects
+        this.getProjects();
+    });
+
+angular.module('masterview', [])
+    .controller('car', function ($log) {
+        return {
+            foo: function() {
+                $log.info('Call the foo() method');
+            }
+        };
+
+    });
+
+angular.module('newproject', ['ui.bootstrap.modal'])
+    .controller('NewProjectModalController', function ($scope, $http) {
+
+    });
+
+var myApp = angular.module('project', ['ui.bootstrap','ui.bootstrap.modal']);
+
+function ProjectController($scope, $http ) {
+    var self = this;
+    $scope.projects = [
+        {name: "Digital Moves"},
+        {name: "Counsellor"},
+        {name: "Offspring"}
+    ];
+
+    this.addProject = function () {
+    };
+
+    this.addTaskToProject = function () {
+    };
+
+    this.getProjects = function () {
+        $http.get('rest/projects/list').success(function(data) {
+            console.log("data="+data);
+            $scope.projectsAjax = data;
+            $scope.projects = data;
+        });
+    }
+
+    // Retrieve the initial list of projects
+    this.getProjects();
+};
+
+function NewProjectModalController($scope,$http) {
+
+}
+
+
+angular.module('app', ['ui.bootstrap', 'masterview'])
+    .controller('AppCtrl', function ($scope, car) {
+        car.start();
+    });
+
+angular.module('masterview', [])
+    .factory('car', function ($log, dieselEngine) {
+        return {
+            start: function() {
+                $log.info('Starting ' + dieselEngine.type);
+            }
+        };
+    });
+
+angular.module('addproject', ['ui.bootstrap.modal'])
+    .factory('dieselEngine', function () {
+        return {
+            type: 'diesel'
+        };
+    });
+
+
+// OLD STUFF
+
+var myApp = angular.module('project', ['ui.bootstrap','ui.bootstrap.modal']);
+
+function ProjectController($scope, $http ) {
+    var self = this;
+    $scope.projects = [
+        {name: "Digital Moves"},
+        {name: "Counsellor"},
+        {name: "Offspring"}
+    ];
+
+    this.addProject = function () {
+    };
+
+    this.addTaskToProject = function () {
+    };
+
+    this.getProjects = function () {
+        $http.get('rest/projects/list').success(function(data) {
+            console.log("data="+data);
+            $scope.projectsAjax = data;
+            $scope.projects = data;
+        });
+    }
+
+    // Retrieve the initial list of projects
+    this.getProjects();
+};
+
+function NewProjectModalController($scope,$http) {
+
+}
+
+
+angular.module('app', ['ui.bootstrap', 'masterview'])
+    .controller('AppCtrl', function ($scope, car) {
+        car.start();
+    });
+
+angular.module('masterview', [])
+    .factory('car', function ($log, dieselEngine) {
+        return {
+            start: function() {
+                $log.info('Starting ' + dieselEngine.type);
+            }
+        };
+    });
+
+angular.module('addproject', ['ui.bootstrap.modal'])
+    .factory('dieselEngine', function () {
+        return {
+            type: 'diesel'
+        };
+    });

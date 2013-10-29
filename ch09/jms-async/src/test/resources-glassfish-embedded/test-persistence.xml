@@ -1,0 +1,41 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+    <persistence-unit name="testDatabase" transaction-type="JTA">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>jdbc/arquillian</jta-data-source>
+        <properties>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
+            <property name="eclipselink.ddl-generation.output-mode" value="both"/>
+            <!-- Arquillian EclipseLink is broken; Fix from Jason Drake 14/Dec/2012
+            http://syrupsucker.blogspot.co.uk/2012/11/eclipselink-logging-with-arquillian-in.html
+
+            Also see EclipseLink logging JPA page
+            http://wiki.eclipse.org/EclipseLink/Examples/JPA/Logging
+            -->
+            <property name="eclipselink.logging.logger" value="org.eclipse.persistence.logging.DefaultSessionLog"/>
+            <!-- Print Timestamp to determine when a log output was printed.
+                (default value is "true") -->
+            <property name="eclipselink.logging.timestamp" value="false"/>
+            <!-- Print Session — to determine on which underlying session (if any) the message was sent.
+                (default value is "true") -->
+            <property name="eclipselink.logging.session" value="false"/>
+            <!-- Print Thread - when you are running multithreaded applications in order
+                to print the hashcode of the thread, which wrote the message.
+                (default value is "false") -->
+            <property name="eclipselink.logging.thread" value="false"/>
+            <!-- Print Exceptions  to enable logging of the exceptions's messages
+                at the time when these exceptions are thrown.
+                (default value is "true") -->
+            <property name="eclipselink.logging.exceptions" value="true"/>
+
+            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
+            <property name="eclipselink.logging.parameters" value="true"/>
+            <property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL.jdbc"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

@@ -59,10 +59,10 @@ dependencies {
     testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
     testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT'
 
-    /*
     compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
     compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
-    
+
+    /*
     testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
     testCompile 'org.jboss.arquillian.extension:arquillian-persistence-api:1.0.0.Alpha6'
     testCompile 'org.jboss.arquillian.extension:arquillian-persistence-impl:1.0.0.Alpha6'
@@ -103,21 +103,30 @@ sourceSets {
 
 task(run, dependsOn: 'classes', type: JavaExec) {
     description = 'Runs the main application'
-    main = 'je7hb.intro.xentracker.App'
+    main = 'je7hb.intro.xentracker.WebAppRunner'
     classpath = sourceSets.main.runtimeClasspath
     args 'Mary', 'Peter', 'Jane'
     standardInput = System.in
 }
 
-task(generateScript, dependon: 'classes') {
+task(generateScript, dependsOn: 'classes') {
     description = 'Generates UNIX bash script that launches the program.'
     if (!System.properties['os.name'].toLowerCase().contains('windows')) {
         // Not Microsoft Windows
         new File("SampleRunner").withWriter { out ->
             out.println("#!/bin/bash")
-            out.println("java -cp ${sourceSets.main.runtimeClasspath.getAsPath()}  je7hb.intro.xentracker.App")
+            out.println("java -cp ${sourceSets.main.runtimeClasspath.getAsPath()}  je7hb.intro.xentracker.WebAppRunner")
         }
         "chmod 755 SampleRunner".execute()
     }
 }
 
+
+task (preamble, type: GradleBuild) {
+    description = "A simple attempt to invoke the preamble"
+    dir = 'appendix01/glassfish-embedded'
+    // buildFile = 'appendix01/glassfish-embedded/build.gradle'
+    tasks = ['assemble','build']
+}
+
+// End

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html ng-app id="ng-app">
+  <head>
+    <meta charset="utf-8">
+	<title>
+	XeNoNiQUE :: 2013 :: XenTracker :: Java EE 7 Developer Handbook 
+	</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="XeNoNiQUE">
+    <meta name="author" content="Peter Pilgrim">
+
+    <!-- Les Bootstrap styles -->
+    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/bootstrap-responsive.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <!-- NAVBAR
+    ================================================== -->
+    <div class="navbar-wrapper">
+      <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
+      <div class="container">
+
+        <div class="navbar navbar-inverse">
+          <div class="navbar-inner">
+            <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">XenTracker Demo</a>
+            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#" >About</a></li>
+                <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Xenonique <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="https://github.com/peterpilgrim">Github</a></li>
+                    <li><a href="artifactory/">Artifactory</a></li>
+                    <li><a href="jenkins/">Jenkins</a></li>
+                    <li class="divider"></li>
+                    <li class="nav-header">Friends</li>
+                    <li><a href="http://tlcpowertalk.com/">TLC Powertalk</a></li>
+                    <li><a href="https://java-champions.java.net/">Java Champions</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div><!-- /.navbar-inner -->
+        </div><!-- /.navbar -->
+      </div> <!-- /.container -->
+    </div><!-- /.navbar-wrapper -->
+
+	<div id="mainContent">
+
+		<div class="promoSignpost" >
+			<div class="promoMessage" >
+				<img class="pull-right" src="images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" width="100" />
+				<h2> XenTracker </h2>
+				<p>
+					This is a Java web application to help you organize project groups and tasks. 
+					It is a demonstration of the Java EE 7 technology features for JAX-RS, WebSocket and Servlets.
+				</p>
+				<button  class="btn btn-primary btn-large">Learn More</button>
+		    </div>
+		</div>
+
+		<div class="projectView" >	
+			<div class="actionBar">
+				<button  class="btn btn-primary">Add New Project</button>				
+			</div>
+
+			<div class="tasksView">
+	
+				<h2 class="projectHeadline" > Project: Important Stuff </h2>
+				<h3> Description </h3>
+				<p> This is a list of TODO items that are high priority </p>
+
+				<p>
+					<button  class="btn btn-primary">Add New Task</button>				
+				</p>
+
+				<table class="taskTable">
+					<tr>
+						<td>
+							Item
+						</td>
+						<td>
+							Description
+						</td>
+						<td>
+							Completed
+						</td>
+						<td>
+							Due Date
+						</td>
+						<td>
+							Control
+						</td>
+					</tr>
+					<tr>
+						<td>
+							105
+						</td>
+						<td>
+							Organize New Years Event 2014 
+						</td>
+						<td>
+							<label class="checkbox">
+						      <input type="checkbox" checked> Done
+						    </label>
+						</td>
+						<td>
+							24-Oct-2013
+						</td>
+						<td>
+    						<a class="btn" href="#"><i class="icon-edit"></i></a>
+    						<a class="btn" href="#"><i class="icon-trash"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							101
+						</td>
+						<td>
+							Buy a Gift for a romantic occassion
+						</td>
+						<td>
+							<label class="checkbox">
+						      <input type="checkbox"> 
+						    </label>
+						</td>
+						<td>
+							14-Feb-2014
+						</td>
+						<td>
+    						<a class="btn" href="#"><i class="icon-edit"></i></a>
+    						<a class="btn" href="#"><i class="icon-trash"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							103
+						</td>
+						<td>
+							Buy a new umbrella for the autumn/winter
+						</td>
+						<td>
+							<label class="checkbox">
+						      <input type="checkbox" checked> Done
+						    </label>
+						</td>
+						<td>
+							&nbsp;
+						</td>
+						<td>
+    						<a class="btn" href="#"><i class="icon-edit"></i></a>
+    						<a class="btn" href="#"><i class="icon-trash"></i></a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							105
+						</td>
+						<td>
+							Water the plants in the home; add fertilizer and biogrowth tablets
+						</td>
+						<td>
+							<label class="checkbox">
+						      <input type="checkbox"> Done
+						    </label>
+						</td>
+						<td>
+							08-Jan-2014
+						</td>
+						<td>
+    						<a class="btn" href="#"><i class="icon-edit"></i></a>
+    						<a class="btn" href="#"><i class="icon-trash"></i></a>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+
+
+		</div>
+
+	</div>	
+	<!-- FOOTER -->
+	<div class="container fatbottomgirls">
+
+	    <hr class="featurette-divider">
+		<footer>
+			<p class="pull-right"><a href="#">Back to top</a></p>
+
+			<p>&copy; 2013, 2014 XeNoNiQUe, UK &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+			<p class="slogan"> I can definitely help you.</p>
+			<p>
+				<a href="https://glassfish.java.net/"> <img src="images/glassfish_logo.jpg" width="128" height="65"/> </a>
+				<a href="http://twitter.com/peter_pilgrim"> <img src="images/twitter-bird-white-on-blue.png" width="64" height="64" /> </a>
+				<a href="https://plus.google.com/117513042687634436539/posts"> <img src="images/Google-Plus-Logo.png" width="64" height="64" /> </a>
+			</p>
+		</footer>
+	</div>	
+
+	<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+	<script src="javascripts/jquery-1.10.1.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.10.1.js"></script> -->
+    <script src="javascripts/bootstrap.js"></script>
+    <script src="javascripts/angular.js"></script>
+    <script src="javascripts/main.js"></script>
+  </body>
+</html>
+
+<!-- 
+
+=========================================================================================
+=========================================================================================
+=========================================================================================
+
+Created by Peter Pilgrim (c) 2013 using some most excellent tools:
+ On the client side: Twitter Bootstrap, AngularJS and JQuery
+ On the server side: Java EE 7 GlassFish 4.0
+
+ Need Development Help? "I can definitely help you"
+
+=========================================================================================
+=========================================================================================
+=========================================================================================
+
+-->

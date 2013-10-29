@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+	<title>
+	XeNoNiQUE :: 2013 :: XenTracker :: Java EE 7 Developer Handbook 
+	</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="XeNoNiQUE">
+    <meta name="author" content="Peter Pilgrim">
+
+    <!-- Les Bootstrap styles -->
+    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/bootstrap-responsive.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+  </head>
+
+  <body ng-controller="ProjectController">
+    <!-- NAVBAR
+    ================================================== -->
+    <div class="navbar-wrapper">
+      <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
+      <div class="container">
+
+        <div class="navbar navbar-inverse">
+          <div class="navbar-inner">
+            <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">XenTracker Demo</a>
+            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#" >About</a></li>
+                <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Xenonique <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="https://github.com/peterpilgrim">Github</a></li>
+                    <li class="divider"></li>
+                    <li><a href="http://www.packtpub.com/java-ee-7-developer-handbook/book">Book</a></li>
+                    <li><a href="http://www.amazon.com/Java-EE-7-Developer-Handbook/dp/1849687943/ref=sr_1_1?s=books&ie=UTF8&qid=1380468215&sr=1-1&keywords=java+ee+7+developer+handbook">Amazon USA</a></li>
+                    <li><a href="http://www.amazon.co.uk/Java-EE-Developer-Handbook-ebook/dp/B00FDLOF66/ref=sr_1_cc_1?s=aps&ie=UTF8&qid=1380468106&sr=1-1-catcorr&keywords=java+ee+7+developer+handbook">Amazon UK</a></li>
+                    <li class="nav-header">Friends</li>
+                      <li><a href="http://tlcpowertalk.com/">TLC Powertalk</a></li>
+                      <li><a href="https://java-champions.java.net/">Java Champions</a></li>
+                      <li><a href="http://www.jfrog.com/home/v_artifactory_opensource_overview">Artifactory</a></li>
+                      <li><a href="http://jenkins-ci.org//">Jenkins</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div><!-- /.navbar-inner -->
+        </div><!-- /.navbar -->
+      </div> <!-- /.container -->
+    </div><!-- /.navbar-wrapper -->
+
+    <script type="text/ng-template" id="newProjectContent.html">
+        <div class="modal-header">
+            <h3>New Project</h3>
+        </div>
+        <div class="modal-body">
+            <form name="newProjectForm" class="css-form" novalidate>
+                Project Name:<br />
+                <input type="text" ng-model="project.name" required /><br />
+                Project Headline:  <br />
+                <textarea ng-model="project.headline" rows="3" required /><br />
+                Project Description: <br />
+                <textarea ng-model="project.description" rows="3" required /><br />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()" ng-disabled="newProjectForm.$invalid" >OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editProjectContent.html">
+        <div class="modal-header">
+            <h3>Edit Project</h3>
+        </div>
+        <div class="modal-body">
+            <form name="newProjectForm" class="css-form" novalidate>
+                Project Name:<br />
+                <input type="text" ng-model="project.name" required /><br />
+                Project Headline:  <br />
+                <textarea ng-model="project.headline" rows="3" required /><br />
+                Project Description: <br />
+                <textarea ng-model="project.description" rows="3" required /><br />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()" ng-disabled="newProjectForm.$invalid" >OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="newTaskContent.html">
+        <div class="modal-header">
+            <h3>New Task</h3>
+        </div>
+        <div class="modal-body">
+            <form name="newTaskForm" class="css-form" novalidate>
+                Task Name:<br />
+                <textarea ng-model="task.name" rows="3" required /><br />
+                Target Date:  <br />
+                <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="task.targetDate" required /><br />
+                Task Completed: <br />
+                Done <input type="checkbox" ng-model="task.completed" /><br />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()" ng-disabled="newTaskForm.$invalid" >OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editTaskContent.html">
+        <div class="modal-header">
+            <h3>Edit Task</h3>
+        </div>
+        <div class="modal-body">
+            <form name="newTaskForm" class="css-form" novalidate>
+                Task Name:<br />
+                <textarea ng-model="task.name" rows="3" required /><br />
+                Target Date:  <br />
+                <input type="text" datepicker-popup="yyyy-MM-dd" ng-model="task.targetDate" required /><br />
+                Task Completed: <br />
+                Done <input type="checkbox" ng-model="task.completed" /><br />
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()" ng-disabled="newTaskForm.$invalid" >OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="deleteTaskContent.html">
+        <div class="modal-header">
+            <h3>Remove Task</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                Are you sure that you want to remove this task?
+            </p>
+            <p>
+                Task Name:  <strong>{{task.name}}</strong><br />
+                Target Date: <strong>{{task.targetDate}}</strong><br />
+                Task Completed: <strong>{{task.completed}}</strong><br />
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()" ng-disabled="newTaskForm.$invalid" >OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+	<div id="mainContent">
+
+		<div class="promoSignpost" >
+			<div class="promoMessage" >
+				<img class="pull-right" src="images/XeNoNiQUe-Logo-2011-01-233x175-72dpi.png" width="100" />
+				<h2> XenTracker </h2>
+				<p>
+					This is a Java web application to help you organize project groups and tasks. 
+					It is a demonstration of the Java EE 7 technology features for JAX-RS, WebSocket and Servlets.
+				</p>
+				<button  class="btn btn-primary btn-large">Learn More</button>
+		    </div>
+		</div>
+
+		<div class="projectView" >	
+			<div class="actionBar" ng-controller="NewProjectModalController" >
+				<button class="btn btn-primary" ng-click="open()" >Add New Project</button>
+                <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+			</div>
+
+            <div class="tasksView" ng-repeat="project in projects" >
+                <hr class="project-divider">
+
+                <h2 class="projectHeadline" > {{project.name}} </h2>
+                <h3> {{project.headline}} </h3>
+                <p> {{project.description}} </p>
+                <div ng-controller="NewProjectModalController">
+                    <button class="btn btn-info"
+                            ng-click="openEditProjectDialog($parent.project)">Edit Project Details</button>
+                </div>
+                <br />
+
+                <div ng-controller="NewTaskModalController">
+                    <p>
+                        <button class="btn btn-primary"
+                                ng-click="openNewTaskDialog(project.id)">Add New Task</button>
+                    </p>
+                </div>
+
+                <table class="taskTable">
+                    <tr>
+                        <td>
+                            Item
+                        </td>
+                        <td>
+                            Description
+                        </td>
+                        <td>
+                            Completed
+                        </td>
+                        <td>
+                            Due Date
+                        </td>
+                        <td>
+                            Control
+                        </td>
+                    </tr>
+
+
+                    <tr ng-repeat="task in project.tasks">
+                        <td>
+                            {{task.id}}
+                        </td>
+                        <td>
+                            <span class="done-{{task.completed}}"> {{task.name}} </span>
+                        </td>
+                        <td>
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="task.completed">
+                                Done
+                            </label>
+                        </td>
+                        <td>
+                            {{task.targetDate}}
+                        </td>
+                        <td>
+                            <div ng-controller="NewTaskModalController">
+                            <a class="btn" href="#" ng-click="openEditTaskDialog($parent.task)"><i class="icon-edit"></i></a>
+                            <a class="btn" href="#" ng-click="openDeleteTaskDialog($parent.task)"><i class="icon-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+		</div>
+
+	</div>	
+	<!-- FOOTER -->
+	<div class="container fatbottom">
+
+	    <hr class="featurette-divider">
+		<footer>
+			<p class="pull-right"><a href="#">Back to top</a></p>
+
+			<p>&copy; 2013, 2014 XeNoNiQUe, UK &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+			<p class="slogan"> I can definitely help you.</p>
+			<p>
+				<a href="https://glassfish.java.net/"> <img src="images/glassfish_logo.jpg" width="128" height="65"/> </a>
+				<a href="http://twitter.com/peter_pilgrim"> <img src="images/twitter-bird-white-on-blue.png" width="64" height="64" /> </a>
+				<a href="https://plus.google.com/117513042687634436539/posts"> <img src="images/Google-Plus-Logo.png" width="64" height="64" /> </a>
+			</p>
+		</footer>
+	</div>	
+
+	<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+	<script src="javascripts/jquery-1.10.1.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.10.1.js"></script> -->
+    <script src="javascripts/angular.js"></script>
+    <script src="javascripts/ui-bootstrap-tpls-0.6.0.js"></script>
+    <script src="app/controllers/main.js"></script>
+    <script src="app/controllers/newproject-modal.js"></script>
+    <script src="app/controllers/newtask-modal.js"></script>
+    <script src="app/services/shared-service.js"></script>
+  </body>
+</html>
+
+<!-- 
+
+=========================================================================================
+=========================================================================================
+=========================================================================================
+
+Created by Peter Pilgrim (c) 2013 using some most excellent tools:
+ On the client side: Twitter Bootstrap, AngularJS and JQuery
+ On the server side: Java EE 7 GlassFish 4.0
+
+ Need Development Help? "I can definitely help you"
+
+=========================================================================================
+=========================================================================================
+=========================================================================================
+
+-->

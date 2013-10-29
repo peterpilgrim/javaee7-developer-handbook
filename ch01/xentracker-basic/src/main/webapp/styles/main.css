@@ -1,0 +1,124 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+  padding-bottom: 40px;
+  color: #5a5a5a;
+}
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  margin-top: 20px;
+  margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+}
+.navbar-wrapper .navbar {
+
+}
+
+/* Remove border and change up box shadow for more contrast */
+.navbar .navbar-inner {
+  border: 0;
+  -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+     -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+          box-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+
+/* Downsize the brand/project name a bit */
+.navbar .brand {
+  padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+}
+
+/* Navbar links: increase padding for taller navbar */
+.navbar .nav > li > a {
+  padding: 15px 20px;
+}
+
+/* Offset the responsive button for proper vertical alignment */
+.navbar .btn-navbar {
+  margin-top: 10px;
+}
+
+
+.promoSignpost {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-image: url("../images/xentracker_logon_signpost_retina.jpg");
+  background-repeat: no-repeat;
+  background-position: center;  
+}
+
+.promoMessage {
+  position: relative;
+  top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  background: #F0F0F0;
+  padding: 10px;
+  -webkit-border-radius: 10px;
+     -moz-border-radius: 10px;
+          border-radius: 10px;
+  -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+     -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+          box-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+
+.mainContent {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px; 
+  margin-bottom: 10px;
+}
+
+.projectView {
+  margin-left: auto;
+  margin-left: auto;
+  width: 90%; 
+  padding: 10px; 
+}
+
+.projectHeadline {
+  color: #00007F;
+}
+
+
+.taskTable {
+  width: 85%;
+  table-layout: fixed;
+}
+
+.taskTable td {
+  border: 1px solid black;
+  padding: 3px;
+}
+
+.taskTable tr:first-child {
+  background-color: #E0E0FF;
+  text-align: center;
+  font-weight: bold;
+}
+
+.taskTable td:nth-child(1),
+.taskTable td:nth-child(3) {
+  width: 75px;
+  text-align: center;
+}
+
+.taskTable td:nth-child(4),
+.taskTable td:nth-child(5) {
+  width: 100px;
+  text-align: center;
+}
