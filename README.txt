@@ -103,20 +103,6 @@ and ``*.iml'' etc
     % gradle idea
 
 
-SUB PROJECTS
-----------------
-
-You can find out the list of sub projects with gralde. Execute the 
-following:
-
-    % gradle projects
-
-
-Read the Gradle documentation to find out how to switch between 
-projects, and execute sub projects. Here is a decent URL: 
-
-    http://www.gradle.org/docs/current/userguide/multi_project_builds.html
-
 
 DEPENDENCIES
 -----------------
@@ -148,6 +134,46 @@ useful Gradle tasks.
     % gradle jar        // for project that builds a JAR
     % gradle war        // ditto 
     % gradle ear        // ditto
+
+
+
+ROOT GRADLE PROJECT 
+----------------------
+
+The root `build.gradle' file now can build the subprojects. It is 
+NOT by any stretch of the imagination a standard Gradle 
+multi-module project, however. Here are the necessary commands
+
+Build just the initial project, here is the command:
+
+    % gradle build
+
+
+
+Build everything project in the Java EE 7 Developer Handbook example 
+except for Chapter 11, use this command:
+
+    % gradle build_everything 
+
+
+
+To build and install all projects to the local Ivy repository:
+
+    % gradle install_everything 
+
+
+
+To clean all projects, run this following command: 
+
+    % gradle clean_everything 
+
+
+
+It certainly helps to know how to list out tasks in a Gradle project. 
+To find about Gradle task, execute the following command:
+
+    % gradle tasks --all
+
 
 
 
@@ -186,6 +212,23 @@ Pages, JavaServer Faces and therefore I felt their learning would
 benefit a simplified page flow without AJAX. So please bear with me as I 
 sort out the split. PS: I am doing post JavaOne 2013, conference and 
 travelling around California. 
+
+
+
+HINT:
+
+Navigate to the `Embedded Container' project and build that one first. 
+Execute the following commands from the project root directory
+
+    % cd appendix01/glassfish-embedded
+    % gradle clean
+    % gradle install
+
+
+The embedded container is used by many of the examples. I am sorry about 
+this mess, because Gradle multi-module files do not behave exactly like
+Maven modules. I counted on it when I was writing the book and then 
+discovered this was the wrong approach for IDE's such as JetBrains IDEA.
 
 
 	

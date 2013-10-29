@@ -30,6 +30,8 @@ import org.junit.runner.RunWith;
 
 import javax.ejb.EJB;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -56,11 +58,12 @@ public class PayloadCheckTest {
     PayloadCheck service;
 
     @Test
-    public void shouldFireMessage() {
+    public void shouldFireMessage() throws InterruptedException {
         service.sendPayloadMessage("hello");
         service.sendPayloadMessage("world");
-        assertEquals("hello", service.getMessages().get(0));
-        assertEquals("world", service.getMessages().get(1));
+        final List<String> messages = service.getMessages();
+        assertEquals("hello", messages.get(0));
+        assertEquals("world", messages.get(1));
         for ( String msg: service.getMessages()) {
             System.out.printf("Message received was [%s]\n", msg );
         }

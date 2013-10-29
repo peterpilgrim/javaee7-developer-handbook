@@ -48,10 +48,14 @@ public class PayloadCheck {
         System.out.printf("%s.sendPayloadMessage(%s) Thread: %s\n",
                 getClass().getSimpleName(), payload, Thread.currentThread());
         context.createProducer().send( inboundQueue, payload);
-        messages.add(payload);
+        synchronized(messages) {
+            messages.add(payload);
+        }
     }
 
     public List<String> getMessages() {
-        return messages;
+        synchronized (messages) {
+            return messages;
+        }
     }
 }

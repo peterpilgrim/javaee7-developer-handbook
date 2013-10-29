@@ -76,7 +76,7 @@ task(run, dependsOn: 'classes', type: JavaExec) {
     standardInput = System.in
 }
 
-task(generateScript, dependon: 'classes') {
+task(generateScript, dependsOn: 'classes') {
     description = 'Generates UNIX bash script that launches the program.'
     if (!System.properties['os.name'].toLowerCase().contains('windows')) {
         // Not Microsoft Windows

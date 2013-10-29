@@ -41,6 +41,7 @@ public class AbstractEmbeddedRunner {
     private AtomicBoolean initialized = new AtomicBoolean();
     private AtomicBoolean running = new AtomicBoolean();
     private GlassFish glassfish;
+    private GlassFishRuntime glassfishRuntime;
 
     public AbstractEmbeddedRunner(int port) {
         this.port = port;
@@ -52,7 +53,7 @@ public class AbstractEmbeddedRunner {
         }
 
         BootstrapProperties bootstrapProperties = new BootstrapProperties();
-        GlassFishRuntime glassfishRuntime = GlassFishRuntime.bootstrap(bootstrapProperties);
+        glassfishRuntime = GlassFishRuntime.bootstrap(bootstrapProperties);
 
         GlassFishProperties glassfishProperties = new GlassFishProperties();
         glassfishProperties.setPort("http-listener", port);
@@ -82,8 +83,19 @@ public class AbstractEmbeddedRunner {
 
     public AbstractEmbeddedRunner stop() throws Exception{
         check();
-        glassfish.stop();
-        running.set(false);
+        try {
+            // this will stop and dispose all the glassfish instances created with this gfr
+            // if you were to bootstrap GlassFishRuntime again, Shutdown GlassFish.
+            // this will avoid "already bootstrapped" errors seen when running multiple tests
+            // in same VM
+            undeployAll();
+            glassfish.stop();
+            glassfish.dispose();
+            glassfishRuntime.shutdown();
+            running.set(false);
+        } catch (GlassFishException ex) {
+            throw new RuntimeException("Failed to shutdown Embedded GlassFish container", ex);
+        }
         return this;
     }
 

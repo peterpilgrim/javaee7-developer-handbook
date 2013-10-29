@@ -60,6 +60,7 @@ public class PayloadCheckSenderBean {
         producer.send(inboundQueue, payload);
         messages.add(payload);
     }
+
     public List<String> getMessages() {
         return messages;
     }

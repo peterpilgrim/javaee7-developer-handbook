@@ -24,7 +24,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 
 // Define equivalent Maven GAV coordinates.
-group = 'je7hb.jms.essentials'
+group = 'je7hb.jms.async'
 archivesBaseName = 'ch09-jms-async'
 version = '1.0'
 
@@ -34,37 +34,58 @@ repositories {
         url 'https://maven.java.net/content/groups/promoted'
     }
     maven {
+        url 'https://maven.java.net/content/repositories/public'     //  /org/glassfish/appclient/gf-client/4.0-SNAPSHOT/gf-client-4.0-SNAPSHOT.pom'
+    }
+    maven {
         url 'http://repository.jboss.org/nexus/content/groups/public'
     }
     mavenCentral()
 }
 
 dependencies {
-    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.0-b86'
-    providedCompile 'javax:javaee-api:7.0-b86'
-    providedCompile 'javax:javaee-web-api:7.0-b86'
+    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+    providedCompile 'javax:javaee-api:7.0'
     providedCompile 'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
 
-    compile     'org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec:1.0.0.Alpha1'
-    compile     'org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec:1.0.0.Alpha2'
+    // Copied from /Library/opt/glassfish-4.0.1-b01-05_31_2013/glassfish/lib/
+    // runtime files('lib-glassfish/gf-client.jar')
+    runtime fileTree(dir: 'lib-glassfish', include: '*.jar')
+
+    // Apparently we need the GlassFish JMS client module libraries.
+//    compile     'org.glassfish.appclient:gf-client:4.0-SNAPSHOT'
+//    compile     'org.glassfish.mq:imqjmsra:5.0'
+//    compile     'org.glassfish.mq:imqbroker:4.5.2'
+
+    /*
     compile     'javax.enterprise:cdi-api:1.1-PFD'
     compile     'com.sun.faces:jsf-api:2.0.3-b05'
     compile     'javax.validation:validation-api:1.1.0.CR3'
     compile     'org.hibernate:hibernate-validator:5.0.0.CR4'
-    compile     'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Draft-14'
-    compile     'javax:javaee-api:7.0-b86'
+    */
+
+    compile     'joda-time:joda-time:2.2'
     compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
 
-    runtime     'org.glassfish.main.extras:glassfish-embedded-all:4.0-b86'
-
+/*
     testCompile 'org.slf4j:slf4j-simple:1.6.4'
     testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
     testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT'
+*/
+
+    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
+    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
+
+    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
+    testCompile 'org.jboss.arquillian.extension:arquillian-persistence-api:1.0.0.Alpha6'
+    testCompile 'org.jboss.arquillian.extension:arquillian-persistence-impl:1.0.0.Alpha6'
+//    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-remote-3.1:1.0.0.CR4'
+//    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT'
+    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-managed-3.1:1.0.0.CR4'
     testCompile 'junit:junit:4.11'
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.5'
+    gradleVersion = '1.8'
 }
 
 // Override Gradle defaults - a force an exploded JAR view
@@ -78,7 +99,7 @@ sourceSets {
             srcDir 'src/test/resources'
         }
         resources {
-            srcDir 'src/test/resources-glassfish-embedded'
+            srcDir 'src/test/resources-glassfish-managed'
         }
 
         output.resourcesDir = 'build/classes/test'
@@ -88,19 +109,19 @@ sourceSets {
 
 task(run, dependsOn: 'classes', type: JavaExec) {
     description = 'Runs the main application'
-    main = 'je7hb.jms.essentials.App'
+    main = 'je7hb.jms.async.App'
     classpath = sourceSets.main.runtimeClasspath
     args 'Mary', 'Peter', 'Jane'
     standardInput = System.in
 }
 
-//task(generateScript, dependon: 'classes') {
+//task(generateScript, dependsOn: 'classes') {
 //    description = 'Generates UNIX bash script that launches the program.'
 //    if (!System.properties['os.name'].toLowerCase().contains('windows')) {
 //        // Not Microsoft Windows
 //        new File("SampleRunner").withWriter { out ->
 //            out.println("#!/bin/bash")
-//            out.println("java -cp ${sourceSets.main.runtimeClasspath.getAsPath()}  je7hb.jms.essentials.App")
+//            out.println("java -cp ${sourceSets.main.runtimeClasspath.getAsPath()}  je7hb.jms.async.App")
 //        }
 //        "chmod 755 SampleRunner".execute()
 //    }

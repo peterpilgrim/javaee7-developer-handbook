@@ -49,7 +49,7 @@ public class CarValidatorTest {
 
     @Test
     public void shouldBasicValidateCar() {
-        Car car = new Car("Austin Martin", 0, "AM12457", 0 );
+        Car car = new Car("Austin Martin", 2, "AM12457", 1000 );
         Set<ConstraintViolation<Car>> constraintViolations
                 = validator.validate(car, BasicCheck.class );
         System.out.printf("constraint violations: %s\n", constraintViolations);

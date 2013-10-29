@@ -37,6 +37,8 @@ public class SupportHelpDesk {
             "Hadeep", "Florence", "Robert", "Zoe", "Frank" );
 
     public String getNextAgentName() {
-        return agents.get((int)( Math.random() * agents.size() ));
+        return String.format("%s%05d",
+                agents.get((int)( Math.random() * agents.size() )),
+                        (int)(Math.random() * 90000.0));
     }
 }

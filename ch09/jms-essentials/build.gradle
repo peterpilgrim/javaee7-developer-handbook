@@ -42,24 +42,34 @@ repositories {
 
 
 dependencies {
-    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.0-b86'
-    providedCompile 'javax:javaee-api:7.0-b86'
-    providedCompile 'javax:javaee-web-api:7.0-b86'
+    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+    providedCompile 'javax:javaee-api:7.0'
+    providedCompile 'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
 
-    compile     'org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec:1.0.0.Alpha1'
-    compile     'org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec:1.0.0.Alpha2'
+    /*
     compile     'javax.enterprise:cdi-api:1.1-PFD'
     compile     'com.sun.faces:jsf-api:2.0.3-b05'
     compile     'javax.validation:validation-api:1.1.0.CR3'
     compile     'org.hibernate:hibernate-validator:5.0.0.CR4'
-    compile     'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Draft-14'
-    compile     'javax:javaee-api:7.0-b86'
+    */
 
-    runtime     'org.glassfish.main.extras:glassfish-embedded-all:4.0-b86'
+    compile     'joda-time:joda-time:2.2'
+    compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
 
     testCompile 'org.slf4j:slf4j-simple:1.6.4'
     testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
     testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT'
+
+    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
+    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
+
+    /*
+    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
+    testCompile 'org.jboss.arquillian.extension:arquillian-persistence-api:1.0.0.Alpha6'
+    testCompile 'org.jboss.arquillian.extension:arquillian-persistence-impl:1.0.0.Alpha6'
+    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-remote-3.1:1.0.0.CR4'
+    */
+
     testCompile 'junit:junit:4.11'
 }
 
@@ -94,7 +104,7 @@ task(run, dependsOn: 'classes', type: JavaExec) {
     standardInput = System.in
 }
 
-//task(generateScript, dependon: 'classes') {
+//task(generateScript, dependsOn: 'classes') {
 //    description = 'Generates UNIX bash script that launches the program.'
 //    if (!System.properties['os.name'].toLowerCase().contains('windows')) {
 //        // Not Microsoft Windows

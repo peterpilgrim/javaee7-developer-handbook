@@ -75,6 +75,8 @@ public class SupportHelpDeskBeanTest {
         for ( int j=0; j<125; ++j ) {
             String agent  = desk.getNextAgentName();
             assertNotNull(agent);
+            System.out.printf("agent=%s\n",agent);
+
             names1.add(agent);
             names2.add(agent);
         }

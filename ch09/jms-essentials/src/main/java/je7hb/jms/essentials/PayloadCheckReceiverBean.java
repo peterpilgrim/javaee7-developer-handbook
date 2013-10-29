@@ -37,7 +37,8 @@ public class PayloadCheckReceiverBean {
 
     public void addMessage(String text) {
         messages.add(text);
-        System.out.printf("%s.addMessage(%s) %d Thread: %s\n",
+        System.out.printf("%s %s.addMessage(%s) %d Thread: %s\n",
+                this.getClass().getSimpleName()+"@"+Integer.toHexString(System.identityHashCode(this)),
                 getClass().getSimpleName(), text, messages.size(), Thread.currentThread());
     }
 

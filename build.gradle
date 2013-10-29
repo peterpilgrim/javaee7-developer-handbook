@@ -32,7 +32,7 @@ apply plugin: 'idea'
 // Define equivalent Maven GAV coordinates.
 group = 'je7hb.root'
 archivesBaseName = 'jeh7hb-root'
-version = '1.0'
+version = '0.98'
 
 repositories {
     mavenLocal()
@@ -46,13 +46,15 @@ repositories {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.6'
+    gradleVersion = '1.8'
 }
 
 task myZip(type: Zip) {
     description = "Creates a ZIP distribution of the `${archivesBaseName}' project."
     from '.'
-    into "${archivesBaseName}-sources-${version}"
+    def targetName = "7942-${archivesBaseName}-sources-${version}.zip"
+    println "Creating targetName=${targetName}"
+    archiveName "${targetName}"
     include '**/src/**'
     include '**/*.xml'
     include '**/*.gradle'
@@ -70,4 +72,101 @@ task myZip(type: Zip) {
     */
 }
 
+// This is the root build file
+File currentFile = new File(".","build.gradle")
 
+def cleanTaskNames = []
+def buildTaskNames = []
+def installTaskNames = []
+def stubTaskNames = []
+
+// Build dynamic task names for each sub project, ensure we avoid
+// recursion by excluding the root build file.
+new File(".").eachFileRecurse{ file ->
+    if ( file.isFile() && "build.gradle".equals(file.name) 
+        && !file.equals(currentFile)) {
+        String stubTaskName     = file.getParentFile().getName()
+        String cleanTaskName    = "clean_"+stubTaskName
+        String buildTaskName    = "build_"+stubTaskName
+        String installTaskName  = "install_"+stubTaskName
+        String ideaTaskName     = "idea_"+stubTaskName
+
+        /* +++ DEBUG+++
+        println "--+---" + file.getPath()
+        println "  +-- " + file.getParentFile().getPath()
+        println "  +-- " + file.getParentFile().getName()
+        println "  +-->>> " + buildTaskName
+        */
+
+        cleanTaskNames << cleanTaskName
+        stubTaskNames << stubTaskName
+
+        // Dynamically create GradleBuildType tasks on the fly
+        task "${cleanTaskName}"(type: GradleBuild) { 
+            description = "Cleans the sub project [${stubTaskName}]"
+            dir = file.getParentFile().getPath()
+            tasks = ['clean']
+        } 
+        task "${ideaTaskName}"(type: GradleBuild) { 
+            description = "Generate IDEA project meta files for the sub project [${stubTaskName}]"
+            dir = file.getParentFile().getPath()
+            tasks = ['idea']
+        }
+
+        // We have to block Chapter 11 example JPA Advanced, because these examples
+        // require a managed application server to already be running.
+        // Application server: GlassFish 4.0
+        if (!file.getPath().contains("/ch11/") && 
+            !file.getPath().contains("jms-async")) {
+            buildTaskNames << buildTaskName
+            installTaskNames << installTaskName
+
+            task "${buildTaskName}"(type: GradleBuild) { 
+                description = "Builds the sub project [${stubTaskName}]"
+                dir = file.getParentFile().getPath()
+                tasks = ['build']
+            } 
+            task "${installTaskName}"(type: GradleBuild) { 
+                description = "Installs the sub project [${stubTaskName}]"
+                dir = file.getParentFile().getPath()
+                tasks = ['build','install']
+            } 
+        }
+    }
+}
+
+task build {
+    description = "Builds and installs only the initial project (*Embedded GlassFish utility)"
+    dependsOn 'install_glassfish-embedded'
+}
+
+task build_everything {
+    description = "Build every subproject"
+    dependsOn build
+    buildTaskNames.each{ subTask1 -> 
+        dependsOn subTask1
+    }
+}
+
+task install_everything {
+    description = "Builds and install every subproject"
+    installTaskNames.each{ subTask1 -> 
+        dependsOn subTask1
+    }
+}
+
+task clean_everything {
+    description = "Cleans out and reset every subproject"
+    cleanTaskNames.each{ subTask1 -> 
+        dependsOn subTask1
+    }
+}
+
+task generate_idea_everything {
+    description = "Create IDEA project files for every subproject"
+    stubTaskNames.each{ subTask1 -> 
+        dependsOn "idea_${subTask1}"
+    }
+}
+
+// End.
