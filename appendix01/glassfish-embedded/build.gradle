@@ -46,6 +46,9 @@ dependencies {
     compile     'org.glassfish.main.extras:glassfish-embedded-all:4.0-b72'
     compile     'javax:javaee-api:7.0-b72'
 
+    compile      'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
+    compile      'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
+
     testCompile 'junit:junit:4.11'
 }
 

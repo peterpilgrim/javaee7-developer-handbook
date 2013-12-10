@@ -20,12 +20,19 @@
 package je7hb.common.webcontainer.embedded.glassfish;
 
 import static org.junit.Assert.*;
+
+import java.io.*;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.impl.base.exporter.zip.ZipExporterImpl;
 import org.junit.*;
 
 public class EmbeddedRunnerTest {
 
 //    public static final String TEST_WAR_FILE = "build/libs/glassfish-embedded-runner-1.0.war";
-    public static final String TEST_WAR_FILE = "glassfish-embedded-runner-1.0.war";
+    public static final String TEST_WAR_FILE = "glassfish-embedded-runner-1.0-SNAPSHOT.war";
     public static final String TEST_WEB_CONTEXT = "test1234";
 
     @Test
@@ -33,6 +40,14 @@ public class EmbeddedRunnerTest {
         System.out.println("We need to deploy a test server");
 
         SimpleEmbeddedRunner runner = (SimpleEmbeddedRunner)new SimpleEmbeddedRunner(8080);
+
+        WebArchive webArchive = ShrinkWrap.create(WebArchive.class, TEST_WAR_FILE)
+                .addPackage(SimpleEmbeddedRunner.class.getPackage())
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+
+        File warFile = new File(webArchive.getName());
+        new ZipExporterImpl(webArchive).exportTo(warFile, true);
+        System.out.printf("Exported war file: %s\n", warFile);
 
         System.out.println("**** INITIALIZING SERVER ****");
         assertFalse(runner.isInitialized());

@@ -6,6 +6,10 @@
          version="3.1" metadata-complete="false">
 
     <display-name>Xen Tracker</display-name>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name> <param-value>Development</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <load-on-startup>1</load-on-startup>
@@ -13,6 +17,17 @@
     <servlet-mapping>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/views/*</url-pattern>
     </servlet-mapping>
 
     <resource-env-ref>
@@ -28,4 +43,9 @@
             javax.enterprise.concurrent.ManagedExecutorService
         </resource-env-ref-type>
     </resource-env-ref>
+
+    <welcome-file-list>
+        <welcome-file>views/index.xhtml</welcome-file>
+    </welcome-file-list>
+
 </web-app>

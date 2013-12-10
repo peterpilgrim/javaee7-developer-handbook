@@ -20,23 +20,26 @@
 package je7hb.intro.xentracker.control;
 
 import je7hb.intro.xentracker.boundary.ProjectTaskService;
-import je7hb.intro.xentracker.entity.*;
+import je7hb.intro.xentracker.entity.Project;
+import je7hb.intro.xentracker.entity.Task;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.inject.Inject;
-import javax.json.*;
-import javax.json.stream.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.stream.JsonGenerator;
+import javax.json.stream.JsonGeneratorFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.StringWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 import static javax.ws.rs.core.MediaType.*;
 
@@ -48,10 +51,6 @@ import static javax.ws.rs.core.MediaType.*;
 @Path("/projects/")
 @Stateless
 public class ProjectRESTServerEndpoint {
-    static SimpleDateFormat FMT =
-        new SimpleDateFormat("dd-MMM-yyyy");
-    static SimpleDateFormat FMT2 =
-            new SimpleDateFormat("yyyy-MM-dd");
 
     static JsonGeneratorFactory jsonGeneratorFactory
         = Json.createGeneratorFactory(
@@ -79,7 +78,7 @@ public class ProjectRESTServerEndpoint {
         StringWriter swriter = new StringWriter();
         JsonGenerator generator
             = jsonGeneratorFactory.createGenerator(swriter);
-        writeProjectAsJson(generator, projects.get(0)).close();
+        ProjectHelper.writeProjectAsJson(generator, projects.get(0)).close();
         return swriter.toString();
     }
 
@@ -100,7 +99,7 @@ public class ProjectRESTServerEndpoint {
                 Task task = new Task(
                     taskObject.getString("name"),
                     ( taskObject.containsKey("targetDate") ?
-                       FMT.parse(taskObject.getString("targetDate")) :
+                       ProjectHelper.FMT.parse(taskObject.getString("targetDate")) :
                        null ),
                     taskObject.getBoolean("completed"));
                 project.addTask(task);
@@ -112,7 +111,7 @@ public class ProjectRESTServerEndpoint {
         StringWriter swriter = new StringWriter();
         JsonGenerator generator =
             jsonGeneratorFactory.createGenerator(swriter);
-        writeProjectAsJson(generator, project).close();
+        ProjectHelper.writeProjectAsJson(generator, project).close();
         return swriter.toString();
     }
 
@@ -143,7 +142,7 @@ public class ProjectRESTServerEndpoint {
         StringWriter swriter = new StringWriter();
         JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
-        writeProjectAsJson(generator, project).close();
+        ProjectHelper.writeProjectAsJson(generator, project).close();
         return swriter.toString();
     }
 
@@ -171,7 +170,7 @@ public class ProjectRESTServerEndpoint {
         Task task = new Task(
                 taskObject.getString("name"),
                 ( taskObject.containsKey("targetDate") ?
-                        convertToDate(taskObject.getString("targetDate")) :
+                        ProjectHelper.convertToDate(taskObject.getString("targetDate")) :
                         null ),
                 ( taskObject.containsKey("completed")) ?
                     taskObject.getBoolean("completed") : false );
@@ -181,7 +180,7 @@ public class ProjectRESTServerEndpoint {
         StringWriter swriter = new StringWriter();
         JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
-        writeProjectAsJson(generator, project).close();
+        ProjectHelper.writeProjectAsJson(generator, project).close();
         return swriter.toString();
     }
 
@@ -211,7 +210,7 @@ public class ProjectRESTServerEndpoint {
             if ( task.getId().equals(taskId )) {
                 task.setName( taskObject.getString("name") );
                 task.setTargetDate( taskObject.containsKey("targetDate") ?
-                        convertToDate(taskObject.getString("targetDate")) :
+                        ProjectHelper.convertToDate(taskObject.getString("targetDate")) :
                         null );
                 task.setCompleted( taskObject.containsKey("completed") ?
                         taskObject.getBoolean("completed") : false );
@@ -222,7 +221,7 @@ public class ProjectRESTServerEndpoint {
         StringWriter swriter = new StringWriter();
         JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
-        writeProjectAsJson(generator, project).close();
+        ProjectHelper.writeProjectAsJson(generator, project).close();
         return swriter.toString();
     }
 
@@ -261,7 +260,7 @@ public class ProjectRESTServerEndpoint {
         StringWriter swriter = new StringWriter();
         JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
-        writeProjectAsJson(generator, project).close();
+        ProjectHelper.writeProjectAsJson(generator, project).close();
         return swriter.toString();
     }
 
@@ -300,7 +299,7 @@ public class ProjectRESTServerEndpoint {
         StringWriter swriter = new StringWriter();
         JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
-        writeProjectAsJson(generator, project).close();
+        ProjectHelper.writeProjectAsJson(generator, project).close();
         return swriter.toString();
     }
 
@@ -325,7 +324,7 @@ public class ProjectRESTServerEndpoint {
                 JsonGenerator generator
                         = jsonGeneratorFactory.createGenerator(swriter);
                 try {
-                    generateProjectsAsJson(generator, projects).close();
+                    ProjectHelper.generateProjectsAsJson(generator, projects).close();
                     System.out.printf("========>> Sending swriter=[%s]\n", swriter.toString());
                     Response response =
                             Response.ok(swriter.toString()).build();
@@ -348,86 +347,4 @@ public class ProjectRESTServerEndpoint {
 
     // Utility methods
 
-    public static JsonGenerator generateProjectsAsJson( JsonGenerator generator, List<Project> projects ) {
-        generator.writeStartArray();
-        for ( Project project: projects ) {
-            writeProjectAsJson(generator, project);
-        }
-        generator.writeEnd().close();
-        return generator;
-    }
-
-    public static JsonGenerator writeProjectAsJson( JsonGenerator generator, Project project ) {
-        generator.writeStartObject()
-            .write("id", project.getId())
-            .write("name", project.getName());
-        if ( project.getHeadline() != null )
-            generator.write("headline", project.getHeadline());
-        if ( project.getDescription() != null )
-            generator.write("description", project.getDescription());
-        generator.writeStartArray("tasks");
-
-        for ( Task task: project.getTasks()) {
-            writeTaskAsJson(generator,task);
-        }
-        generator.writeEnd().writeEnd();
-        return generator;
-    }
-
-    public static JsonGenerator writeTaskAsJson( JsonGenerator generator, Task task ) {
-        generator.writeStartObject()
-            .write("id", task.getId())
-            .write("name", task.getName())
-            .write("targetDate",
-                    task.getTargetDate() == null ? "" :
-                            FMT2.format(task.getTargetDate()))
-            .write("completed", task.isCompleted())
-            .write("projectId",
-                    task.getProject() != null ? task.getProject().getId() : 0 )
-            .writeEnd();
-        return generator;
-    }
-
-    public static boolean convertToBoolean( String value ) {
-        return convertToBoolean(value, false);
-    }
-
-    public static boolean convertToBoolean( String value, boolean defaultValue ) {
-        if ( value == null )
-            return defaultValue;
-        value = value.trim();
-        if ( value.length() == 0 )
-            return defaultValue;
-        if ( "true".equalsIgnoreCase(value) ||
-                "yes".equalsIgnoreCase(value) || "1".equalsIgnoreCase(value) )
-            return true;
-        if ( "false".equalsIgnoreCase(value) ||
-                "no".equalsIgnoreCase(value) || "0".equalsIgnoreCase(value) )
-            return false;
-        return defaultValue;
-    }
-
-    public static Date convertToDate( String value ) {
-        if ( value == null )
-            return null;
-        value = value.trim();
-        if ( value.length() == 0 )
-            return null;
-
-        Date date = null;
-        try {
-            date = FMT.parse(value);
-        }
-        catch (ParseException pe1) {
-            try {
-                date = FMT2.parse(value);
-            }
-            catch (ParseException pe2) {
-                throw new RuntimeException(
-                        "unable to parse date ["+value+"]");
-            }
-        }
-
-        return date;
-    }
 }

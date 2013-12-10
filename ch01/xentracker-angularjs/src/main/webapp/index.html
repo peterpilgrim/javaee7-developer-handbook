@@ -228,7 +228,8 @@
                         </td>
                         <td>
                             <label class="checkbox">
-                                <input type="checkbox" ng-model="task.completed">
+                                <!-- change this code to a websocket invocation -->
+                                <input type="checkbox" ng-model="task.completed" ng-change="updateProjectTaskCompleted(task)">
                                 Done
                             </label>
                         </td>

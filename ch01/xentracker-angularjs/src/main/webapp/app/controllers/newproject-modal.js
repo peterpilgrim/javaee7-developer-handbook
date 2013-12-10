@@ -62,7 +62,6 @@ newproject.controller('NewProjectModalController', function($scope, $modal, $htt
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
-
 });
 
 var newProjectModalInstanceController = function ($scope, $modalInstance, project) {

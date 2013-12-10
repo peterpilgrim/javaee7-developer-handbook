@@ -66,7 +66,7 @@ public class ProjectRESTServerEndpointTest {
     public static WebArchive createDeployment() {
         WebArchive war = ShrinkWrap.create(WebArchive.class, "xentracker.war")
                 .addPackage(Project.class.getPackage())
-                .addPackage(ProjectWebSocketServerEndpointTest.class.getPackage())
+                .addPackage(ProjectWebSocketRetrieveEndpointTest.class.getPackage())
                 .addPackage(ProjectTaskService.class.getPackage())
                 .addClasses(StringHelper.class)
                 .addAsWebInfResource(

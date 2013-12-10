@@ -21,8 +21,10 @@ package je7hb.intro.xentracker.entity;
 
 import je7hb.intro.xentracker.StringHelper;
 import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
