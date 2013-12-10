@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"  >
+
+<c:set var="root" value="#{request.contextPath}" />
+
+<h:head>
+    <meta charset="utf-8"/>
+    <title>
+        XeNoNiQUE :: 2013 :: XenTracker :: Java EE 7 Developer Handbook
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="XeNoNiQUE"/>
+    <meta name="author" content="Peter Pilgrim"/>
+
+    <!-- Les Bootstrap resources.styles -->
+    <h:outputStylesheet name="/styles/bootstrap.css" rel="stylesheet"/>
+    <h:outputStylesheet name="/styles/bootstrap-responsive.css" rel="stylesheet"/>
+    <h:outputStylesheet name="/styles/main.css" rel="stylesheet"/>
+</h:head>
+
+<h:body>
+
+    <!-- NAVBAR
+    ================================================== -->
+    <div class="navbar-wrapper">
+        <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
+        <div class="container">
+
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="brand" href="#">XenTracker Demo</a>
+                    <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#" >About</a></li>
+                            <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Xenonique <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="https://github.com/peterpilgrim">Github</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="http://www.packtpub.com/java-ee-7-developer-handbook/book">Book</a></li>
+                                    <li><a href="http://www.amazon.com/Java-EE-7-Developer-Handbook/dp/1849687943/">Amazon USA</a></li>
+                                    <li><a href="http://www.amazon.co.uk/Java-EE-Developer-Handbook-ebook/dp/B00FDLOF66/">Amazon UK</a></li>
+                                    <li class="nav-header">Friends</li>
+                                    <li><a href="http://tlcpowertalk.com/">TLC Powertalk</a></li>
+                                    <li><a href="https://java-champions.java.net/">Java Champions</a></li>
+                                    <li><a href="http://www.jfrog.com/home/v_artifactory_opensource_overview">Artifactory</a></li>
+                                    <li><a href="http://jenkins-ci.org//">Jenkins</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div><!-- /.navbar-inner -->
+            </div><!-- /.navbar -->
+        </div> <!-- /.container -->
+    </div><!-- /.navbar-wrapper -->
+
+
+    <div id="top" class="topContent">
+        <ui:insert name="top"><h1>This is reversed for Top Content</h1></ui:insert>
+    </div>
+
+    <div id="content" class="mainContent">
+        <ui:insert name="content">Main Content</ui:insert>
+    </div>
+
+    <div id="footer" class="footerContent">
+        <ui:insert name="footer">Footer Content</ui:insert>
+    </div>
+
+    <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+
+    <h:outputScript name="javascripts/jquery-1.10.1.js" />
+    <h:outputScript name="javascripts/bootstrap.js" />
+    <h:outputScript name="javascripts/main.js" />
+</h:body>
+
+</html>

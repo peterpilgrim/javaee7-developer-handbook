@@ -1,0 +1,4 @@
+/**
+ * JavaScript for the application
+ */
+

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition template="views/template.xhtml">
+        <ui:define name="top">
+            Welcome to Template Client Page
+        </ui:define>
+        <ui:define name="content">
+            <h:graphicImage value="#{resource['images:XeNoNiQUe-Logo-2011-01-233x175-72dpi.png']}"/>
+            <h:outputText value="You are in the Main Content Section"/>
+        </ui:define>
+        <ui:define name="Footer">
+            <h:outputLabel value="You are in the footer section"/>
+        </ui:define>
+    </ui:composition>
+</html>
