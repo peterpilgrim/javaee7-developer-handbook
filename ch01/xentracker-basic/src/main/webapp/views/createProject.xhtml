@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/views/template.xhtml">
+        <ui:define name="top">
+            <div class="topSignpost" >
+            </div>
+        </ui:define>
+
+        <ui:define name="content">
+
+            <div class="entry-form-area">
+
+                <h1>Create New Project</h1>
+
+                <p>
+                <h:outputText value="Please enter all of the information to create a new project."/>
+                </p>
+
+                <h:form>
+                    Title:<br/>
+                    <h:inputText id="projectTitle"
+                            value="${projectViewController.name}"
+                            size="128" >
+                        <f:validateRequired/>
+                    </h:inputText>
+                    <h:message for="projectTitle" errorClass="text-error"/>
+                    <br/>
+                    Headline:<br/>
+                    <h:inputTextarea id="projectHeadline"
+                                 value="${projectViewController.headline}"
+                                 size="192" >
+                        <f:validateRequired/>
+                    </h:inputTextarea>
+                    <h:message for="projectHeadline" errorClass="text-error"/>
+                    <br/>
+                    Description:<br/>
+                    <h:inputTextarea id="projectDescription"
+                                     value="${projectViewController.description}"
+                                     rows = "5"
+                                     columns = "32"
+                                     size="384" >
+                        <f:validateRequired/>
+                    </h:inputTextarea>
+                    <h:message for="projectDescription" errorClass="text-error"/>
+                    <br/>
+
+                    <hr/>
+
+                    <h:commandLink styleClass="btn btn-primary" action="#{projectViewController.createNewProject}">Create</h:commandLink>
+                    <h:commandLink styleClass="btn btn-primary btn-info" action="#{projectViewController.cancel}">Cancel</h:commandLink>
+                </h:form>
+            </div>
+
+        </ui:define>
+
+        <ui:define name="footer">
+            <p>
+            <h:outputLabel value="You are in the footer section!!!"/>
+            </p>
+            <h:graphicImage value="#{resource['images:XeNoNiQUe-Logo-2011-01-233x175-72dpi.png']}"/>
+        </ui:define>
+    </ui:composition>
+</html>
