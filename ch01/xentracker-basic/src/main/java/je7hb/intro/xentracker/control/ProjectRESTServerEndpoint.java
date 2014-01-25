@@ -47,8 +47,6 @@ import static javax.ws.rs.core.MediaType.*;
 @Path("/projects/")
 @Stateless
 public class ProjectRESTServerEndpoint {
-    static SimpleDateFormat FMT =
-        new SimpleDateFormat("dd-MMM-yyyy");
 
     static JsonGeneratorFactory jsonGeneratorFactory
         = Json.createGeneratorFactory(
@@ -68,7 +66,7 @@ public class ProjectRESTServerEndpoint {
         StringWriter swriter = new StringWriter();
         JsonGenerator generator
             = jsonGeneratorFactory.createGenerator(swriter);
-        generateProjectsAsJson(generator, projects).close();
+        ProjectHelper.generateProjectsAsJson(generator, projects).close();
         return swriter.toString();
     }
 
@@ -86,7 +84,7 @@ public class ProjectRESTServerEndpoint {
                 Task task = new Task(
                     taskObject.getString("name"),
                     ( taskObject.containsKey("targetDate") ?
-                       FMT.parse(taskObject.getString("targetDate")) :
+                            ProjectHelper.FMT.parse(taskObject.getString("targetDate")) :
                        null ),
                     taskObject.getBoolean("completed"));
                 project.addTask(task);
@@ -97,7 +95,7 @@ public class ProjectRESTServerEndpoint {
         StringWriter swriter = new StringWriter();
         JsonGenerator generator =
             jsonGeneratorFactory.createGenerator(swriter);
-        writeProjectAsJson(generator, project).close();
+        ProjectHelper.writeProjectAsJson(generator, project).close();
         return swriter.toString();
     }
 
@@ -121,7 +119,7 @@ public class ProjectRESTServerEndpoint {
                 StringWriter swriter = new StringWriter();
                 JsonGenerator generator
                     = jsonGeneratorFactory.createGenerator(swriter);
-                generateProjectsAsJson(generator, projects).close();
+                ProjectHelper.generateProjectsAsJson(generator, projects).close();
                 System.out.printf("========>> Sending swriter=[%s]\n", swriter.toString());
                 Response response =
                         Response.ok(swriter.toString()).build();
@@ -135,42 +133,6 @@ public class ProjectRESTServerEndpoint {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    // Utility methods
-
-    public static JsonGenerator generateProjectsAsJson( JsonGenerator generator, List<Project> projects ) {
-        generator.writeStartArray();
-        for ( Project project: projects ) {
-            writeProjectAsJson(generator, project);
-        }
-        generator.writeEnd().close();
-        return generator;
-    }
-
-    public static JsonGenerator writeProjectAsJson( JsonGenerator generator, Project project ) {
-        generator.writeStartObject()
-            .write("id", project.getId())
-            .write("name", project.getName())
-            .writeStartArray("tasks");
-
-        for ( Task task: project.getTasks()) {
-            writeTaskAsJson(generator,task);
-        }
-        generator.writeEnd().writeEnd();
-        return generator;
-    }
-
-    public static JsonGenerator writeTaskAsJson( JsonGenerator generator, Task task ) {
-        generator.writeStartObject()
-            .write("id", task.getId())
-            .write("name", task.getName())
-            .write("targetDate",
-                    task.getTargetDate() == null ? "" :
-                            FMT.format(task.getTargetDate()))
-            .write("completed", task.isCompleted())
-            .writeEnd();
-        return generator;
     }
 
 }

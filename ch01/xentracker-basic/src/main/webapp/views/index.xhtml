@@ -1,18 +1,75 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="views/template.xhtml">
+    <ui:composition template="/views/template.xhtml">
         <ui:define name="top">
-            Welcome to Template Client Page
+            <div class="promoSignpost" >
+                <div class="promoMessage" >
+                    <h:graphicImage class="pull-right" value="#{resource['images:XeNoNiQUe-Logo-2011-01-233x175-72dpi.png']}" width="100" />
+                    <h2> XenTracker </h2>
+                    <p>
+                        This is a Java web application to help you organize project groups and tasks.
+                        It is a demonstration of the Java EE 7 technology features for JAX-RS, WebSocket and Servlets.
+                    </p>
+                    <button  class="btn btn-primary btn-large">Learn More</button>
+                </div>
+            </div>
         </ui:define>
         <ui:define name="content">
-            <h:graphicImage value="#{resource['images:XeNoNiQUe-Logo-2011-01-233x175-72dpi.png']}"/>
+
+            <p>
             <h:outputText value="You are in the Main Content Section"/>
+            </p>
+
+            <p>
+                Getting started today!
+                <h:form id="createNewProjectForm">
+                    <h:commandLink styleClass="btn btn-primary" action="#{projectViewController.navigateNewProject}">Add New Project</h:commandLink>
+                </h:form>
+                <!-- <a class="btn btn-primary btn-info" href="#" >Add New Project</a> -->
+            </p>
+
+            <h:form>
+                <h:dataTable id="projects" value="#{projectViewController.projectList}"
+                            styleClass="taskTable"
+                            var="project">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Project Name" />
+                        </f:facet>
+                        <h:outputText value="#{project.name}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Headline" />
+                        </f:facet>
+                        <h:outputText value="#{project.headline}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Description" />
+                        </f:facet>
+                        <h:outputText value="#{project.description}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Action" />
+                        </f:facet>
+                        <a class="btn" href="#" ><i class="icon-edit"></i></a>
+                        <a class="btn" href="#" ><i class="icon-trash"></i></a>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
         </ui:define>
-        <ui:define name="Footer">
-            <h:outputLabel value="You are in the footer section"/>
+
+        <ui:define name="footer">
+            <p>
+            <h:outputLabel value="You are in the footer section!!!"/>
+            </p>
+            <h:graphicImage value="#{resource['images:XeNoNiQUe-Logo-2011-01-233x175-72dpi.png']}"/>
         </ui:define>
     </ui:composition>
 </html>

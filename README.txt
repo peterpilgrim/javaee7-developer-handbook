@@ -168,6 +168,14 @@ To clean all projects, run this following command:
     % gradle clean_everything 
 
 
+To clean and build projects, run this following command: 
+
+    % gradle clean_build_everything 
+    // equivalent to `gradle clean build'
+
+    % gradle clean_install_everything
+    // equivalent to `gradle clean install'
+
 
 It certainly helps to know how to list out tasks in a Gradle project. 
 To find about Gradle task, execute the following command:

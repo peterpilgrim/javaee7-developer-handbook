@@ -79,6 +79,8 @@ def cleanTaskNames = []
 def buildTaskNames = []
 def installTaskNames = []
 def stubTaskNames = []
+def cleanBuildTaskNames = []
+def cleanInstallTaskNames = []
 
 // Build dynamic task names for each sub project, ensure we avoid
 // recursion by excluding the root build file.
@@ -90,6 +92,8 @@ new File(".").eachFileRecurse{ file ->
         String buildTaskName    = "build_"+stubTaskName
         String installTaskName  = "install_"+stubTaskName
         String ideaTaskName     = "idea_"+stubTaskName
+        String cleanBuildTaskName    = "clean_build_"+stubTaskName
+        String cleanInstallTaskName  = "clean_install_"+stubTaskName
 
         /* +++ DEBUG+++
         println "--+---" + file.getPath()
@@ -120,6 +124,8 @@ new File(".").eachFileRecurse{ file ->
             !file.getPath().contains("jms-async")) {
             buildTaskNames << buildTaskName
             installTaskNames << installTaskName
+            cleanBuildTaskNames << cleanBuildTaskName
+            cleanInstallTaskNames << cleanInstallTaskName
 
             task "${buildTaskName}"(type: GradleBuild) { 
                 description = "Builds the sub project [${stubTaskName}]"
@@ -130,6 +136,16 @@ new File(".").eachFileRecurse{ file ->
                 description = "Installs the sub project [${stubTaskName}]"
                 dir = file.getParentFile().getPath()
                 tasks = ['build','install']
+            } 
+            task "${cleanBuildTaskName}"(type: GradleBuild) { 
+                description = "Cleans and builds the sub project [${stubTaskName}]"
+                dir = file.getParentFile().getPath()
+                tasks = ['clean', 'build']
+            } 
+            task "${cleanInstallTaskName}"(type: GradleBuild) { 
+                description = "Cleans and installs the sub project [${stubTaskName}]"
+                dir = file.getParentFile().getPath()
+                tasks = ['clean', 'install']
             } 
         }
     }
@@ -158,6 +174,20 @@ task install_everything {
 task clean_everything {
     description = "Cleans out and reset every subproject"
     cleanTaskNames.each{ subTask1 -> 
+        dependsOn subTask1
+    }
+}
+
+task clean_build_everything {
+    description = "Cleans and builds every subproject"
+    cleanBuildTaskNames.each{ subTask1 -> 
+        dependsOn subTask1
+    }
+}
+
+task clean_install_everything {
+    description = "Cleans and installs every subproject"
+    cleanInstallTaskNames.each{ subTask1 -> 
         dependsOn subTask1
     }
 }

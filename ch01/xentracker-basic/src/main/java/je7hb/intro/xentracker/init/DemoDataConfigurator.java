@@ -33,21 +33,36 @@ public class DemoDataConfigurator {
     }
 
     @PostConstruct
-    public void createInitialProjectData() {
+    public void initialise() {
+        System.out.printf("%s.initialise() projectTaskService=%s\n",
+                getClass().getSimpleName(),
+                projectTaskService );
+        createInitialProjectData();
+    }
 
+    public void createInitialProjectData() {
         System.out.printf("%s.createInitialProjectData() projectTaskService=%s\n",
                 getClass().getSimpleName(),
                 projectTaskService );
 
-        Project project1 = new Project("Technology Presentation");
+        Date p = getFutureRandomDate();
+        Date q = getFutureRandomDate(p);
+        Date r = getFutureRandomDate(q);
+
+        Project project1 = new Project("Technology Presentation",
+                "Demonstration of the Milestone 1",
+                "Show off the project to the key stakeholders and decision makers");
         project1.addTask( new Task("Design concept", getFutureRandomDate(), true ));
-        project1.addTask( new Task("Write slides", getFutureRandomDate(), false ));
-        project1.addTask( new Task("Talk to the organizer", getFutureRandomDate(), false ));
-        project1.addTask( new Task("Prepare demos", getFutureRandomDate(), false ));
+        project1.addTask( new Task("Write slides", p, false ));
+        project1.addTask( new Task("Talk to the organizer", q, false ));
+        project1.addTask( new Task("Prepare demos", r, false ));
 
         projectTaskService.saveProject(project1);
 
-        Project project2 = new Project("Family Birthday");
+
+        Project project2 = new Project("Family Birthday",
+                "Grandparent Birthday",
+                "important anniversary so tell immediate relatives not to miss it!");
         project2.addTask( new Task("Secretly find out gifts", getFutureRandomDate(), true ));
         project2.addTask( new Task("Buy gifts", getFutureRandomDate(), false ));
         project2.addTask( new Task("Buy birthday card", getFutureRandomDate(), true ));
@@ -55,7 +70,9 @@ public class DemoDataConfigurator {
 
         projectTaskService.saveProject(project2);
 
-        Project project3 = new Project("Business Report");
+        Project project3 = new Project("Business Report",
+                "Important phase in our sales strategy",
+                "Renegotiate the principal account with the enrolled customer.");
         Date x = getFutureRandomDate();
         Date y = getFutureRandomDate(x);
         Date z = getFutureRandomDate(y);

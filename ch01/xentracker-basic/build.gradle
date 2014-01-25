@@ -122,11 +122,4 @@ task(generateScript, dependsOn: 'classes') {
 }
 
 
-task (preamble, type: GradleBuild) {
-    description = "A simple attempt to invoke the preamble"
-    dir = 'appendix01/glassfish-embedded'
-    // buildFile = 'appendix01/glassfish-embedded/build.gradle'
-    tasks = ['assemble','build']
-}
-
 // End
