@@ -7,6 +7,16 @@
 *.war
 *.ear
 
+
+# IDE
+###################
+*.ipr
+*.iml
+*.iws
+.classpath
+.eclipse
+
+
 # Transient files
 ###################
 .gradle
@@ -16,6 +26,7 @@ build
 classes
 .svn/*
 *.tmp
+*.swp
 
 
 # Compiled source #
