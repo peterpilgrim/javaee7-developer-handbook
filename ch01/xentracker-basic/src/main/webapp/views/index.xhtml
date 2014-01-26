@@ -32,7 +32,7 @@
                 <!-- <a class="btn btn-primary btn-info" href="#" >Add New Project</a> -->
             </p>
 
-            <h:form>
+            <h:form id="editProjectTable">
                 <h:dataTable id="projects" value="#{projectViewController.projectList}"
                             styleClass="taskTable"
                             var="project">
@@ -58,7 +58,11 @@
                         <f:facet name="header">
                             <h:outputText value="Action" />
                         </f:facet>
-                        <a class="btn" href="#" ><i class="icon-edit"></i></a>
+                        ${project.id}
+                        <h:link styleClass="btn" outcome="editProject.xhtml?id=#{project.id}">
+                            <f:param name="id" value="#{project.id}" />
+                            <i class="icon-edit"></i>
+                        </h:link>
                         <a class="btn" href="#" ><i class="icon-trash"></i></a>
                     </h:column>
                 </h:dataTable>

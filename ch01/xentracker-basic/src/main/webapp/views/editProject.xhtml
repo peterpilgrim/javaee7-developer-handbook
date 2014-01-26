@@ -2,9 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:composition template="/views/template.xhtml">
+        <f:metadata>
+            <f:viewParam name="id" value="#{projectEditController.id}" />
+            <f:event type="preRenderView" listener="#{projectEditController.findProjectById}"/>
+        </f:metadata>
+
         <ui:define name="top">
             <div class="topSignpost" >
             </div>
@@ -14,16 +19,18 @@
 
             <div class="entry-form-area">
 
-                <h1>Create New Project</h1>
+                <h1>Edit Project</h1>
 
                 <p>
-                <h:outputText value="Please enter all of the information to create a new project."/>
+                <h:outputText value="Please edit the current project details."/>
                 </p>
 
                 <h:form>
+                    <h:inputHidden value="${projectEditController.id}" />
+
                     Title:<br/>
                     <h:inputText id="projectTitle"
-                            value="${projectViewController.name}"
+                            value="${projectEditController.name}"
                             size="128" >
                         <f:validateRequired/>
                     </h:inputText>
@@ -31,7 +38,7 @@
                     <br/>
                     Headline:<br/>
                     <h:inputTextarea id="projectHeadline"
-                                 value="${projectViewController.headline}"
+                                 value="${projectEditController.headline}"
                                  size="192" >
                         <f:validateRequired/>
                     </h:inputTextarea>
@@ -39,7 +46,7 @@
                     <br/>
                     Description:<br/>
                     <h:inputTextarea id="projectDescription"
-                                     value="${projectViewController.description}"
+                                     value="${projectEditController.description}"
                                      rows = "5"
                                      columns = "32"
                                      size="384" >
@@ -50,8 +57,8 @@
 
                     <hr/>
 
-                    <h:commandLink styleClass="btn btn-primary" action="#{projectViewController.createNewProject}">Create</h:commandLink>
-                    <h:commandLink styleClass="btn btn-primary btn-info" immediate="true" action="#{projectViewController.cancel}">Cancel</h:commandLink>
+                    <h:commandLink styleClass="btn btn-primary" action="#{projectEditController.saveEdit}">Edit and Save</h:commandLink>
+                    <h:commandLink styleClass="btn btn-primary btn-info" immediate="true" action="#{projectEditController.cancel}">Cancel</h:commandLink>
                 </h:form>
             </div>
 
