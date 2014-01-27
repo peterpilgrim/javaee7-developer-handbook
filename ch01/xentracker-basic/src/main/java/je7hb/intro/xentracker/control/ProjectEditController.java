@@ -39,7 +39,6 @@ public class ProjectEditController {
         }
 
         Project project = service.findProjectById(id).get(0);
-
         if (project == null) {
             String message = "Bad request. Unknown user.";
             FacesContext.getCurrentInstance().addMessage(null,
@@ -70,8 +69,8 @@ public class ProjectEditController {
         return contextPath +"/views/editProject.xhtml";
     }
 
-    public String saveEdit() {
-        System.out.printf("===>>> %s.saveEdit() called\n", this.getClass().getSimpleName());
+    public String editProject() {
+        System.out.printf("===>>> %s.editProject() called\n", this.getClass().getSimpleName());
 
         Project project = service.findProjectById(id).get(0);
         project.setName(name);
@@ -79,7 +78,17 @@ public class ProjectEditController {
         project.setDescription(description);
 
         service.updateProject(project);
-        System.out.printf("===>>> project = %s\n", project);
+        System.out.printf("===>>> EDIT project = %s\n", project);
+
+        return "index?faces-redirect=true";
+    }
+
+    public String removeProject() {
+        System.out.printf("===>>> %s.removeProject() called\n", this.getClass().getSimpleName());
+
+        Project project = service.findProjectById(id).get(0);
+        service.removeProject(project);
+        System.out.printf("===>>> REMOVED project = %s\n", project);
 
         return "index?faces-redirect=true";
     }
