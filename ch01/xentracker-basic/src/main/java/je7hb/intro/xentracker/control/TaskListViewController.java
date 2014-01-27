@@ -2,6 +2,7 @@ package je7hb.intro.xentracker.control;
 
 import je7hb.intro.xentracker.boundary.ProjectTaskService;
 import je7hb.intro.xentracker.entity.Project;
+import je7hb.intro.xentracker.entity.Task;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -10,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,14 +20,17 @@ import java.util.List;
  * @author Peter Pilgrim
  */
 
-@ManagedBean(name="projectTaskListController")
+@ManagedBean(name= "taskListViewController")
 @ViewScoped
-public class ProjectTaskListController {
+public class TaskListViewController {
 
     @Inject ProjectTaskService service;
 
     private int id;
     private Project project;
+    private String name;
+    private Date targetDate;
+    private boolean completed;
 
     public void findProjectById() {
         System.out.printf("===>>> %s.init() called id=%d\n", this.getClass().getSimpleName(), id );
@@ -47,15 +52,33 @@ public class ProjectTaskListController {
     // Unable to find matching navigation case with from-view-id '/index.xhtml' for action '#{projectViewController.createNewProject}' with outcome 'create-project'
     public String navigateNewTask() {
         System.out.printf("%s.navigateNewTask() called\n", this.getClass().getSimpleName());
-        return "createTask?faces-redirect=true";
+        return String.format("createTask?id=%d&faces-redirect=true", id);
     }
 
     public String cancel() {
-        return "projectTaskList?faces-redirect=true";
+        return String.format("projectTaskList?id=%d&faces-redirect=true", id);
     }
 
     public String returnToProjects() {
         return "index?faces-redirect=true";
+    }
+
+    public String createNewTask() {
+        System.out.printf("%s.createNewTask() called\n", this.getClass().getSimpleName());
+        Task task = new Task(name, targetDate, completed );
+
+        project = service.findProjectById(id).get(0);
+        project.addTask(task);
+        service.updateProject(project);
+        return String.format("projectTaskList?id=%d&faces-redirect=true", id );
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     public int getId() {
@@ -66,11 +89,20 @@ public class ProjectTaskListController {
         this.id = id;
     }
 
-    public Project getProject() {
-        return project;
+    public String getName() {
+        return name;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setName(String name) {
+        this.name = name;
     }
+
+    public Date getTargetDate() { return targetDate; }
+
+    public void setTargetDate(Date targetDate) { this.targetDate = targetDate; }
+
+    public boolean isCompleted() { return completed; }
+
+    public void setCompleted(boolean completed) { this.completed = completed; }
+
 }

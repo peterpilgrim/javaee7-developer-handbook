@@ -6,8 +6,8 @@
 
     <ui:composition template="/views/template.xhtml">
         <f:metadata>
-            <f:viewParam name="taskId" value="#{taskEditController.taskId}" />
-            <f:event type="preRenderView" listener="#{taskEditController.findTaskById}"/>
+            <f:viewParam name="id" value="#{taskListViewController.id}" />
+            <f:event type="preRenderView" listener="#{taskListViewController.findProjectById}"/>
         </f:metadata>
 
         <ui:define name="top">
@@ -19,26 +19,29 @@
 
             <div class="entry-form-area">
 
-                <h1>Remove Task</h1>
+                <h1>Create New Task</h1>
 
                 <p>
-                    Project name:<strong> #{taskEditController.taskProject.name} </strong>
-                    Headline: #{taskEditController.taskProject.headline}
+                    Project name:<strong> #{taskListViewController.project.name} </strong>
                 </p>
-
                 <p>
-                <h:outputText value="Please confirm that you want to remove this task?"/>
+                <h:outputText value="Please enter all of the information to create a new task."/>
                 </p>
 
                 <h:form>
-                    <h:inputHidden value="#{taskEditController.taskId}" />
+                    <h:inputHidden value="#{taskListViewController.id}" />
                     <table class="table table-bordered">
                         <tr>
                             <td>
                                 Name:
                             </td>
                             <td>
-                                #{taskEditController.name}
+                                <h:inputText id="taskName"
+                                             value="#{taskListViewController.name}"
+                                             size="128" >
+                                    <f:validateRequired/>
+                                </h:inputText>
+                                <h:message for="taskName" errorClass="text-error"/>
                             </td>
                         </tr>
                         <tr>
@@ -46,11 +49,13 @@
                                 Target Date:
                             </td>
                             <td>
-                                <h:outputText
-                                             value="#{taskEditController.targetDate}"
-                                             size="32" >
+                                <h:inputText id="taskTargetDate"
+                                                 value="#{taskListViewController.targetDate}"
+                                                 size="32" >
                                     <f:convertDateTime pattern="dd-MMM-yyyy" />
-                                </h:outputText>
+                                    <f:validateRequired/>
+                                </h:inputText>
+                                <h:message for="taskTargetDate" errorClass="text-error"/>
                             </td>
                         </tr>
                         <tr>
@@ -58,20 +63,20 @@
                                 Completed:
                             </td>
                             <td>
-                                #{taskEditController.completed}
+                                <h:selectBooleanCheckbox id="taskCompleted"
+                                                 value="#{taskListViewController.completed}" />
+                                <h:message for="taskCompleted" errorClass="text-error"/>
                             </td>
                         </tr>
                     </table>
                     <br/>
                     <br/>
-
-
                     <hr/>
 
-                    <h:commandLink styleClass="btn btn-primary" action="#{taskEditController.removeTask}">Remove Task</h:commandLink>
+                    <h:commandLink styleClass="btn btn-primary" action="#{taskListViewController.createNewTask}">Create</h:commandLink>
                     &#160;
                     &#160;
-                    <h:commandLink styleClass="btn btn-primary btn-info" immediate="true" action="#{taskEditController.cancel}">Cancel</h:commandLink>
+                    <h:commandLink styleClass="btn btn-primary btn-info" immediate="true" action="#{taskListViewController.cancel}">Cancel</h:commandLink>
                 </h:form>
             </div>
 

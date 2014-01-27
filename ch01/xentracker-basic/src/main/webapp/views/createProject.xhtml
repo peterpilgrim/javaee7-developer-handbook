@@ -21,33 +21,51 @@
                 </p>
 
                 <h:form>
-                    Title:<br/>
-                    <h:inputText id="projectTitle"
-                            value="${projectViewController.name}"
-                            size="128" >
-                        <f:validateRequired/>
-                    </h:inputText>
-                    <h:message for="projectTitle" errorClass="text-error"/>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>
+                                Title:
+                            </td>
+                            <td>
+                                <h:inputText id="projectTitle"
+                                             value="${projectViewController.name}"
+                                             size="128" >
+                                    <f:validateRequired/>
+                                </h:inputText>
+                                <h:message for="projectTitle" errorClass="text-error"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Headline:
+                            </td>
+                            <td>
+                                <h:inputTextarea id="projectHeadline"
+                                                 value="${projectViewController.headline}"
+                                                 size="192" >
+                                    <f:validateRequired/>
+                                </h:inputTextarea>
+                                <h:message for="projectHeadline" errorClass="text-error"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Description:
+                            </td>
+                            <td>
+                                <h:inputTextarea id="projectDescription"
+                                                 value="${projectViewController.description}"
+                                                 rows = "5"
+                                                 columns = "32"
+                                                 size="384" >
+                                    <f:validateRequired/>
+                                </h:inputTextarea>
+                                <h:message for="projectDescription" errorClass="text-error"/>
+                            </td>
+                        </tr>
+                    </table>
                     <br/>
-                    Headline:<br/>
-                    <h:inputTextarea id="projectHeadline"
-                                 value="${projectViewController.headline}"
-                                 size="192" >
-                        <f:validateRequired/>
-                    </h:inputTextarea>
-                    <h:message for="projectHeadline" errorClass="text-error"/>
                     <br/>
-                    Description:<br/>
-                    <h:inputTextarea id="projectDescription"
-                                     value="${projectViewController.description}"
-                                     rows = "5"
-                                     columns = "32"
-                                     size="384" >
-                        <f:validateRequired/>
-                    </h:inputTextarea>
-                    <h:message for="projectDescription" errorClass="text-error"/>
-                    <br/>
-
                     <hr/>
 
                     <h:commandLink styleClass="btn btn-primary" action="#{projectViewController.createNewProject}">Create</h:commandLink>

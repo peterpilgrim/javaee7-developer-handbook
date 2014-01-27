@@ -5,12 +5,10 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:composition template="/views/template.xhtml">
-        <ui:remove>
         <f:metadata>
-            <f:viewParam name="id" value="#{projectEditController.id}" />
-            <f:event type="preRenderView" listener="#{projectEditController.findProjectById}"/>
+            <f:viewParam name="taskId" value="#{taskEditController.taskId}" />
+            <f:event type="preRenderView" listener="#{taskEditController.findTaskById}"/>
         </f:metadata>
-        </ui:remove>
 
         <ui:define name="top">
             <div class="topSignpost" >
@@ -24,21 +22,64 @@
                 <h1>Edit Task</h1>
 
                 <p>
+                    Project name:<strong> #{taskEditController.taskProject.name} </strong>
+                    Headline: #{taskEditController.taskProject.headline}
+                </p>
+
+                <p>
                 <h:outputText value="Please edit the current task details"/>
                 </p>
 
                 <h:form>
-
-                    <ui:remove>
-                        <h:inputHidden value="${projectEditController.id}" />
-                    </ui:remove>
+                    <h:inputHidden value="#{taskEditController.taskId}" />
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>
+                                Name:
+                            </td>
+                            <td>
+                                <h:inputText id="taskName"
+                                             value="#{taskEditController.name}"
+                                             size="128" >
+                                    <f:validateRequired/>
+                                </h:inputText>
+                                <h:message for="taskName" errorClass="text-error"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Target Date:
+                            </td>
+                            <td>
+                                <h:inputText id="taskTargetDate"
+                                             value="#{taskEditController.targetDate}"
+                                             size="32" >
+                                    <f:convertDateTime pattern="dd-MMM-yyyy" />
+                                    <f:validateRequired/>
+                                </h:inputText>
+                                <h:message for="taskTargetDate" errorClass="text-error"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Completed:
+                            </td>
+                            <td>
+                                <h:selectBooleanCheckbox id="taskCompleted"
+                                                         value="#{taskEditController.completed}" />
+                                <h:message for="taskCompleted" errorClass="text-error"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <br/>
 
                     <hr/>
 
-                    <h:commandLink styleClass="btn btn-primary" action="#{projectEditController.editProject}">Edit and Save</h:commandLink>
+                    <h:commandLink styleClass="btn btn-primary" action="#{taskEditController.editTask}">Edit and Save</h:commandLink>
                     &#160;
                     &#160;
-                    <h:commandLink styleClass="btn btn-primary btn-info" immediate="true" action="#{projectEditController.cancel}">Cancel</h:commandLink>
+                    <h:commandLink styleClass="btn btn-primary btn-info" immediate="true" action="#{taskEditController.cancel}">Cancel</h:commandLink>
                 </h:form>
             </div>
 

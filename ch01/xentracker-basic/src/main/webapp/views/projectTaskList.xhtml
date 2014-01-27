@@ -6,8 +6,8 @@
 
     <ui:composition template="/views/template.xhtml">
         <f:metadata>
-            <f:viewParam name="id" value="#{projectTaskListController.id}" />
-            <f:event type="preRenderView" listener="#{projectTaskListController.findProjectById}"/>
+            <f:viewParam name="id" value="#{taskListViewController.id}" />
+            <f:event type="preRenderView" listener="#{taskListViewController.findProjectById}"/>
         </f:metadata>
 
         <ui:define name="top">
@@ -25,26 +25,33 @@
                 <h:outputText value="Task list for this project:"/>
                 </p>
 
+                <h:link styleClass="btn btn-primary" outcome="createTask.xhtml?id=#{taskListViewController.id}">
+                    <f:param name="id" value="#{taskListViewController.id}" />
+                    Create New Task
+                </h:link>
+
                 <br/>
+                <br/>
+
                 <table class="table table-striped table-bordered" >
                     <tr>
                         <td>Title:</td>
-                        <td><strong>&#160;#{projectTaskListController.project.name}</strong></td>
+                        <td><strong>&#160;#{taskListViewController.project.name}</strong></td>
                     </tr>
                     <tr>
                         <td>Headline:</td>
-                        <td>&#160;#{projectTaskListController.project.headline}</td>
+                        <td>&#160;#{taskListViewController.project.headline}</td>
                     </tr>
                     <tr>
                         <td>Description:</td>
-                        <td>&#160;#{projectTaskListController.project.description}</td>
+                        <td>&#160;#{taskListViewController.project.description}</td>
                     </tr>
                 </table>
 
+                <br/>
+                <br/>
                 <h:form>
-                    <br/>
-                    <br/>
-                    <h:dataTable id="projects" value="#{projectTaskListController.project.tasks}"
+                    <h:dataTable id="projects" value="#{taskListViewController.project.tasks}"
                                  styleClass="table table-bordered"
                                  var="task">
                         <h:column>
@@ -57,7 +64,9 @@
                             <f:facet name="header">
                                 <h:outputText value="Target Date" />
                             </f:facet>
-                            <h:outputText value="#{task.targetDate}"/>
+                            <h:outputText value="#{task.targetDate}">
+                                <f:convertDateTime pattern="dd-MMM-yyyy" />
+                            </h:outputText>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
@@ -85,7 +94,7 @@
                     <hr/>
                     &#160;
                     &#160;
-                    <h:commandLink styleClass="btn btn-primary btn-info" immediate="true" action="#{projectTaskListController.returnToProjects}">Return to Projects</h:commandLink>
+                    <h:commandLink styleClass="btn btn-primary btn-info" immediate="true" action="#{taskListViewController.returnToProjects}">Return to Projects</h:commandLink>
                 </h:form>
             </div>
 

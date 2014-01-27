@@ -40,7 +40,7 @@ public class ProjectEditController {
 
         Project project = service.findProjectById(id).get(0);
         if (project == null) {
-            String message = "Bad request. Unknown user.";
+            String message = "Bad request. Unknown project.";
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
         }
