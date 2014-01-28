@@ -34,7 +34,6 @@ import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static javax.ws.rs.core.MediaType.*;

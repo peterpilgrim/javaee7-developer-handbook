@@ -33,7 +33,6 @@ public class TaskListViewController {
     private boolean completed;
 
     public void findProjectById() {
-        System.out.printf("===>>> %s.init() called id=%d\n", this.getClass().getSimpleName(), id );
         if (id <= 0) {
             String message = "Bad request. Please use a link from within the system.";
             FacesContext.getCurrentInstance().addMessage(null,
@@ -49,7 +48,6 @@ public class TaskListViewController {
         }
     }
 
-    // Unable to find matching navigation case with from-view-id '/index.xhtml' for action '#{projectViewController.createNewProject}' with outcome 'create-project'
     public String navigateNewTask() {
         System.out.printf("%s.navigateNewTask() called\n", this.getClass().getSimpleName());
         return String.format("createTask?id=%d&faces-redirect=true", id);
@@ -64,9 +62,7 @@ public class TaskListViewController {
     }
 
     public String createNewTask() {
-        System.out.printf("%s.createNewTask() called\n", this.getClass().getSimpleName());
-        Task task = new Task(name, targetDate, completed );
-
+        final Task task = new Task(name, targetDate, completed );
         project = service.findProjectById(id).get(0);
         project.addTask(task);
         service.updateProject(project);

@@ -30,7 +30,6 @@ public class TaskEditController {
     private Project taskProject;
 
     public void findTaskById() {
-        System.out.printf("===>>> %s.init() called taskId=%d\n", this.getClass().getSimpleName(), taskId );
         if (taskId <= 0) {
             String message = "Bad request. Please use a link from within the system.";
             FacesContext.getCurrentInstance().addMessage(null,
@@ -51,33 +50,24 @@ public class TaskEditController {
     }
 
     public String cancel() {
-        System.out.printf("%s.cancel() called\n", this.getClass().getSimpleName());
         return String.format("projectTaskList?id=%d&faces-redirect=true", taskProject.getId() );
     }
 
     public String editTask() {
-        System.out.printf("===>>> %s.editTask() called\n", this.getClass().getSimpleName());
-
         final Task task = service.findTaskById(taskId).get(0);
         task.setName(name);
         task.setCompleted(completed);
         task.setTargetDate(targetDate);
         final Project project = task.getProject();
         service.updateProject(project);
-        System.out.printf("===>>> EDIT task = %s\n", task);
-
         return String.format("projectTaskList?id=%d&faces-redirect=true", project.getId() );
     }
 
     public String removeTask() {
-        System.out.printf("===>>> %s.removeTask() called\n", this.getClass().getSimpleName());
-
         final Task task = service.findTaskById(taskId).get(0);
         final Project project = task.getProject();
         task.getProject().removeTask(task);
         service.updateProject(project);
-        System.out.printf("===>>> REMOVED task = %s\n", project);
-
         return String.format("projectTaskList?id=%d&faces-redirect=true", project.getId() );
     }
 

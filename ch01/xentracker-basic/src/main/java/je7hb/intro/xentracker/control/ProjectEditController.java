@@ -5,12 +5,9 @@ import je7hb.intro.xentracker.entity.Project;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
-import java.util.List;
 
 /**
  * The type ProjectViewController
@@ -30,7 +27,6 @@ public class ProjectEditController {
     private String description;
 
     public void findProjectById() {
-        System.out.printf("===>>> %s.init() called id=%d\n", this.getClass().getSimpleName(), id );
         if (id <= 0) {
             String message = "Bad request. Please use a link from within the system.";
             FacesContext.getCurrentInstance().addMessage(null,
@@ -50,45 +46,22 @@ public class ProjectEditController {
     }
 
     public String cancel() {
-        System.out.printf("%s.cancel() called\n", this.getClass().getSimpleName());
         return "index?faces-redirect=true";
     }
 
-    public String viewEdit(int projectId) {
-        System.out.printf("===>>> %s.viewEdit( projectId=%d ) called\n", this.getClass().getSimpleName(), projectId);
-
-        Project project = service.findProjectById(projectId).get(0);
-        id = project.getId();
-        name = project.getName();
-        headline = project.getHeadline();
-        description = project.getDescription();
-        System.out.printf("===>>> project = %s\n", project);
-
-        String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-
-        return contextPath +"/views/editProject.xhtml";
-    }
-
     public String editProject() {
-        System.out.printf("===>>> %s.editProject() called\n", this.getClass().getSimpleName());
-
-        Project project = service.findProjectById(id).get(0);
+        final Project project = service.findProjectById(id).get(0);
         project.setName(name);
         project.setHeadline(headline);
         project.setDescription(description);
-
         service.updateProject(project);
-        System.out.printf("===>>> EDIT project = %s\n", project);
 
         return "index?faces-redirect=true";
     }
 
     public String removeProject() {
-        System.out.printf("===>>> %s.removeProject() called\n", this.getClass().getSimpleName());
-
-        Project project = service.findProjectById(id).get(0);
+        final Project project = service.findProjectById(id).get(0);
         service.removeProject(project);
-        System.out.printf("===>>> REMOVED project = %s\n", project);
 
         return "index?faces-redirect=true";
     }

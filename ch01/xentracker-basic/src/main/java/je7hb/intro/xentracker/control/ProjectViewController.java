@@ -3,12 +3,8 @@ package je7hb.intro.xentracker.control;
 import je7hb.intro.xentracker.boundary.ProjectTaskService;
 import je7hb.intro.xentracker.entity.Project;
 
-import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import java.util.List;
 
@@ -34,22 +30,11 @@ public class ProjectViewController {
         return projects;
     }
 
-    public void chooseBookFromLink(ActionEvent event) {
-        String current = event.getComponent().getId();
-        FacesContext context = FacesContext.getCurrentInstance();
-//        String bookId = books.get(current);
-//        context.getExternalContext().getSessionMap().put("bookId", bookId);
-    }
-
-    // Unable to find matching navigation case with from-view-id '/index.xhtml' for action '#{projectViewController.createNewProject}' with outcome 'create-project'
     public String navigateNewProject() {
-        System.out.printf("%s.navigateNewProject() called\n", this.getClass().getSimpleName());
         return "createProject?faces-redirect=true";
     }
 
-    // Unable to find matching navigation case with from-view-id '/index.xhtml' for action '#{projectViewController.createNewProject}' with outcome 'create-project'
     public String createNewProject() {
-        System.out.printf("%s.createNewProject() called\n", this.getClass().getSimpleName());
         Project project = new Project(name, headline, description);
         service.saveProject(project);
         name = null;
@@ -59,23 +44,7 @@ public class ProjectViewController {
     }
 
     public String cancel() {
-        System.out.printf("%s.cancel() called\n", this.getClass().getSimpleName());
         return "index?faces-redirect=true";
-    }
-
-    public String editProject(int projectId) {
-        System.out.printf("%s.editProject(projectId=%d) called\n", this.getClass().getSimpleName(), projectId );
-
-        Project project = service.findProjectById(projectId).get(0);
-        id = project.getId();
-        name = project.getName();
-        headline = project.getHeadline();
-        description = project.getDescription();
-
-        String contextPath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-        System.out.printf("contextPath=%s\n", contextPath);
-
-        return contextPath +"/views/editProject.xhtml";
     }
 
     public int getId() {
