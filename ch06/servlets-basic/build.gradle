@@ -54,7 +54,7 @@ war {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.3'
+    gradleVersion = '1.12'
 }
 
 // Override Gradle defaults - a force an exploded JAR view

@@ -45,7 +45,7 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.2'
+    gradleVersion = '1.12'
 }
 
 // Override Gradle defaults - a force an exploded JAR view
