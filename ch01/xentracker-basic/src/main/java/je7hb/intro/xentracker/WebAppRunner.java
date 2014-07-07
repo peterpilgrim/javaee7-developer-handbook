@@ -61,7 +61,7 @@ public class WebAppRunner {
 
         webArchive.merge(ShrinkWrap.create(GenericArchive.class).as(ExplodedImporter.class)
             .importDirectory("src/main/webapp").as(GenericArchive.class),
-            "/", Filters.include(".*\\.(html|jsp|css|js|png|jpg|gif)$"));
+            "/", Filters.include(".*\\.(xhtml|html|htm|jsf|jsp|css|js|png|jpg|gif)$"));
 
         System.out.println(webArchive.toString(true));
 
