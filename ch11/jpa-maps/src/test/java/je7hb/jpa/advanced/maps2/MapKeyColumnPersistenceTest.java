@@ -47,9 +47,8 @@ public class MapKeyColumnPersistenceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
-            .addClasses(Artist.class)
-            .addClasses(LiveEvent.class)
-            .addAsResource(
+            .addClasses(Artist.class, LiveEvent.class, Utils.class)
+                .addAsResource(
                     "test-persistence.xml",
                     "META-INF/persistence.xml")
             .addAsManifestResource(

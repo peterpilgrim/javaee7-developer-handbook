@@ -68,7 +68,8 @@ public class PayloadCheckMDBTest {
         sender.sendPayloadMessage("Wanda", "Barbados");
         sender.sendPayloadMessage("world");
         sender.sendPayloadMessage("Fish", "Barbados");
-        Thread.sleep(2500);
+        System.out.println("***** Deliberately waiting for a moment or two .... Zzzz");
+        Thread.sleep(1560);
         List<String> messages = receiver.getMessages();
         System.out.printf("\n**** receiver messages %s ****\n", messages);
         assertEquals(2, messages.size());

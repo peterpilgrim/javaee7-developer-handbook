@@ -30,6 +30,8 @@ import org.junit.runner.RunWith;
 
 import javax.ejb.EJB;
 
+import java.io.File;
+
 import static org.junit.Assert.*;
 
 /**
@@ -47,6 +49,9 @@ public class PayloadCheckTest {
 //                .addAsResource(
 //                        "test-persistence.xml",
 //                        "META-INF/persistence.xml")
+                .addAsResource(
+                        new File("src/test/resources-glassfish-managed/glassfish-resources.xml"),
+                        "glassfish-resources.xml")
                 .addAsManifestResource(
                         EmptyAsset.INSTANCE,
                         ArchivePaths.create("beans.xml"));
@@ -59,9 +64,12 @@ public class PayloadCheckTest {
     PayloadCheck service;
 
     @Test
-    public void shouldFireMessage() {
+    public void shouldFireMessage() throws Exception {
         service.sendPayloadMessage("hello");
         service.sendPayloadMessage("world");
+
+        System.out.println("Sleeping for a bit ... ZZZZ");
+        Thread.sleep(1895);
         assertEquals("hello", service.getMessages().get(0));
         assertEquals("world", service.getMessages().get(1));
     }

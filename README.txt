@@ -178,7 +178,7 @@ To clean and build projects, run this following command:
 
 
 It certainly helps to know how to list out tasks in a Gradle project. 
-To find about Gradle task, execute the following command:
+To find about Gradle the available tasks, execute the following command:
 
     % gradle tasks --all
 

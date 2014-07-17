@@ -61,6 +61,8 @@ public class PayloadCheckTest {
     public void shouldFireMessage() throws InterruptedException {
         service.sendPayloadMessage("hello");
         service.sendPayloadMessage("world");
+        System.out.println("***** Deliberately waiting for a moment or two .... Zzzz");
+        Thread.sleep(1560);
         final List<String> messages = service.getMessages();
         assertEquals("hello", messages.get(0));
         assertEquals("world", messages.get(1));
