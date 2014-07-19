@@ -27,7 +27,7 @@ group = 'com.javaeehandbook.book1'
 archivesBaseName = 'ch02-cdi-standalone'
 version = '1.0'
 
-ext.deltaspikeVersion='0.3-incubating'
+ext.deltaspikeVersion='1.0.0'
 
 repositories {
     mavenCentral()
@@ -35,13 +35,15 @@ repositories {
 
 dependencies {    
     // Weld for Java SE
-    compile     'org.jboss.weld.se:weld-se-core:1.1.9.Final'
+    // 'org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:1.0.0'
+
+    compile     'org.jboss.weld.se:weld-se-core:2.2.3.Final'
     compile     'org.slf4j:slf4j-simple:1.6.1'
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:${deltaspikeVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-weld:${deltaspikeVersion}"
 
     //  Test dependencies
-    testCompile 'junit:junit:4.10'
+    testCompile 'junit:junit:4.11'
 }
 
 task wrapper(type: Wrapper) {
