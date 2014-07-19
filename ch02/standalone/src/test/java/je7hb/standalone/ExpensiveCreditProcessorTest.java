@@ -34,7 +34,7 @@ import static org.junit.Assert.assertNotNull;
  */
 public class ExpensiveCreditProcessorTest extends AbstractCdiContainerTest {
 
-    private @Inject @Premium @RequestScoped CreditProcessor agent;
+    @Inject @Premium @RequestScoped private CreditProcessor agent;
 
     @Test
     public void shouldInjectExpensiveCredit() {

@@ -68,3 +68,7 @@ classes/*
 .Trashes
 ehthumbs.db
 Thumbs.db
+.nb-gradle-properties
+.nb-gradle
+.nb-gradle/private/
+.nb-gradle/profiles/private/
