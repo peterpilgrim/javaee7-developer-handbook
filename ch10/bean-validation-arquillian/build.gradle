@@ -41,7 +41,7 @@ repositories {
 
 
 dependencies {
-    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.0-b86'
+    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
     providedCompile 'javax:javaee-api:7.0-b86'
     providedCompile 'javax:javaee-web-api:7.0-b86'
 
@@ -54,7 +54,7 @@ dependencies {
     compile     'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Draft-14'
     compile     'javax:javaee-api:7.0-b86'
 
-    runtime     'org.glassfish.main.extras:glassfish-embedded-all:4.0-b86'
+    runtime     'org.glassfish.main.extras:glassfish-embedded-all:4.1'
 
     testCompile 'org.slf4j:slf4j-simple:1.6.4'
     testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
