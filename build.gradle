@@ -23,7 +23,7 @@
 // ================================================================================
 //
 // This Gradle build is the root and does compile any software explicitly
-// 
+//
 
 apply plugin: 'maven'
 apply plugin: 'eclipse'
@@ -46,7 +46,7 @@ repositories {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
+    gradleVersion = '2.3'
 }
 
 task myZip(type: Zip) {
@@ -85,7 +85,7 @@ def cleanInstallTaskNames = []
 // Build dynamic task names for each sub project, ensure we avoid
 // recursion by excluding the root build file.
 new File(".").eachFileRecurse{ file ->
-    if ( file.isFile() && "build.gradle".equals(file.name) 
+    if ( file.isFile() && "build.gradle".equals(file.name)
         && !file.equals(currentFile)) {
         String stubTaskName     = file.getParentFile().getName()
         String cleanTaskName    = "clean_"+stubTaskName
@@ -106,12 +106,12 @@ new File(".").eachFileRecurse{ file ->
         stubTaskNames << stubTaskName
 
         // Dynamically create GradleBuildType tasks on the fly
-        task "${cleanTaskName}"(type: GradleBuild) { 
+        task "${cleanTaskName}"(type: GradleBuild) {
             description = "Cleans the sub project [${stubTaskName}]"
             dir = file.getParentFile().getPath()
             tasks = ['clean']
-        } 
-        task "${ideaTaskName}"(type: GradleBuild) { 
+        }
+        task "${ideaTaskName}"(type: GradleBuild) {
             description = "Generate IDEA project meta files for the sub project [${stubTaskName}]"
             dir = file.getParentFile().getPath()
             tasks = ['idea']
@@ -126,33 +126,33 @@ new File(".").eachFileRecurse{ file ->
             !file.getPath().contains("jpa-miscellany") &&
             !file.getPath().contains("jpa-") &&
             !file.getPath().contains("jms-async")) {
-            // Check *DEBUG*: 
+            // Check *DEBUG*:
             // println(file.getPath())
             buildTaskNames << buildTaskName
             installTaskNames << installTaskName
             cleanBuildTaskNames << cleanBuildTaskName
             cleanInstallTaskNames << cleanInstallTaskName
 
-            task "${buildTaskName}"(type: GradleBuild) { 
+            task "${buildTaskName}"(type: GradleBuild) {
                 description = "Builds the sub project [${stubTaskName}]"
                 dir = file.getParentFile().getPath()
                 tasks = ['build']
-            } 
-            task "${installTaskName}"(type: GradleBuild) { 
+            }
+            task "${installTaskName}"(type: GradleBuild) {
                 description = "Installs the sub project [${stubTaskName}]"
                 dir = file.getParentFile().getPath()
                 tasks = ['build','install']
-            } 
-            task "${cleanBuildTaskName}"(type: GradleBuild) { 
+            }
+            task "${cleanBuildTaskName}"(type: GradleBuild) {
                 description = "Cleans and builds the sub project [${stubTaskName}]"
                 dir = file.getParentFile().getPath()
                 tasks = ['clean', 'build']
-            } 
-            task "${cleanInstallTaskName}"(type: GradleBuild) { 
+            }
+            task "${cleanInstallTaskName}"(type: GradleBuild) {
                 description = "Cleans and installs the sub project [${stubTaskName}]"
                 dir = file.getParentFile().getPath()
                 tasks = ['clean', 'install']
-            } 
+            }
         }
     }
 }
@@ -165,7 +165,7 @@ task build {
 task build_everything {
     description = "Build every subproject"
     dependsOn build
-    buildTaskNames.each{ subTask1 -> 
+    buildTaskNames.each{ subTask1 ->
         dependsOn subTask1
     }
     println "*NOTE*: For Chapter 11, Advanced Topics with JPA, you require a running Managed Glassfish 4.0.1 server that is connected to MySQL 5.6 server"
@@ -173,35 +173,35 @@ task build_everything {
 
 task install_everything {
     description = "Builds and install every subproject"
-    installTaskNames.each{ subTask1 -> 
+    installTaskNames.each{ subTask1 ->
         dependsOn subTask1
     }
 }
 
 task clean_everything {
     description = "Cleans out and reset every subproject"
-    cleanTaskNames.each{ subTask1 -> 
+    cleanTaskNames.each{ subTask1 ->
         dependsOn subTask1
     }
 }
 
 task clean_build_everything {
     description = "Cleans and builds every subproject"
-    cleanBuildTaskNames.each{ subTask1 -> 
+    cleanBuildTaskNames.each{ subTask1 ->
         dependsOn subTask1
     }
 }
 
 task clean_install_everything {
     description = "Cleans and installs every subproject"
-    cleanInstallTaskNames.each{ subTask1 -> 
+    cleanInstallTaskNames.each{ subTask1 ->
         dependsOn subTask1
     }
 }
 
 task generate_idea_everything {
     description = "Create IDEA project files for every subproject"
-    stubTaskNames.each{ subTask1 -> 
+    stubTaskNames.each{ subTask1 ->
         dependsOn "idea_${subTask1}"
     }
 }
