@@ -72,3 +72,6 @@ Thumbs.db
 .nb-gradle
 .nb-gradle/private/
 .nb-gradle/profiles/private/
+
+# Gradlew must be complete
+!gradle/wrapper/gradle-wrapper.jar
