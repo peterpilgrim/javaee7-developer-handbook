@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+    compile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
     compile 'javax:javaee-api:7.0'
 
     testCompile 'junit:junit:4.11'

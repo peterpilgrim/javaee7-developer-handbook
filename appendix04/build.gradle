@@ -42,7 +42,7 @@ repositories {
 
 
 dependencies {
-    //    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+  //    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
 
     compile     'javax.enterprise:cdi-api:1.1-PFD'
     compile     'javax:javaee-api:7.0'

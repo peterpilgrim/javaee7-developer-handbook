@@ -43,7 +43,7 @@ repositories {
 }
 
 dependencies {
-    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.0.1-b01'
+    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
     providedCompile 'javax:javaee-api:7.0'
     providedCompile 'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
 

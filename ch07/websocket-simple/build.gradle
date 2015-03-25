@@ -52,11 +52,11 @@ idea {
 }
 
 dependencies {
-    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.0-b86'
+    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
     providedCompile 'javax:javaee-api:7.0-b86'
     providedCompile 'javax:javaee-web-api:7.0-b86'
 
-    compile     'org.glassfish.main.extras:glassfish-embedded-all:4.0-b86'
+    compile     'org.glassfish.main.extras:glassfish-embedded-all:4.1'
     compile     'javax:javaee-api:7.0-b86'
 
     testCompile 'junit:junit:4.10'
