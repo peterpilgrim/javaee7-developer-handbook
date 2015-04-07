@@ -32,6 +32,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,6 +45,8 @@ import java.util.concurrent.TimeUnit;
 @Stateless
 public class RestfulBookAsyncService {
 
+    private ExecutorService executor = Executors.newFixedThreadPool(2);
+
     private List<Book> products = Arrays.asList(
             new Book("Miguel De Cervantes", "Don Quixote"),
             new Book("Daniel Defoe", "Robinson Crusoe"),
@@ -50,34 +54,50 @@ public class RestfulBookAsyncService {
             new Book("Mary Shelley", "Frankenstein"),
             new Book("Charlotte Bronte", "Jane Eyre"));
 
+    // Replace with Lambdas in Java 8
+    class MyAsyncTask implements Runnable {
+
+        final private AsyncResponse asyncResponse;
+
+        public MyAsyncTask(AsyncResponse asyncResponse) {
+            this.asyncResponse = asyncResponse;
+        }
+
+        @Override
+        public void run() {
+            System.out.printf("%s.run() thread: [%s]\n",
+                    getClass().getSimpleName(), Thread.currentThread());
+            final long SLEEP=500;
+            final int N=10;
+            asyncResponse.setTimeout( (N+1)*SLEEP, TimeUnit.MILLISECONDS );
+            System.out.printf("retrieve list asynchronously ");
+            try {
+                for (int j=0; j<N; ++j ) {
+                    System.out.print(".");
+                    System.out.flush();
+                    Thread.sleep(SLEEP);
+                }
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(".\n");
+
+            StringBuffer buf = new StringBuffer();
+            for (Book b: products) { buf.append(b.title); buf.append('\n'); }
+            Response response = Response.ok(buf.toString()).build();
+            System.out.printf("sending data back now on thread: [%s]\n",
+                    Thread.currentThread());
+            asyncResponse.resume(response);
+        }
+    }
+
     @GET
-//    @Asynchronous
     @Produces(MediaType.TEXT_PLAIN)
     public void getList( @Suspended AsyncResponse asyncResponse) {
         System.out.printf("%s.getList() thread: [%s]\n",
-            getClass().getSimpleName(), Thread.currentThread());
-        final long SLEEP=500;
-        final int N=10;
-        asyncResponse.setTimeout( (N+1)*SLEEP, TimeUnit.MILLISECONDS );
-        System.out.printf("retrieve list asynchronously ");
-        try {
-            for (int j=0; j<N; ++j ) {
-                System.out.print(".");
-                System.out.flush();
-                Thread.sleep(SLEEP);
-            }
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println(".\n");
-
-        StringBuffer buf = new StringBuffer();
-        for (Book b: products) { buf.append(b.title); buf.append('\n'); }
-        Response response = Response.ok(buf.toString()).build();
-        System.out.printf("sending data back now on thread: [%s]\n",
-            Thread.currentThread());
-        asyncResponse.resume(response);
+                getClass().getSimpleName(), Thread.currentThread());
+        executor.submit( new MyAsyncTask(asyncResponse));
     }
 
     @PostConstruct

@@ -10,6 +10,14 @@
     <servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <load-on-startup>1</load-on-startup>
+
+        <!--
+            IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT   IMPORTANT
+            ====================================================================================
+
+            The next line is important in order to enable Jersey in GlassFish 4.1 to perform asynchronous requests
+        -->
+        <async-supported>true</async-supported>
     </servlet>
     <servlet-mapping>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
