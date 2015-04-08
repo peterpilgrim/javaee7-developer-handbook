@@ -44,13 +44,13 @@ public class DemoDataConfigurator {
 
     @Timeout
     public void createInitialProjectData(Timer timer) {
-        System.out.printf("***** %s.createInitialProjectData() projectTaskService=%s, initialized=%s, timer=%s\n",
-                getClass().getSimpleName(), projectTaskService, initialized, timer );
-
         if (initialized) {
             return;
         }
         initialized = true;
+
+        System.out.printf("***** %s.createInitialProjectData() projectTaskService=%s, initialized=%s, timer=%s\n",
+                getClass().getSimpleName(), projectTaskService, initialized, timer );
 
         Date p = getFutureRandomDate();
         Date q = getFutureRandomDate(p);
