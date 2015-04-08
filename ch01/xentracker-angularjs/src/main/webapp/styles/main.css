@@ -136,3 +136,6 @@ body {
     color: #52101d;
 }
 
+.modal-body {
+  height: 950px;
+}
