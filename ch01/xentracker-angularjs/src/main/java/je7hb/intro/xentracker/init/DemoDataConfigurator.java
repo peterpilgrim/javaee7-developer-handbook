@@ -5,9 +5,8 @@ import je7hb.intro.xentracker.entity.Project;
 import je7hb.intro.xentracker.entity.Task;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.annotation.Resource;
+import javax.ejb.*;
 import java.util.Date;
 
 /**
@@ -21,6 +20,11 @@ public class DemoDataConfigurator {
     @EJB
     ProjectTaskService projectTaskService;
 
+    @Resource
+    TimerService timerService;
+
+    private boolean initialized = false;
+
     public static Date getFutureRandomDate() {
         return getFutureRandomDate( new Date() );
     }
@@ -32,22 +36,27 @@ public class DemoDataConfigurator {
 
     @PostConstruct
     public void initialise() {
-        System.out.printf("%s.initialise() projectTaskService=%s\n",
-                getClass().getSimpleName(),
-                projectTaskService );
-        createInitialProjectData();
+        // FIXME: GlassFish 4.1 / Payara - Get around the issues of initialisation. It appears the transaction manager and entity manager are not ready by the time a singleton starts up! We use a EJB timer workaround.
+        System.out.printf("***** %s.initialise() projectTaskService=%s, timerService=%s\n", getClass().getSimpleName(), projectTaskService, timerService);
+        final ScheduleExpression expression = new ScheduleExpression().second("*/10").minute("*").hour("*");
+        timerService.createCalendarTimer(expression);
     }
 
-    public void createInitialProjectData() {
-        System.out.printf("%s.createInitialProjectData() projectTaskService=%s\n",
-                getClass().getSimpleName(),
-                projectTaskService );
+    @Timeout
+    public void createInitialProjectData(Timer timer) {
+        System.out.printf("***** %s.createInitialProjectData() projectTaskService=%s, initialized=%s, timer=%s\n",
+                getClass().getSimpleName(), projectTaskService, initialized, timer );
+
+        if (initialized) {
+            return;
+        }
+        initialized = true;
 
         Date p = getFutureRandomDate();
         Date q = getFutureRandomDate(p);
         Date r = getFutureRandomDate(q);
 
-        Project project1 = new Project("Technology Presentation",
+        final Project project1 = new Project("Technology Presentation",
             "Demonstration of the Milestone 1",
             "Show off the project to the key stakeholders and decision makers");
         project1.addTask( new Task("Design concept", getFutureRandomDate(), true ));
@@ -57,8 +66,7 @@ public class DemoDataConfigurator {
 
         projectTaskService.saveProject(project1);
 
-
-        Project project2 = new Project("Family Birthday",
+        final Project project2 = new Project("Family Birthday",
             "Grandparent Birthday",
             "important anniversary so tell immediate relatives not to miss it!");
         project2.addTask( new Task("Secretly find out gifts", getFutureRandomDate(), true ));
@@ -68,7 +76,7 @@ public class DemoDataConfigurator {
 
         projectTaskService.saveProject(project2);
 
-        Project project3 = new Project("Business Report",
+        final Project project3 = new Project("Business Report",
                 "Important phase in our sales strategy",
                 "Renegotiate the principal account with the enrolled customer.");
         Date x = getFutureRandomDate();

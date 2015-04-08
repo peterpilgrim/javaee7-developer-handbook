@@ -52,7 +52,7 @@ dependencies {
     compile     'org.hibernate:hibernate-validator:5.0.0.CR4'
     */
 
-    compile     'joda-time:joda-time:2.2'
+    /* compile     'joda-time:joda-time:2.2' - JODA time still confuses GlassFish 4.1 / Payara 4.1 */
     compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
 
     testCompile 'org.slf4j:slf4j-simple:1.6.4'

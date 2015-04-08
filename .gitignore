@@ -17,12 +17,15 @@
 .eclipse
 out
 out/*
+.idea
+.idea/*
 
 
 # Transient files
 ###################
 .gradle
 SampleRunner
+HelloWorld
 build/*
 build
 classes
