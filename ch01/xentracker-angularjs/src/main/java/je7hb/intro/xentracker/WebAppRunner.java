@@ -42,7 +42,7 @@ public class WebAppRunner {
         System.out.println("=================================================");
 		System.out.println("Start the Server with a ShrinkWrap build here!!!!");
 
-        WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
+        final WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
             .addPackage(DemoDataConfigurator.class.getPackage())
             .addPackage(ProjectTaskService.class.getPackage())
             .addPackage(ProjectRESTServerEndpoint.class.getPackage())
@@ -64,9 +64,9 @@ public class WebAppRunner {
 
         System.out.println(webArchive.toString(true));
 
-        File warFile = new File(webArchive.getName());
+        final File warFile = new File(webArchive.getName());
         new ZipExporterImpl(webArchive).exportTo(warFile, true);
-        SimpleEmbeddedRunner runner =
+        final SimpleEmbeddedRunner runner =
             SimpleEmbeddedRunner.launchDeployWarFile(
                 warFile, "xentracker", 8080);
 
@@ -75,7 +75,7 @@ public class WebAppRunner {
         System.out.println("=================================================");
 
         System.out.print("\nHIT THE RETURN KEY >");
-        Scanner sc = new Scanner(System.in);
+        final Scanner sc = new Scanner(System.in);
         while(!sc.nextLine().equals(""));
         System.out.println("\nStopping service ...");
 

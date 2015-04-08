@@ -281,13 +281,13 @@ public class ProjectRESTServerEndpoint {
             throw new RuntimeException(
                     "Invalid projectId:["+projectId+"] supplied");
 
-        List<Project> projects = service.findProjectById( projectId );
+        final List<Project> projects = service.findProjectById( projectId );
         if ( projects.isEmpty() ) {
             throw new RuntimeException(
                     "No project was found with projectId:["+projectId+"]");
         }
 
-        Project project = projects.get(0);
+        final Project project = projects.get(0);
         for ( Task task: project.getTasks()) {
             if ( task.getId().equals(taskId )) {
                 project.removeTask(task);
@@ -296,8 +296,8 @@ public class ProjectRESTServerEndpoint {
         }
         service.saveProject(project);
 
-        StringWriter swriter = new StringWriter();
-        JsonGenerator generator =
+        final StringWriter swriter = new StringWriter();
+        final JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
         ProjectHelper.writeProjectAsJson(generator, project).close();
         return swriter.toString();

@@ -51,7 +51,7 @@ public class WebSocketClientTesterEndpoint extends Endpoint {
         System.out.printf("%s.makeConnection() config=%s\n",
                 getClass().getSimpleName(), config);
 
-        WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+        final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         System.out.printf("container=%s\n", container);
         container.connectToServer( this, config, new URI(urlTemplateLink) );
     }

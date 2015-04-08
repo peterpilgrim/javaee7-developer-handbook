@@ -56,9 +56,9 @@ public class ProjectWebSocketUpdateStatusTaskEndpoint {
     public String updateTaskStatus(String message) {
         System.out.printf("--++++-- updateTaskStatus(message:%s)\n", message);
         System.out.flush();
-        StringReader stringReader = new StringReader(message);
-        JsonReader reader = Json.createReader(stringReader);
-        JsonObject obj = reader.readObject();
+        final StringReader stringReader = new StringReader(message);
+        final JsonReader reader = Json.createReader(stringReader);
+        final JsonObject obj = reader.readObject();
         if ( !obj.containsKey("projectId")) {
             return "json object does not have `projectId' key";
         }
@@ -69,10 +69,10 @@ public class ProjectWebSocketUpdateStatusTaskEndpoint {
             return "json object does not have `completed' key";
         }
 
-        int projectId = obj.getInt("projectId");
-        int taskId = obj.getInt("taskId");
-        boolean completed = obj.getBoolean("completed");
-        List<Project> projects =
+        final int projectId = obj.getInt("projectId");
+        final int taskId = obj.getInt("taskId");
+        final boolean completed = obj.getBoolean("completed");
+        final List<Project> projects =
             service.findProjectById(projectId);
 
         if ( !projects.isEmpty()) {

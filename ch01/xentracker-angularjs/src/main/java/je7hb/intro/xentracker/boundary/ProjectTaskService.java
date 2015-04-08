@@ -43,37 +43,37 @@ public class ProjectTaskService {
     }
 
     public void updateProject( Project project ) {
-        Project projectToBeUpdated = entityManager.merge(project);
+        final Project projectToBeUpdated = entityManager.merge(project);
         entityManager.persist(projectToBeUpdated);
     }
 
     public void removeProject( Project project ) {
-        Project projectToBeRemoved = entityManager.merge(project);
+        final Project projectToBeRemoved = entityManager.merge(project);
         entityManager.remove(projectToBeRemoved);
     }
 
     public List<Project> findAllProjects() {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
             "Project.findAllProjects");
         return query.getResultList();
     }
 
     public List<Project> findProjectById( Integer id ) {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
             "Project.findProjectById")
             .setParameter("id", id );
         return query.getResultList();
     }
 
     public List<Task> findTaskById( Integer id ) {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
                 "Project.findTaskById")
                 .setParameter("id", id );
         return query.getResultList();
     }
 
     public List<Task> findTasksByProjectId( Integer id ) {
-        Query query = entityManager.createNamedQuery(
+        final Query query = entityManager.createNamedQuery(
                 "Project.findTasksByProjectId")
                 .setParameter("id", id );
         return query.getResultList();

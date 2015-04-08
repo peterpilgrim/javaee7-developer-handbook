@@ -51,12 +51,11 @@ public class ProjectWebSocketRetrieveEndpoint {
 
     @OnMessage
     public String updateProjectTask(String message) {
-        int projectId = Integer.parseInt(message.trim());
+        final int projectId = Integer.parseInt(message.trim());
         List<Project> projects =
             service.findProjectById(projectId);
-        StringWriter swriter = new StringWriter();
-        JsonGenerator generator = jsonGeneratorFactory.createGenerator(swriter);
-
+        final StringWriter swriter = new StringWriter();
+        final JsonGenerator generator = jsonGeneratorFactory.createGenerator(swriter);
         ProjectHelper.generateProjectsAsJson(generator, projects).close();
         return swriter.toString();
     }

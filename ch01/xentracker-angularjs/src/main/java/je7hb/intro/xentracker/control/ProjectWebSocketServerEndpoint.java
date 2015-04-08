@@ -45,17 +45,17 @@ public class ProjectWebSocketServerEndpoint {
 
     @OnMessage
     public String retrieveProjectAndTasks(String message) {
-        int projectId = Integer.parseInt(message.trim());
-        List<Project> projects =
+        final int projectId = Integer.parseInt(message.trim());
+        final List<Project> projects =
             service.findProjectById(projectId);
-        StringWriter swriter = new StringWriter();
+        final StringWriter swriter = new StringWriter();
 
-        JsonGeneratorFactory factory =
+        final JsonGeneratorFactory factory =
             Json.createGeneratorFactory(
                 new HashMap<String, Object>(){{
                     put(JsonGenerator.PRETTY_PRINTING, true);
                 }});
-        JsonGenerator generator = factory.createGenerator(swriter);
+        final JsonGenerator generator = factory.createGenerator(swriter);
 
         generator.writeStartArray();
         for ( Project project: projects ) {
