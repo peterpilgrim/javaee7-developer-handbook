@@ -39,7 +39,7 @@ public final class FixtureUtils {
     }
 
     public static Project createProjectAndTasks( String name, int taskCount ) {
-        Project project = new Project(name);
+        final Project project = new Project(name);
         project.setHeadline("headline"+Integer.toString((int) (100 + rnd.nextDouble() * 900.0)));
         project.setDescription("description"+Integer.toString((int) (100 + rnd.nextDouble() * 900.0)));
         for ( int j=0; j<taskCount; ++j) {
@@ -48,7 +48,7 @@ public final class FixtureUtils {
                 targetDate = new Date(System.currentTimeMillis() +
                         (long)((int)(Math.random() * 7 + 1) * 86400 * 1000 ));
             }
-            Task task = new Task("task"+(j+1)*2, targetDate, false );
+            final Task task = new Task("task"+(j+1)*2, targetDate, false );
             project.addTask(task);
             task.setProject(project);
         }

@@ -42,6 +42,9 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -202,9 +205,18 @@ public class ProjectRESTServerEndpointTest {
         List<Project> projects = service.findAllProjects();
         Thread.sleep(1000);
 
-        JsonObject input1 = bf.createObjectBuilder()
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime( new Date() );
+        cal.add(Calendar.MONTH, 1);
+        final Date date1 = cal.getTime();
+        cal.add(Calendar.MONTH, 2);
+        final Date date2 = cal.getTime();
+        final SimpleDateFormat outgoingDateFormatter = new SimpleDateFormat("dd-MMM-yyyy");
+        final SimpleDateFormat incomingDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        final JsonObject input1 = bf.createObjectBuilder()
                 .add("name", "Fireside Chat")
-                .add("targetDate", "21-May-2014")
+                .add("targetDate", outgoingDateFormatter.format(date1))
                 .add("completed", JsonValue.FALSE)
                 .build();
 
@@ -214,26 +226,27 @@ public class ProjectRESTServerEndpointTest {
                 Entity.entity(
                         input1, APPLICATION_JSON_TYPE));
         assertThat(response.getStatus(), is(200));
-        JsonObject output1 = response.readEntity( JsonObject.class );
+        final JsonObject output1 = response.readEntity(JsonObject.class);
         System.out.printf(">>====== output1 = %s\n", output1);
         assertNotNull(output1);
 
-        assertThat( output1.getJsonArray("tasks").size(), is(1));
-        JsonObject json = output1.getJsonArray("tasks").getJsonObject(0);
-        int taskId = json.getInt("id");
-        assertTrue( taskId > 0 );
-        assertThat( "Fireside Chat", is(json.getString("name")));
-        assertThat( "2014-05-21", is(json.getString("targetDate")));
-        assertFalse( json.getBoolean("completed")) ;
-        JsonObject input2 = bf.createObjectBuilder()
-                .add("id", taskId )
+        assertThat(output1.getJsonArray("tasks").size(), is(1));
+        final JsonObject json1 = output1.getJsonArray("tasks").getJsonObject(0);
+        final int taskId1 = json1.getInt("id");
+        assertTrue(taskId1 > 0);
+        assertThat("Fireside Chat", is(json1.getString("name")));
+
+        assertThat(incomingDateFormatter.format(date1), is(json1.getString("targetDate")));
+        assertFalse( json1.getBoolean("completed")) ;
+        final JsonObject input2 = bf.createObjectBuilder()
+                .add("id", taskId1 )
                 .add("name", "JavaOne USA")
-                .add("targetDate", "29-Sep-2014")
+                .add("targetDate", outgoingDateFormatter.format(date2))
                 .add("completed", JsonValue.TRUE)
                 .build();
 
         target = ClientBuilder.newClient()
-                .target("http://localhost:8181/xentracker/rest/projects/item/"+proj1.getId()+"/task/"+taskId);
+                .target("http://localhost:8181/xentracker/rest/projects/item/" + proj1.getId() + "/task/" + taskId1);
         response = target.request().put(
                 Entity.entity(
                         input2, APPLICATION_JSON_TYPE));
@@ -242,13 +255,13 @@ public class ProjectRESTServerEndpointTest {
         System.out.printf(">>====== output2 = %s\n", output2);
         assertNotNull(output2);
 
-        assertThat( output2.getJsonArray("tasks").size(), is(1));
-        json = output2.getJsonArray("tasks").getJsonObject(0);
-        taskId = json.getInt("id");
-        assertTrue(taskId > 0);
-        assertThat( "JavaOne USA", is(json.getString("name")));
-        assertThat( "2014-09-29", is(json.getString("targetDate")));
-        assertTrue( json.getBoolean("completed"));
+        assertThat(output2.getJsonArray("tasks").size(), is(1));
+        final JsonObject json2 = output2.getJsonArray("tasks").getJsonObject(0);
+        final int taskId2 = json2.getInt("id");
+        assertTrue(taskId2 > 0);
+        assertThat( "JavaOne USA", is(json2.getString("name")));
+        assertThat( incomingDateFormatter.format(date2), is(json2.getString("targetDate")));
+        assertTrue( json2.getBoolean("completed"));
     }
 
     @Test

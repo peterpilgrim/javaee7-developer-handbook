@@ -127,7 +127,7 @@ public class ProjectRESTServerEndpoint {
             throw new RuntimeException(
                     "Invalid projectId:["+projectId+"] supplied");
 
-        List<Project> projects = service.findProjectById( projectId );
+        final List<Project> projects = service.findProjectById( projectId );
         if ( projects.isEmpty() ) {
             throw new RuntimeException(
                     "No project was found with projectId:["+projectId+"]");
@@ -139,8 +139,8 @@ public class ProjectRESTServerEndpoint {
         project.setDescription(projectObject.getString("description"));
 
         service.saveProject(project);
-        StringWriter swriter = new StringWriter();
-        JsonGenerator generator =
+        final StringWriter swriter = new StringWriter();
+        final JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
         ProjectHelper.writeProjectAsJson(generator, project).close();
         return swriter.toString();
@@ -166,8 +166,8 @@ public class ProjectRESTServerEndpoint {
                     "No project was found with projectId:["+projectId+"]");
         }
 
-        Project project = projects.get(0);
-        Task task = new Task(
+        final Project project = projects.get(0);
+        final Task task = new Task(
                 taskObject.getString("name"),
                 ( taskObject.containsKey("targetDate") ?
                         ProjectHelper.convertToDate(taskObject.getString("targetDate")) :
@@ -176,8 +176,7 @@ public class ProjectRESTServerEndpoint {
                     taskObject.getBoolean("completed") : false );
         project.addTask(task);
         service.saveProject(project);
-
-        StringWriter swriter = new StringWriter();
+        final StringWriter swriter = new StringWriter();
         JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
         ProjectHelper.writeProjectAsJson(generator, project).close();
@@ -199,13 +198,13 @@ public class ProjectRESTServerEndpoint {
             throw new RuntimeException(
                     "Invalid projectId:["+projectId+"] supplied");
 
-        List<Project> projects = service.findProjectById( projectId );
+        final List<Project> projects = service.findProjectById( projectId );
         if ( projects.isEmpty() ) {
             throw new RuntimeException(
                     "No project was found with projectId:["+projectId+"]");
         }
 
-        Project project = projects.get(0);
+        final Project project = projects.get(0);
         for ( Task task: project.getTasks()) {
             if ( task.getId().equals(taskId )) {
                 task.setName( taskObject.getString("name") );
@@ -218,8 +217,8 @@ public class ProjectRESTServerEndpoint {
         }
         service.saveProject(project);
 
-        StringWriter swriter = new StringWriter();
-        JsonGenerator generator =
+        final StringWriter swriter = new StringWriter();
+        final JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
         ProjectHelper.writeProjectAsJson(generator, project).close();
         return swriter.toString();
@@ -242,13 +241,13 @@ public class ProjectRESTServerEndpoint {
             throw new RuntimeException(
                     "Invalid projectId:["+projectId+"] supplied");
 
-        List<Project> projects = service.findProjectById( projectId );
+        final List<Project> projects = service.findProjectById( projectId );
         if ( projects.isEmpty() ) {
             throw new RuntimeException(
                     "No project was found with projectId:["+projectId+"]");
         }
 
-        Project project = projects.get(0);
+        final Project project = projects.get(0);
         for ( Task task: project.getTasks()) {
             if ( task.getId().equals(taskId )) {
                 project.removeTask(task);
@@ -257,8 +256,8 @@ public class ProjectRESTServerEndpoint {
         }
         service.saveProject(project);
 
-        StringWriter swriter = new StringWriter();
-        JsonGenerator generator =
+        final StringWriter swriter = new StringWriter();
+        final JsonGenerator generator =
                 jsonGeneratorFactory.createGenerator(swriter);
         ProjectHelper.writeProjectAsJson(generator, project).close();
         return swriter.toString();
@@ -319,14 +318,14 @@ public class ProjectRESTServerEndpoint {
             public void run() {
                 System.out.printf("========>> %s.getProjectList() Executable Task %s asyncResponse=%s\n",
                         getClass().getSimpleName(), Thread.currentThread(), asyncResponse);
-                List<Project> projects = service.findAllProjects();
-                StringWriter swriter = new StringWriter();
-                JsonGenerator generator
+                final List<Project> projects = service.findAllProjects();
+                final StringWriter swriter = new StringWriter();
+                final JsonGenerator generator
                         = jsonGeneratorFactory.createGenerator(swriter);
                 try {
                     ProjectHelper.generateProjectsAsJson(generator, projects).close();
                     System.out.printf("========>> Sending swriter=[%s]\n", swriter.toString());
-                    Response response =
+                    final Response response =
                             Response.ok(swriter.toString()).build();
                     asyncResponse.resume(response);
 
