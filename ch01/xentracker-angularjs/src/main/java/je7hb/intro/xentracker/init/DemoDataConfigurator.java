@@ -52,9 +52,9 @@ public class DemoDataConfigurator {
         System.out.printf("***** %s.createInitialProjectData() projectTaskService=%s, initialized=%s, timer=%s\n",
                 getClass().getSimpleName(), projectTaskService, initialized, timer );
 
-        Date p = getFutureRandomDate();
-        Date q = getFutureRandomDate(p);
-        Date r = getFutureRandomDate(q);
+        final Date p = getFutureRandomDate();
+        final Date q = getFutureRandomDate(p);
+        final Date r = getFutureRandomDate(q);
 
         final Project project1 = new Project("Technology Presentation",
             "Demonstration of the Milestone 1",
@@ -79,9 +79,9 @@ public class DemoDataConfigurator {
         final Project project3 = new Project("Business Report",
                 "Important phase in our sales strategy",
                 "Renegotiate the principal account with the enrolled customer.");
-        Date x = getFutureRandomDate();
-        Date y = getFutureRandomDate(x);
-        Date z = getFutureRandomDate(y);
+        final Date x = getFutureRandomDate();
+        final Date y = getFutureRandomDate(x);
+        final Date z = getFutureRandomDate(y);
         project3.addTask( new Task("Set up a meeting", x, true ));
         project3.addTask( new Task("Hold the meeting", y, false ));
         project3.addTask( new Task("Write the report", z, false ));
