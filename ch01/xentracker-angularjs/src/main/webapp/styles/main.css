@@ -139,3 +139,12 @@ body {
 .modal-body {
   height: 950px;
 }
+
+.modal-body input[type=text] {
+  width: 32em;
+}
+
+.modal-body textarea {
+  width: 32em;
+}
+

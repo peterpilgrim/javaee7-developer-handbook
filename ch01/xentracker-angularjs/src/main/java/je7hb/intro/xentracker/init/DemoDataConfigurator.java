@@ -38,7 +38,7 @@ public class DemoDataConfigurator {
     public void initialise() {
         // FIXME: GlassFish 4.1 / Payara - Get around the issues of initialisation. It appears the transaction manager and entity manager are not ready by the time a singleton starts up! We use a EJB timer workaround.
         System.out.printf("***** %s.initialise() projectTaskService=%s, timerService=%s\n", getClass().getSimpleName(), projectTaskService, timerService);
-        final ScheduleExpression expression = new ScheduleExpression().second("*/10").minute("*").hour("*");
+        final ScheduleExpression expression = new ScheduleExpression().second("*/5").minute("*").hour("*");
         timerService.createCalendarTimer(expression);
     }
 
