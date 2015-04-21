@@ -19,7 +19,9 @@
 
 package je7hb.jms.essentials;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -29,15 +31,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @author Peter Pilgrim (peter)
  */
-@Stateless
 @Singleton
+@Startup
 public class PayloadCheckReceiverBean {
     private CopyOnWriteArrayList<String> messages =
             new CopyOnWriteArrayList<>();
 
+    @PostConstruct
+    public void init() {
+        System.out.printf("%s.init()  hash:%s Thread: %s\n", this.getClass().getSimpleName(), this.getClass().getSimpleName()+"@"+Integer.toHexString(System.identityHashCode(this)), Thread.currentThread());
+    }
+
     public void addMessage(String text) {
         messages.add(text);
-        System.out.printf("%s %s.addMessage(%s) %d Thread: %s\n",
+        System.out.printf("%s %s.addMessage(%s) size:%d Thread: %s\n",
                 this.getClass().getSimpleName()+"@"+Integer.toHexString(System.identityHashCode(this)),
                 getClass().getSimpleName(), text, messages.size(), Thread.currentThread());
     }
