@@ -7,7 +7,8 @@
 
     <container qualifier="glassfish-managed" default="true">
         <configuration>
-            <property name="glassFishHome">/Library/opt/glassfish-4.0.1-b05-20140427</property>
+            <!--<property name="glassFishHome">/Library/opt/glassfish-4.0.1-b05-20140427</property>-->
+            <property name="glassFishHome">C:\\opt\\glassfish-4.1-b13-04_01_2015</property>
             <property name="adminHost">localhost</property>
             <property name="adminPort">4848</property>
         </configuration>

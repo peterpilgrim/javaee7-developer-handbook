@@ -20,7 +20,8 @@
 package je7hb.jms.async;
 
 import javax.annotation.Resource;
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.jms.*;
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ import java.util.List;
  *
  * @author Peter Pilgrim (peter)
  */
-@Stateless
+@Singleton
+@Startup
 public class PayloadCheckAsync {
 
     @Inject
