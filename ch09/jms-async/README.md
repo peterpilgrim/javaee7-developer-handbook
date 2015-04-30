@@ -20,6 +20,59 @@ Change the location to the installation root of GlassFish 4.0 on your workstatio
 ```
 
 
+## Creating JMS Resources on GlassFish 
+
+Open a terminal window.
+
+Navigate to GLASSFISH_HOME and then to the `bin` directory.
+
+```
+cd /Library/opt/glassfish-4.1/bin
+```
+
+Run the GlassFish administrator program `asadmin`. 
+
+At the interactive prompt for this program, run the following commands.
+
+Start the application server on domain1.
+```
+    start-domain
+```
+
+Show the running domains
+```
+    list-domains
+```
+
+Create the JMS connection factory
+
+```
+    create-jms-resource  --restype javax.jms.ConnectionFactory jms/demoConnectionFactory
+```
+
+Create the JMS queue
+```
+    create-jms-resource  --restype javax.jms.Queue jms/demoQueue
+```
+
+Reveal the JMS resources for this domain1
+```
+    list-jms-resources
+```
+
+Stop the application server on domain1
+
+```
+    stop-domain
+```
+
+Terminate the interactive GlassFish Administrator shell and return to the parent command shell prompt. 
+
+```
+    exit
+```
+
+
 +PP+ *2014*   
 
 
