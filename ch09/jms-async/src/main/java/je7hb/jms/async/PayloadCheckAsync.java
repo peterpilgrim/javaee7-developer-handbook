@@ -48,10 +48,9 @@ public class PayloadCheckAsync {
     private CompletionListener completionListener = new CompletionListener() {
         @Override
         public void onCompletion(Message msg) {
-            TextMessage textMsg = (TextMessage)msg;
+            final TextMessage textMsg = (TextMessage)msg;
             try {
-                System.out.printf("%s.onCompletion(%s) Thread: %s\n",
-                        getClass().getSimpleName(), textMsg.getText(), Thread.currentThread());
+                System.out.printf("***** %s.onCompletion(%s) Thread: %s\n", getClass().getSimpleName(), textMsg.getText(), Thread.currentThread());
                 messages.add(textMsg.getText());
             } catch (JMSException e) {
                 e.printStackTrace(System.err);
@@ -65,9 +64,8 @@ public class PayloadCheckAsync {
     };
 
     public void sendPayloadMessage( String payload ) {
-        System.out.printf("%s.sendPayloadMessage(%s) Thread: %s\n",
-                getClass().getSimpleName(), payload, Thread.currentThread());
-        JMSProducer producer = context.createProducer();
+        System.out.printf("**** %s.sendPayloadMessage(%s) Thread: %s\n", getClass().getSimpleName(), payload, Thread.currentThread());
+        final JMSProducer producer = context.createProducer();
         producer.setAsync(completionListener);
         context.createProducer().send(inboundQueue, payload);
     }

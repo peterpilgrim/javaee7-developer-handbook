@@ -115,6 +115,8 @@ public class PayloadCheckAsyncTest {
         producer.send(queue, "world");
         producer.send(queue, "asynchronously");
 
+        System.out.println(".... waiting ...");
+
         Thread.sleep(2000);
 
         System.out.println("Done");
