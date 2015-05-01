@@ -76,7 +76,7 @@ public class AsynchronousJMSMessageArquillianTest {
     @Test
     @RunAsClient
     public void shouldFire() throws JMSException, InterruptedException, NamingException {
-        Properties properties = new Properties();
+        final Properties properties = new Properties();
 //        properties.put("com.sun.appserv.iiop.endpoints", "localhost:7676");
 //        properties.put("org.omg.CORBA.ORBInitialHost", "localhost");
 //        properties.put("org.omg.CORBA.ORBInitialPort", "3700");
@@ -95,23 +95,21 @@ public class AsynchronousJMSMessageArquillianTest {
 
         System.out.println("=====================================================================");
         System.out.println("=====================================================================");
-        InitialContext jndiContext = new InitialContext(properties);
+        final InitialContext jndiContext = new InitialContext(properties);
         System.out.printf("\t jndiContext=%s\n", jndiContext);
         System.out.println("=====================================================================");
         System.out.println("=====================================================================");
 
-        ConnectionFactory connectionFactory =
-                (ConnectionFactory)jndiContext.lookup("jms/demoConnectionFactory");
+        final ConnectionFactory connectionFactory = (ConnectionFactory)jndiContext.lookup("jms/demoConnectionFactory");
 
-        Queue queue = (Queue)jndiContext.lookup("jms/demoQueue");
+        final Queue queue = (Queue)jndiContext.lookup("jms/demoQueue");
 
         assertNotNull(connectionFactory);
         assertNotNull(queue);
 
-        Connection connection = connectionFactory.createConnection();
-        JMSContext context = connectionFactory.createContext(
-                Session.AUTO_ACKNOWLEDGE );
-        JMSProducer producer = context.createProducer();
+        final Connection connection = connectionFactory.createConnection();
+        final JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE );
+        final JMSProducer producer = context.createProducer();
 
         messages.clear();
 
@@ -121,9 +119,8 @@ public class AsynchronousJMSMessageArquillianTest {
         producer.send(queue, "world");
         producer.send(queue, "asynchronously");
 
-        Thread.sleep(2000);
+        Thread.sleep(1774);
 
         System.out.println("Done");
-
     }
 }

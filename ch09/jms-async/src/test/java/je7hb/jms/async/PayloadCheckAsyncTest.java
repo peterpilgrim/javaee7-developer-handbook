@@ -50,7 +50,7 @@ public class PayloadCheckAsyncTest {
 
     @Deployment(testable = false)
     public static JavaArchive createDeployment() {
-        JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
+        final JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
                 .addClasses(PayloadCheckAsync.class)
 //                .addAsResource(
 //                        "test-persistence.xml",
@@ -90,22 +90,26 @@ public class PayloadCheckAsyncTest {
     @RunAsClient
     public void shouldFireMessageAsynchronously() throws Exception {
 
-        Hashtable properties = new Hashtable(2);
+        System.out.print("Waiting ...");
+        Thread.sleep(1000);
+        System.out.println("Ok");
+
+        final Hashtable properties = new Hashtable(2);
         properties.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.enterprise.naming.SerialInitContextFactory");
         properties.put(Context.PROVIDER_URL, "mq://localhost:7676");
         properties.put("java.naming.factory.url.pkgs", "com.sun.enterprise.naming");
         properties.put("java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
 
-        InitialContext jndiContext = new InitialContext(properties);
+        final InitialContext jndiContext = new InitialContext(properties);
 
-        ConnectionFactory connectionFactory =
+        final ConnectionFactory connectionFactory =
             (ConnectionFactory)jndiContext.lookup("jms/demoConnectionFactory");
 
-        Queue queue = (Queue)jndiContext.lookup("jms/demoQueue");
+        final Queue queue = (Queue)jndiContext.lookup("jms/demoQueue");
 
-        JMSContext context = connectionFactory.createContext(
+        final JMSContext context = connectionFactory.createContext(
                 Session.AUTO_ACKNOWLEDGE );
-        JMSProducer producer = context.createProducer();
+        final JMSProducer producer = context.createProducer();
 
         messages.clear();
 

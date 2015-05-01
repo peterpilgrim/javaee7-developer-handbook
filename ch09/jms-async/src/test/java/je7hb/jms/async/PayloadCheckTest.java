@@ -44,11 +44,8 @@ public class PayloadCheckTest {
 
     @Deployment
     public static JavaArchive createDeployment() {
-        JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
+        final JavaArchive jar = ShrinkWrap.create(JavaArchive.class)
                 .addClasses(PayloadCheck.class)
-//                .addAsResource(
-//                        "test-persistence.xml",
-//                        "META-INF/persistence.xml")
                 .addAsResource(
                         new File("src/test/resources-glassfish-managed/glassfish-resources.xml"),
                         "glassfish-resources.xml")

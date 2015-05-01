@@ -107,6 +107,10 @@ sourceSets {
     }
 }
 
+test {
+    forkEvery = 1
+}
+
 task(run, dependsOn: 'classes', type: JavaExec) {
     description = 'Runs the main application'
     main = 'je7hb.jms.async.App'

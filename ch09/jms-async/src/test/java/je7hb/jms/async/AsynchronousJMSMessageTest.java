@@ -31,6 +31,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
 
@@ -102,22 +103,7 @@ public class AsynchronousJMSMessageTest {
 
     @Test
     public void shouldFireMessageAsynchronously() throws Exception {
-
-//        String strLine = "";
-//        try {
-//            // Get the object of DataInputStream
-//            InputStreamReader isr = new InputStreamReader(System.in);
-//            BufferedReader br = new BufferedReader(isr);
-//            String line = "";
-//            while ((line = br.readLine()) != null && !line.equals("exit") )
-//                strLine += br.readLine() + "~";
-//
-//            isr.close();
-//        } catch (IOException ioe) {
-//            ioe.printStackTrace();
-//        }
-
-        Properties properties = new Properties();
+//        final Properties properties = new Properties();
 //        properties.put("com.sun.appserv.iiop.endpoints", "localhost:7676");
 //        properties.put("org.omg.CORBA.ORBInitialHost", "localhost");
 //        properties.put("org.omg.CORBA.ORBInitialPort", "3700");
@@ -126,30 +112,34 @@ public class AsynchronousJMSMessageTest {
 //        properties.put("java.naming.factory.url.pkgs", "com.sun.enterprise.naming");
 //        properties.put("java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
 
+        final Hashtable properties = new Hashtable(2);
         properties.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.enterprise.naming.SerialInitContextFactory");
-        properties.put(Context.URL_PKG_PREFIXES, "com.sun.enterprise.naming");
-        properties.put(Context.STATE_FACTORIES, "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-//        properties.put("org.omg.CORBA.ORBInitialHost", "localhost");
-//        properties.put("org.omg.CORBA.ORBInitialPort", "3700");
-        properties.put(Context.PROVIDER_URL, "mq://localhost:7676"); // vm://localhost:
-//        properties.put(Context.PROVIDER_URL, "iiop://localhost:7676"); // vm://localhost:
+        properties.put(Context.PROVIDER_URL, "mq://localhost:7676");
+        properties.put("java.naming.factory.url.pkgs", "com.sun.enterprise.naming");
+        properties.put("java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
+
+//        properties.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.enterprise.naming.SerialInitContextFactory");
+//        properties.put(Context.URL_PKG_PREFIXES, "com.sun.enterprise.naming");
+//        properties.put(Context.STATE_FACTORIES, "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
+////        properties.put("org.omg.CORBA.ORBInitialHost", "localhost");
+////        properties.put("org.omg.CORBA.ORBInitialPort", "3700");
+//        properties.put(Context.PROVIDER_URL, "mq://localhost:7676"); // vm://localhost:
+////        properties.put(Context.PROVIDER_URL, "iiop://localhost:7676"); // vm://localhost:
 
         System.out.println("=====================================================================");
         System.out.println("=====================================================================");
-        InitialContext jndiContext = new InitialContext(properties);
+        final InitialContext jndiContext = new InitialContext(properties);
         System.out.printf("\t jndiContext=%s\n", jndiContext);
         System.out.println("=====================================================================");
         System.out.println("=====================================================================");
 
-        ConnectionFactory connectionFactory =
-                (ConnectionFactory)jndiContext.lookup("jms/demoConnectionFactory");
+        final ConnectionFactory connectionFactory = (ConnectionFactory)jndiContext.lookup("java:comp:jms/demoConnectionFactory");
 
-        Queue queue = (Queue)jndiContext.lookup("jms/demoQueue");
+        final Queue queue = (Queue)jndiContext.lookup("jms/demoQueue");
 
-        Connection connection = connectionFactory.createConnection();
-        JMSContext context = connectionFactory.createContext(
-                Session.AUTO_ACKNOWLEDGE );
-        JMSProducer producer = context.createProducer();
+        final JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE );
+
+        final JMSProducer producer = context.createProducer();
 
         messages.clear();
 
@@ -159,7 +149,7 @@ public class AsynchronousJMSMessageTest {
         producer.send(queue, "world");
         producer.send(queue, "asynchronously");
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
 
         System.out.println("Done");
     }
