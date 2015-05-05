@@ -51,13 +51,13 @@ repositories {
 
 dependencies {
     providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
-    providedCompile 'javax:javaee-api:7.0-b79'
-    providedCompile 'javax:javaee-web-api:7.0-b79'
+    providedCompile 'javax:javaee-api:7.0'
+    providedCompile 'javax:javaee-web-api:7.0'
 
     compile     'org.glassfish.main.extras:glassfish-embedded-all:4.1'
-    compile     'javax:javaee-api:7.0-b79'
+    compile     'javax:javaee-api:7.0'
 
-    testCompile 'junit:junit:4.10'
+    testCompile 'junit:junit:4.11'
 }
 
 war {
