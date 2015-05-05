@@ -29,11 +29,11 @@ import java.io.IOException;
  */
 public class LongEchoWebSocketServer extends Endpoint {
     @Override
-    public void onOpen(Session session, EndpointConfiguration config) {
+    public void onOpen(Session session, EndpointConfig config) {
         String query = session.getQueryString();
         System.out.printf("%s#onOpen() session=%s, query=%s\n");
         final RemoteEndpoint.Basic remoteEndpoint = session.getBasicRemote();
-        session.addMessageHandler( new MessageHandler.Basic<String>() {
+        session.addMessageHandler( new MessageHandler.Whole<String>() {
             @Override
             public void onMessage(String message) {
             try {
