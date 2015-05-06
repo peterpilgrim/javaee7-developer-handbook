@@ -35,11 +35,19 @@ public class EmbeddedRunner extends AbstractEmbeddedRunner {
     public static void main(String args[]) throws Exception {
         EmbeddedRunner runner = (EmbeddedRunner) new EmbeddedRunner(8080).init().start();
 
-        runner.deployWithRename("build/libs/ch07-websockets-basic-1.0.war", "mywebapp");
+        runner.deployWithRename("build/libs/ch07-websockets-chat-1.0.war", "websocket-chat");
         Thread.sleep(1000);
-        System.out.printf("**** Press the ENTER key to stop the server ****\n");
+        System.out.println("\n");
+        System.out.println("===============================================================================");
+        System.out.println("===============================================================================");
+        System.out.printf("=    Try navigating to %s\n", "http://localhost:8080/websocket-chat/");
+        System.out.printf("=    Try navigating to %s\n", "http://localhost:8080/websocket-chat/chat.jsp");
+        System.out.println("===============================================================================");
+        System.out.println("===============================================================================");
+        System.out.println("**** Press the ENTER key to stop the server ****");
         Scanner sc = new Scanner(System.in);
         while(!sc.nextLine().equals(""));
         runner.stop();
+        System.out.println("Done.\n");
     }
 }
