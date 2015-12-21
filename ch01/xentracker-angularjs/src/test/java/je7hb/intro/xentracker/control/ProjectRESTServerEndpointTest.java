@@ -43,6 +43,8 @@ import javax.ws.rs.core.Response;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -266,16 +268,18 @@ public class ProjectRESTServerEndpointTest {
 
     @Test
     public void shouldInvokeDELETEWithAddRemoveTaskFromProject() throws Exception {
-        Project proj1 = createProjectAndTasks(0);
+        final Project proj1 = createProjectAndTasks(0);
         service.saveProject(proj1);
 
         // Force a flush to the database?!
-        List<Project> projects = service.findAllProjects();
+        final List<Project> projects = service.findAllProjects();
         Thread.sleep(1000);
 
-        JsonObject input1 = bf.createObjectBuilder()
+        final LocalDate futureDate = LocalDate.now().plusDays( (long)(Math.random()*64) + 3L );
+        final DateTimeFormatter outDTF = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+        final JsonObject input1 = bf.createObjectBuilder()
                 .add("name", "Make money now")
-                .add("targetDate", "14-Jul-2015")
+                .add("targetDate", futureDate.format(outDTF))
                 .add("completed", JsonValue.FALSE)
                 .build();
 
@@ -293,7 +297,8 @@ public class ProjectRESTServerEndpointTest {
         int taskId = json.getInt("id");
         assertTrue( taskId > 0 );
         assertThat( "Make money now", is(json.getString("name")));
-        assertThat( "2015-07-14", is(json.getString("targetDate")));
+        final DateTimeFormatter inDTF = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        assertThat( futureDate.format(inDTF), is(json.getString("targetDate")));
         assertFalse( json.getBoolean("completed")) ;
 
         target = ClientBuilder.newClient()
