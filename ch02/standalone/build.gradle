@@ -27,7 +27,7 @@ group = 'com.javaeehandbook.book1'
 archivesBaseName = 'ch02-cdi-standalone'
 version = '1.0'
 
-ext.deltaspikeVersion='1.0.0'
+ext.deltaspikeVersion='1.5.2'
 
 repositories {
     mavenCentral()
