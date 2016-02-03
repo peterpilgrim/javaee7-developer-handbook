@@ -1,0 +1,29 @@
+// settings.gradle
+// FIXME: `appendix04' should be in separate module called `appendix04/jsonp-demos'
+// FIXME: Requires a standalone JMS 2.0 environment `ch10/jms-async' 
+include 'appendix01/glassfish-embedded'
+
+/*
+        'appendix04',
+        'ch01/xentracker-angularjs',
+        'ch01/javascript-basic',
+        'ch02/arquillian',
+        'ch02/standalone',
+        'ch03/ejb',
+        'ch04/jpa-fxspot',
+        'ch04/jpa-simple',
+        'ch06/servlets-basic',
+        'ch07/websocket-chat',
+        'ch07/websocket-client',
+        'ch07/websocket-programmatic',
+        'ch07/websocket-simple',
+        'ch08/jaxrs-basic',
+        'ch09/jms-essentials',
+        'ch10/bean-validation',
+        'ch10/bean-validation-arquillian',
+        'ch11/jpa-criteria',
+        'ch11/jpa-entitygraph',
+        'ch11/jpa-maps',
+        'ch11/jpa-miscellany',
+        'ch11/jpa-storedproc'
+*/
