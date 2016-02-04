@@ -19,67 +19,15 @@
 
 apply plugin: 'java'
 // apply plugin: 'war'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 
-// Define equivalent Maven GAV coordinates.
-group = 'com.javaeehandbook.book1'
 archivesBaseName = 'glassfish-embedded-runner'
-version = '1.0'
-
-repositories {
-    maven {
-        url 'https://maven.java.net/content/groups/promoted'
-    }
-    maven {
-        url 'http://repository.jboss.org/nexus/content/groups/public'
-    }
-    mavenCentral()
-    mavenLocal()
-}
-
 
 dependencies {
-  //    providedCompile     'org.glassfish.main.extras:glassfish-embedded-all:4.1'
-
-    compile     'org.glassfish.main.extras:glassfish-embedded-all:4.1'
-    compile     'javax:javaee-api:7.0-b72'
-
-    compile      'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
-    compile      'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
-
-    testCompile 'junit:junit:4.11'
+    compile     "org.glassfish.main.extras:glassfish-embedded-all:${glassfishVersion}"
+    compile      "org.jboss.shrinkwrap:shrinkwrap-api:${shrinkWrapVersion}"
+    compile      "org.jboss.shrinkwrap:shrinkwrap-impl-base:${shrinkWrapVersion}"
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
-}
-
-// Override Gradle defaults - a force an exploded JAR view
-sourceSets {
-    main {
-        output.resourcesDir = 'build/classes/main'
-        output.classesDir   = 'build/classes/main'
-    }
-    test {
-        output.resourcesDir = 'build/classes/test'
-        output.classesDir   = 'build/classes/test'
-    }
-}
-
-// Add a sources jar
-task sourcesJar(type: Jar, dependsOn:classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-// add the jars as artifacts
-artifacts {
-    archives sourcesJar
-//    archives javadocJar
-//    archives testJar
-}
 task(run, dependsOn: 'classes', type: JavaExec) {
     description = 'Runs the main application'
     main = 'je7hb.common.webcontainer.embedded.glassfish.App'

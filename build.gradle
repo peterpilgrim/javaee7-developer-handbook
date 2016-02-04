@@ -1,7 +1,7 @@
 /*******************************************************************************
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2013,2014 by Peter Pilgrim, Addiscombe, Surrey, XeNoNiQUe UK
+ * Copyright (c) 2013,2014 - 2016 by Peter Pilgrim, Milton Keynes, United Kingdom
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU GPL v3.0
@@ -25,45 +25,149 @@
 // This Gradle build is the root and does compile any software explicitly
 //
 
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 
-// Define equivalent Maven GAV coordinates.
-group = 'je7hb.root'
-archivesBaseName = 'jeh7hb-root'
-version = '0.98'
+apply plugin: 'java'
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url 'https://maven.java.net/content/groups/promoted'
+
+// The name of this project
+project.archivesBaseName = 'javaee7-developer-handbook'
+
+// --------------------------------------------------------------------------------
+// Settings for all Java EE 7 projects
+// --------------------------------------------------------------------------------
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    // Define equivalent Maven GAV coordinates.
+    group = 'uk.co.xenonique.javaee7handbook'
+    version = '1.0-SNAPSHOT'
+
+    ext {
+        glassfishVersion    = "4.1"
+        javaeeVersion       = "7.0"
+        ozarkVersion        = "1.0.0-m01"
+        junitVersion        = "4.12"
+        hamcrestVersion     = "1.3"
+        mockitoVersion      = "1.10.19"
+        shrinkWrapVersion   = "1.0.1"
     }
-    maven {
-        url 'http://repository.jboss.org/nexus/content/groups/public'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url 'https://maven.java.net/content/groups/promoted'
+        }
+        maven {
+            url 'http://repository.jboss.org/nexus/content/groups/public'
+        }
+    }
+
+    // Java version compatibility to use when compiling Java source 
+    sourceCompatibility = '1.8'
+    // Java version to generate classes
+    targetCompatibility = '1.8'
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '2.10'
+    }
+
+    idea {
+
+        module {
+            //if you love browsing Javadoc
+            downloadJavadoc = false
+
+            //and hate reading sources :)
+            downloadSources = true
+        }
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+
+
+// --------------------------------------------------------------------------------
+// Configure settings for Digital Java EE 7 sub projects
+// --------------------------------------------------------------------------------
+
+subprojects {
+    dependencies {
+//        compile     'joda-time:joda-time:2.2'
+//        compile     'org.slf4j:slf4j-simple:1.6.4'
+
+//        compile     'org.glassfish.main.extras:glassfish-embedded-all:4.1'
+//        compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+//        compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
+//        compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
+
+        testCompile "org.hamcrest:hamcrest-all:${hamcrestVersion}"
+        testCompile "junit:junit:${junitVersion}"
+        testCompile "org.mockito:mockito-core:${mockitoVersion}"
+    }
+
+    // Override Gradle defaults - a force an exploded JAR view
+    sourceSets {
+        main {
+            output.resourcesDir = 'build/classes/main'
+            output.classesDir   = 'build/classes/main'
+        }
+        test {
+            resources {
+                srcDir 'src/test/resources'
+            }
+            resources {
+                srcDir 'src/test/resources-glassfish-embedded'
+            }
+    //        resources {
+    //            srcDir 'src/test/resources-jbossas-embedded'
+    //        }
+
+            output.resourcesDir = 'build/classes/test'
+            output.classesDir   = 'build/classes/test'
+        }
+    }
 }
 
+
+
+// --------------------------------------------------------------------------------
+// Specific tasks and configuration for the current gradle module
+// --------------------------------------------------------------------------------
+
+// Specific task to build the ZIP 
 task myZip(type: Zip) {
     description = "Creates a ZIP distribution of the `${archivesBaseName}' project."
     from '.'
-    def targetName = "7942-${archivesBaseName}-sources-${version}.zip"
-    println "Creating targetName=${targetName}"
+    def datestamp = new Date().format("yyyyMMdd")
+    def targetName = "EN7942-${archivesBaseName}-sources-${version}-${datestamp}.zip"
+    println "**** Creating achive targetName=${targetName} ****"
     archiveName "${targetName}"
     include '**/src/**'
     include '**/*.xml'
     include '**/*.gradle'
     include '**/*.txt'
+    include '**/*.md'
+    include '**/.gitignore'
+    exclude '**/.gradle'
     exclude '**/.gradle/**'
+    exclude '**/.idea'
+    exclude '**/.idea/**'
+    exclude '**/.eclipse'
+    exclude '**/.classpath'
+    exclude '**/build'
     exclude '**/build/**'
-    exclude '**/out/**'
+    exclude '**/target'
     exclude '**/target/**'
-    exclude '**/ch08-olde/**'
+    exclude '**/classes'
+    exclude '**/classes/**'
+    exclude '**/out'
+    exclude '**/out/**'
+
+    into "EN7942-${archivesBaseName}"
+
     /*
     exclude {
         details ->
@@ -72,138 +176,5 @@ task myZip(type: Zip) {
     */
 }
 
-// This is the root build file
-File currentFile = new File(".","build.gradle")
-
-def cleanTaskNames = []
-def buildTaskNames = []
-def installTaskNames = []
-def stubTaskNames = []
-def cleanBuildTaskNames = []
-def cleanInstallTaskNames = []
-
-// Build dynamic task names for each sub project, ensure we avoid
-// recursion by excluding the root build file.
-new File(".").eachFileRecurse{ file ->
-    if ( file.isFile() && "build.gradle".equals(file.name)
-        && !file.equals(currentFile)) {
-        String stubTaskName     = file.getParentFile().getName()
-        String cleanTaskName    = "clean_"+stubTaskName
-        String buildTaskName    = "build_"+stubTaskName
-        String installTaskName  = "install_"+stubTaskName
-        String ideaTaskName     = "idea_"+stubTaskName
-        String cleanBuildTaskName    = "clean_build_"+stubTaskName
-        String cleanInstallTaskName  = "clean_install_"+stubTaskName
-
-        /* +++ DEBUG+++
-        println "--+---" + file.getPath()
-        println "  +-- " + file.getParentFile().getPath()
-        println "  +-- " + file.getParentFile().getName()
-        println "  +-->>> " + buildTaskName
-        */
-
-        cleanTaskNames << cleanTaskName
-        stubTaskNames << stubTaskName
-
-        // Dynamically create GradleBuildType tasks on the fly
-        task "${cleanTaskName}"(type: GradleBuild) {
-            description = "Cleans the sub project [${stubTaskName}]"
-            dir = file.getParentFile().getPath()
-            tasks = ['clean']
-        }
-        task "${ideaTaskName}"(type: GradleBuild) {
-            description = "Generate IDEA project meta files for the sub project [${stubTaskName}]"
-            dir = file.getParentFile().getPath()
-            tasks = ['idea']
-        }
-
-        // We have to block Chapter 11 example JPA Advanced, because these examples
-        // require a managed application server to already be running.
-        // Application server: GlassFish 4.0
-        if (!file.getPath().contains("jpa-criteria") &&
-            !file.getPath().contains("jpa-entitygraph") &&
-            !file.getPath().contains("jpa-maps") &&
-            !file.getPath().contains("jpa-miscellany") &&
-            !file.getPath().contains("jpa-") &&
-            !file.getPath().contains("jms-async")) {
-            // Check *DEBUG*:
-            // println(file.getPath())
-            buildTaskNames << buildTaskName
-            installTaskNames << installTaskName
-            cleanBuildTaskNames << cleanBuildTaskName
-            cleanInstallTaskNames << cleanInstallTaskName
-
-            task "${buildTaskName}"(type: GradleBuild) {
-                description = "Builds the sub project [${stubTaskName}]"
-                dir = file.getParentFile().getPath()
-                tasks = ['build']
-            }
-            task "${installTaskName}"(type: GradleBuild) {
-                description = "Installs the sub project [${stubTaskName}]"
-                dir = file.getParentFile().getPath()
-                tasks = ['build','install']
-            }
-            task "${cleanBuildTaskName}"(type: GradleBuild) {
-                description = "Cleans and builds the sub project [${stubTaskName}]"
-                dir = file.getParentFile().getPath()
-                tasks = ['clean', 'build']
-            }
-            task "${cleanInstallTaskName}"(type: GradleBuild) {
-                description = "Cleans and installs the sub project [${stubTaskName}]"
-                dir = file.getParentFile().getPath()
-                tasks = ['clean', 'install']
-            }
-        }
-    }
-}
-
-task build {
-    description = "Builds and installs only the initial project (*Embedded GlassFish utility)"
-    dependsOn 'install_glassfish-embedded'
-}
-
-task build_everything {
-    description = "Build every subproject"
-    dependsOn build
-    buildTaskNames.each{ subTask1 ->
-        dependsOn subTask1
-    }
-    println "*NOTE*: For Chapter 11, Advanced Topics with JPA, you require a running Managed Glassfish 4.0.1 server that is connected to MySQL 5.6 server"
-}
-
-task install_everything {
-    description = "Builds and install every subproject"
-    installTaskNames.each{ subTask1 ->
-        dependsOn subTask1
-    }
-}
-
-task clean_everything {
-    description = "Cleans out and reset every subproject"
-    cleanTaskNames.each{ subTask1 ->
-        dependsOn subTask1
-    }
-}
-
-task clean_build_everything {
-    description = "Cleans and builds every subproject"
-    cleanBuildTaskNames.each{ subTask1 ->
-        dependsOn subTask1
-    }
-}
-
-task clean_install_everything {
-    description = "Cleans and installs every subproject"
-    cleanInstallTaskNames.each{ subTask1 ->
-        dependsOn subTask1
-    }
-}
-
-task generate_idea_everything {
-    description = "Create IDEA project files for every subproject"
-    stubTaskNames.each{ subTask1 ->
-        dependsOn "idea_${subTask1}"
-    }
-}
 
 // End.
