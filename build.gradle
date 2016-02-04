@@ -1,7 +1,7 @@
 /*******************************************************************************
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2013,2014 - 2016 by Peter Pilgrim, Milton Keynes, United Kingdom
+ * Copyright (c) 2013-2016 by Peter Pilgrim, Milton Keynes, England
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU GPL v3.0
@@ -22,12 +22,11 @@
 //    J A V A    E E   7    D E V E L O P E R     H A N D B O O K
 // ================================================================================
 //
-// This Gradle build is the root and does compile any software explicitly
+// This is a reworked Gradle build 
 //
 
 
 apply plugin: 'java'
-
 
 // The name of this project
 project.archivesBaseName = 'javaee7-developer-handbook'
@@ -46,13 +45,23 @@ allprojects {
     version = '1.0-SNAPSHOT'
 
     ext {
-        glassfishVersion    = "4.1"
-        javaeeVersion       = "7.0"
-        ozarkVersion        = "1.0.0-m01"
-        junitVersion        = "4.12"
-        hamcrestVersion     = "1.3"
-        mockitoVersion      = "1.10.19"
-        shrinkWrapVersion   = "1.0.1"
+        arquillianVersion                   = "1.0.3.Final"
+        arquillianJunitVersion              = "1.0.3.Final"
+        arquillianPersistenceVersion        = "1.0.0.Alpha7"
+        arquillianGlassfishEmbeddedVersion  = "1.0.0.Final-SNAPSHOT"
+        arquillianGlassfishRemoteVersion    = "1.0.0.CR4"
+        deltaspikeVersion                   = "1.5.2"
+        glassfishVersion                    = "4.1"
+        hamcrestVersion                     = "1.3"
+        javaeeVersion                       = "7.0"
+        jodaTimeVersion                     = "2.2"
+        junitVersion                        = "4.12"
+        ozarkVersion                        = "1.0.0-m01"
+        mockitoVersion                      = "1.10.19"
+        shrinkWrapVersion                   = "1.0.1"
+        slf4jVersion                        = "1.6.4"
+        weldSEVersion                       = "1.1.9.Final"
+        weldEEEmbeddedVersion               = "1.0.0.CR3" 
     }
 
     repositories {
@@ -132,6 +141,23 @@ subprojects {
 }
 
 
+// --------------------------------------------------------------------------------
+// Project Lib Dependencies for this Java EE 7 Gradle Build
+// --------------------------------------------------------------------------------
+// SEE ALSO: https://docs.gradle.org/current/userguide/multi_project_builds.html
+
+project(':ch01:xentracker-angularjs') {
+    dependencies {
+        compile project(':appendix01:glassfish-embedded')
+    }
+}
+
+project(':ch01:xentracker-basic') {
+    dependencies {
+        compile project(':appendix01:glassfish-embedded')
+    }
+}
+
 
 // --------------------------------------------------------------------------------
 // Specific tasks and configuration for the current gradle module
@@ -168,13 +194,12 @@ task myZip(type: Zip) {
 
     into "EN7942-${archivesBaseName}"
 
-    /*
+   /*
     exclude {
         details ->
             details.file.name.equals('.gradle')
     }
     */
 }
-
 
 // End.

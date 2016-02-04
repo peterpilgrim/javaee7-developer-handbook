@@ -18,35 +18,28 @@
  *******************************************************************************/
 
 // Define equivalent Maven GAV coordinates.
-archivesBaseName = 'ch03-ejb'
+archivesBaseName = 'jsonp-examples'
 
 
 dependencies {
-    compile "org.glassfish.main.extras:glassfish-embedded-all:${glassfishVersion}"
-    compile "javax:javaee-api:${javaeeVersion}"
 
-    testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
-    testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${arquillianJunitVersion}"
-    testCompile "org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:${arquillianGlassfishRemoteVersion}"
+    compile     "javax.enterprise:cdi-api:1.1-PFD"
+    compile     "javax:javaee-api:7.0"
+
+    runtime     "org.glassfish.main.extras:glassfish-embedded-all:${glassfishVersion}"
+
+    testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${arquillianVersion}"
+    testCompile "org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:${arquillianGlassfishEmbeddedVersion}"
+
 }
+
 
 
 task(run, dependsOn: 'classes', type: JavaExec) {
     description = 'Runs the main application'
-    main = 'je7hb.basic.ejb.App'
+    main = 'je7hb.appendix.utilities.jsondemos.App'
     classpath = sourceSets.main.runtimeClasspath
     args 'Mary', 'Peter', 'Jane'
-}
-
-task(generateScript, dependsOn: 'classes') {
-    description = 'Generates UNIX bash script that launches the program.'
-    if (!System.properties['os.name'].toLowerCase().contains('windows')) {
-        // Not Microsoft Windows
-        new File("SampleRunner").withWriter { out ->
-            out.println("#!/bin/bash")
-            out.println("java -cp ${sourceSets.main.runtimeClasspath.getAsPath()}  je7hb.basic.ejb.App")
-        }
-        "chmod 755 SampleRunner".execute()
-    }
+    standardInput = System.in
 }
 

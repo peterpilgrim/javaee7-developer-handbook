@@ -17,51 +17,16 @@
  *
  *******************************************************************************/
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-
-// Define equivalent Maven GAV coordinates.
-group = 'com.javaeehandbook.book1'
 archivesBaseName = 'ch02-cdi-arquillian'
-version = '1.0'
-
-repositories {
-    mavenCentral()
-    maven {
-        url 'https://maven.java.net/content/groups/promoted'
-    }
-    maven {
-        url 'http://repository.jboss.org/nexus/content/groups/public'
-    }
-}
 
 dependencies {
 	compile 	'org.jboss.spec:jboss-javaee-6.0:1.0.0.Final'
 	compile 	'org.jboss.arquillian:arquillian-bom:1.0.3.Final'
 
-    testCompile 'org.jboss.weld.se:weld-se-core:1.1.9.Final'
-    testCompile 'org.slf4j:slf4j-simple:1.6.4'
-    testCompile 'org.jboss.arquillian.container:arquillian-weld-ee-embedded-1.1:1.0.0.CR3'
-	testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.2.Final'           
-    testCompile 'junit:junit:4.10'
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
-}
-
-// Override Gradle defaults - a force an exploded JAR view
-sourceSets {
-    main {
-        output.resourcesDir = 'build/classes/main'
-        output.classesDir   = 'build/classes/main'
-    }
-    test {
-        output.resourcesDir = 'build/classes/test'
-        output.classesDir   = 'build/classes/test'
-    }
+    testCompile "org.jboss.weld.se:weld-se-core:${weldSEVersion}"
+    testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
+    testCompile "org.jboss.arquillian.container:arquillian-weld-ee-embedded-1.1:${weldEEEmbeddedVersion}"
+	testCompile "org.jboss.arquillian.junit:arquillian-junit-container:1.0.2.Final"           
 }
 
 task(run, dependsOn: 'classes', type: JavaExec) {

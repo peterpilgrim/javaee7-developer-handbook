@@ -17,50 +17,19 @@
  *
  *******************************************************************************/
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-
-// Define equivalent Maven GAV coordinates.
-group = 'com.javaeehandbook.book1'
 archivesBaseName = 'ch02-cdi-standalone'
-version = '1.0'
-
-ext.deltaspikeVersion='1.5.2'
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {    
     // Weld for Java SE
     // 'org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:1.0.0'
 
-    compile     'org.jboss.weld.se:weld-se-core:2.2.3.Final'
-    compile     'org.slf4j:slf4j-simple:1.6.1'
+    compile     "org.jboss.weld.se:weld-se-core:2.2.3.Final"
+    compile     "org.slf4j:slf4j-simple:1.6.1"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:${deltaspikeVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-weld:${deltaspikeVersion}"
 
-    //  Test dependencies
-    testCompile 'junit:junit:4.11'
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
-}
-
-// Override Gradle defaults - a force an exploded JAR view
-sourceSets {
-    main {
-        output.resourcesDir = 'build/classes/main'
-        output.classesDir   = 'build/classes/main'
-    }
-    test {
-        output.resourcesDir = 'build/classes/test'
-        output.classesDir   = 'build/classes/test'
-    }
-}
 
 task(run, dependsOn: 'classes', type: JavaExec) {
     description = 'Runs the main application'
