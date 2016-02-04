@@ -19,31 +19,14 @@
 
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 
-// Define equivalent Maven GAV coordinates.
-group = 'je7hb.intro.xentracker'
 archivesBaseName = 'xentracker-angularjs'
-version = '1.0'
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url 'https://maven.java.net/content/groups/promoted'
-    }
-    maven {
-        url 'http://repository.jboss.org/nexus/content/groups/public'
-    }
-}
 
 
 dependencies {
-    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
-    providedCompile 'javax:javaee-api:7.0'
-    providedCompile 'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+    providedCompile "org.glassfish.main.extras:glassfish-embedded-all:${glassfishVersion}"
+    providedCompile "javax:javaee-api:${javaeeVersion}"
+    // providedCompile "uk.co.xenonique.javaee7handbook:glassfish-embedded-runner:1.0"
 
     /*
     compile     'javax.enterprise:cdi-api:1.1-PFD'
@@ -53,14 +36,16 @@ dependencies {
     */
 
     /* compile     'joda-time:joda-time:2.2' - JODA time still confuses GlassFish 4.1 / Payara 4.1 */
-    compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+    compile     "org.glassfish.main.extras:glassfish-embedded-all:${glassfishVersion}"
+    compile     "javax:javaee-api:${javaeeVersion}"
 
-    testCompile 'org.slf4j:slf4j-simple:1.6.4'
-    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
-    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT'
+    // compile     "uk.co.xenonique.javaee7handbook:glassfish-embedded-runner:1.0"
 
-    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
-    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
+    testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
+
+
+    compile      "org.jboss.shrinkwrap:shrinkwrap-api:${shrinkWrapVersion}"
+    compile      "org.jboss.shrinkwrap:shrinkwrap-impl-base:${shrinkWrapVersion}"
 
     /*
     testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
@@ -69,37 +54,32 @@ dependencies {
     testCompile 'org.jboss.arquillian.container:arquillian-glassfish-remote-3.1:1.0.0.CR4'
     */
 
-    testCompile 'junit:junit:4.11'
 }
 
-war {
-    // classpath  configurations.extralibs
-    // webXml = file("src/main/webapp/WEB-INF/web.xml")
-    // baseXml = "servlet-webapp"
-}
+// war {
+//     // classpath  configurations.extralibs
+//     // webXml = file("src/main/webapp/WEB-INF/web.xml")
+//     // baseXml = "servlet-webapp"
+// }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
-}
+// // Override Gradle defaults - a force an exploded JAR view
+// sourceSets {
+//     main {
+//         output.resourcesDir = 'build/classes/main'
+//         output.classesDir   = 'build/classes/main'
+//     }
+//     test {
+//         resources {
+//             srcDir 'src/test/resources'
+//         }
+//         resources {
+//             srcDir 'src/test/resources-glassfish-embedded'
+//         }
 
-// Override Gradle defaults - a force an exploded JAR view
-sourceSets {
-    main {
-        output.resourcesDir = 'build/classes/main'
-        output.classesDir   = 'build/classes/main'
-    }
-    test {
-        resources {
-            srcDir 'src/test/resources'
-        }
-        resources {
-            srcDir 'src/test/resources-glassfish-embedded'
-        }
-
-        output.resourcesDir = 'build/classes/test'
-        output.classesDir   = 'build/classes/test'
-    }
-}
+//         output.resourcesDir = 'build/classes/test'
+//         output.classesDir   = 'build/classes/test'
+//     }
+// }
 
 task(run, dependsOn: 'classes', type: JavaExec) {
     description = 'Runs the main application'
