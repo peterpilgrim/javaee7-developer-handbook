@@ -1,0 +1,23 @@
+Programmer Notes
+
+A scrap heap of stuff during development for this project ... *PP*
+
+
+//    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+//
+//    compile( "org.slf4j:slf4j-simple:${slf4jVersion}" ) {
+//        transitive = false
+//        // We want to exclude dependency 'org.slf4j:slf4j-api:1.5.*'
+//        // in order to avoid java.lang.NoSuchMethodError: org.slf4j.helpers.MessageFormatter.format(
+//        //      Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/String;
+//        //        exclude 'org.slf4j:slf4j-api:1.5.*'
+//    }
+
+//    compile     "org.jboss.spec.javax.annotation:jboss-annotations-api_1.1_spec:1.0.0.Final"
+//    compile	    "org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec:1.0.0.Final"
+//    compile     "javax.enterprise:cdi-api:1.0"
+//    compile     "com.sun.faces:jsf-api:2.0.3-b05"
+//    compile     "javax.validation:validation-api:1.1.0.Final"
+//    compile     "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.0.Final"
+
+

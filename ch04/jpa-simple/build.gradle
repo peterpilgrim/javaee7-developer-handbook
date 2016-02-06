@@ -23,8 +23,6 @@ archivesBaseName = 'ch04-jpa-simple'
 
 dependencies {
     compile "javax:javaee-api:${javaeeVersion}"
-    runtime "javax:javaee-api:${javaeeVersion}"
-
 
     testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${arquillianJunitVersion}"
     testCompile "org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:${arquillianGlassfishRemoteVersion}"
