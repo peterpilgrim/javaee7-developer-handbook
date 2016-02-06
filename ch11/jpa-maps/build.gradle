@@ -17,63 +17,36 @@
  *
  *******************************************************************************/
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 
 // Define equivalent Maven GAV coordinates.
-group = 'je7hb.jpa.advanced'
 archivesBaseName = 'ch11-jpa-maps1'
-version = '1.0'
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-
-    maven {
-        url 'https://maven.java.net/content/groups/promoted'
-    }
-    maven {
-        url 'http://repository.jboss.org/nexus/content/groups/public'
-    }
-}
 
 
 dependencies {
-//    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
-//    providedCompile 'javax:javaee-api:7.0-bpeter-private'
-//    providedCompile 'javax:javaee-web-api:7.0-bpeter-private'
+    compile     "javax.enterprise:cdi-api:1.1-PFD"
+    compile     "com.sun.faces:jsf-api:2.0.3-b05"
+    compile     "javax.validation:validation-api:1.1.0.CR3"
+    compile     "org.hibernate:hibernate-validator:5.0.0.CR4"
+//    compile     "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Draft-16'
+    compile     "javax:javaee-api:${javaeeVersion}"
+    compile     "joda-time:joda-time:${jodaTimeVersion}"
 
-    compile     'javax.enterprise:cdi-api:1.1-PFD'
-    compile     'com.sun.faces:jsf-api:2.0.3-b05'
-    compile     'javax.validation:validation-api:1.1.0.CR3'
-    compile     'org.hibernate:hibernate-validator:5.0.0.CR4'
-//    compile     'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Draft-16'
-    compile     'javax:javaee-api:7.0'
-    compile     'joda-time:joda-time:2.2'
+//    compile     "org.eclipse.persistence:eclipselink:2.5.0"
 
-//    compile     'org.eclipse.persistence:eclipselink:2.5.0'
+//    compile     "org.hibernate:hibernate-core:4.3.0.Beta3"
+//    compile     "org.hibernate:hibernate-entitymanager:4.3.0.Beta2"
+//    compile     "com.h2database:h2:1.3.171"
+//    compile     "org.hsqldb:hsqldb-j5:2.2.4"
 
-//    compile     'org.hibernate:hibernate-core:4.3.0.Beta3'
-//    compile     'org.hibernate:hibernate-entitymanager:4.3.0.Beta2'
-//    compile     'com.h2database:h2:1.3.171'
-//    compile     'org.hsqldb:hsqldb-j5:2.2.4'
+//    runtime     "org.glassfish.main.extras:glassfish-embedded-all:4.1"
 
-//    runtime     'org.glassfish.main.extras:glassfish-embedded-all:4.1'
-
-    testCompile 'org.slf4j:slf4j-simple:1.6.4'
-//    testCompile 'org.slf4j:slf4j-api:1.5.10'
-    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
-    testCompile 'org.jboss.arquillian.extension:arquillian-persistence-api:1.0.0.Alpha6'
-    testCompile 'org.jboss.arquillian.extension:arquillian-persistence-impl:1.0.0.Alpha6'
-    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-remote-3.1:1.0.0.CR4'
-//    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT'
-    testCompile 'junit:junit:4.11'
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
+    testCompile "org.slf4j:slf4j-simple:1.6.4"
+//    testCompile "org.slf4j:slf4j-api:1.5.10"
+    testCompile "org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final"
+    testCompile "org.jboss.arquillian.extension:arquillian-persistence-api:1.0.0.Alpha6"
+    testCompile "org.jboss.arquillian.extension:arquillian-persistence-impl:1.0.0.Alpha6"
+    testCompile "org.jboss.arquillian.container:arquillian-glassfish-remote-3.1:1.0.0.CR4"
+//    testCompile "org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT"
 }
 
 // Override Gradle defaults - a force an exploded JAR view

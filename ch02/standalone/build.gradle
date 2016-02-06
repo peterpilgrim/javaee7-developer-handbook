@@ -21,10 +21,14 @@ archivesBaseName = 'ch02-cdi-standalone'
 
 dependencies {    
     // Weld for Java SE
-    // 'org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:1.0.0'
 
-    compile     "org.jboss.weld.se:weld-se-core:2.2.3.Final"
-    compile     "org.slf4j:slf4j-simple:1.6.1"
+    // 'org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:1.0.0'
+    // 'org.jboss.weld.se:weld-se-core:3.0.0.Alpha14'
+
+    compile     "javax:javaee-api:${javaeeVersion}"
+
+    compile     "org.jboss.weld.se:weld-se-core:${weldSEVersion}"
+    compile     "org.slf4j:slf4j-simple:${slf4jVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:${deltaspikeVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-weld:${deltaspikeVersion}"
 

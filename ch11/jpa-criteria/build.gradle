@@ -17,32 +17,17 @@
  *
  *******************************************************************************/
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 
 // Define equivalent Maven GAV coordinates.
-group = 'je7hb.jpa.advanced'
 archivesBaseName = 'ch11-jpa-criteria'
-version = '1.0'
 
 repositories {
-    mavenLocal()
     maven {
         credentials {
             username 'admin'
-            password 'mikeow3n'
+            password 'Aniversal314!'
         }
         url 'http://www.xenonique.co.uk/artifactory/XeNoNiQUE-FIRMWIDE'
-    }
-    mavenCentral()
-
-    maven {
-        url 'https://maven.java.net/content/groups/promoted'
-    }
-    maven {
-        url 'http://repository.jboss.org/nexus/content/groups/public'
     }
 }
 
@@ -77,10 +62,6 @@ dependencies {
     testCompile 'org.jboss.arquillian.container:arquillian-glassfish-remote-3.1:1.0.0.CR4'
 //    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT'
     testCompile 'junit:junit:4.11'
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
 }
 
 // Override Gradle defaults - a force an exploded JAR view

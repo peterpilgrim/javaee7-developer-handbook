@@ -17,35 +17,19 @@
  *
  *******************************************************************************/
 
-apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'war'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 
 // Define equivalent Maven GAV coordinates.
-group = 'je7hb.jms.async'
 archivesBaseName = 'ch09-jms-async'
-version = '1.0'
-
-repositories {
-    mavenLocal()
-    maven {
-        url 'https://maven.java.net/content/groups/promoted'
-    }
-    maven {
-        url 'https://maven.java.net/content/repositories/public'     //  /org/glassfish/appclient/gf-client/4.0-SNAPSHOT/gf-client-4.0-SNAPSHOT.pom'
-    }
-    maven {
-        url 'http://repository.jboss.org/nexus/content/groups/public'
-    }
-    mavenCentral()
-}
 
 dependencies {
-    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
-    providedCompile 'javax:javaee-api:7.0'
-    providedCompile 'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+    providedCompile "org.glassfish.main.extras:glassfish-embedded-all:${glassfishVersion}"
+
+    compile     "org.glassfish.main.extras:glassfish-embedded-all:${glassfishVersion}"
+    compile     "javax:javaee-api:${javaeeVersion}"
+
+    compile     "org.jboss.shrinkwrap:shrinkwrap-api:${shrinkWrapVersion}"
+    compile     "org.jboss.shrinkwrap:shrinkwrap-impl-base:${shrinkWrapVersion}"
 
     // Copied from /Library/opt/glassfish-4.0.1-b01-05_31_2013/glassfish/lib/
     // runtime files('lib-glassfish/gf-client.jar')
@@ -63,8 +47,7 @@ dependencies {
     compile     'org.hibernate:hibernate-validator:5.0.0.CR4'
     */
 
-    compile     'joda-time:joda-time:2.2'
-    compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+    // compile     'joda-time:joda-time:2.2'
 
 /*
     testCompile 'org.slf4j:slf4j-simple:1.6.4'
@@ -72,20 +55,12 @@ dependencies {
     testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT'
 */
 
-    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
-    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
-
-    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
-    testCompile 'org.jboss.arquillian.extension:arquillian-persistence-api:1.0.0.Alpha6'
-    testCompile 'org.jboss.arquillian.extension:arquillian-persistence-impl:1.0.0.Alpha6'
+    testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${arquillianJunitVersion}"
+    testCompile "org.jboss.arquillian.extension:arquillian-persistence-api:${arquillianPersistenceVersion}"
+    testCompile "org.jboss.arquillian.extension:arquillian-persistence-impl:${arquillianPersistenceVersion}"
 //    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-remote-3.1:1.0.0.CR4'
 //    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.Final-SNAPSHOT'
-    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-managed-3.1:1.0.0.CR4'
-    testCompile 'junit:junit:4.11'
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
+    testCompile "org.jboss.arquillian.container:arquillian-glassfish-managed-3.1:${arquillianGlassfishManagedVersion}"
 }
 
 // Override Gradle defaults - a force an exploded JAR view

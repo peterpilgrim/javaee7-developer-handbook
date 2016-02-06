@@ -17,59 +17,19 @@
  *
  *******************************************************************************/
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-
 // Define equivalent Maven GAV coordinates.
-group = 'com.javaeehandbook.book1'
 archivesBaseName = 'ch04-jpa-simple'
-version = '1.0'
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url 'https://maven.java.net/content/groups/promoted'
-    }
-    maven {
-        url 'http://repository.jboss.org/nexus/content/groups/public'
-    }
-}
 
 dependencies {
-    compile 'javax:javaee-api:7.0'
-    runtime 'javax:javaee-api:7.0'
+    compile "javax:javaee-api:${javaeeVersion}"
+    runtime "javax:javaee-api:${javaeeVersion}"
 
-    testCompile 'junit:junit:4.11'
-    testCompile 'org.jboss.arquillian.junit:arquillian-junit-container:1.0.3.Final'
-    testCompile 'org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:1.0.0.CR4'
 
-    runtime     'org.glassfish.main.extras:glassfish-embedded-all:4.1'
+    testCompile "org.jboss.arquillian.junit:arquillian-junit-container:${arquillianJunitVersion}"
+    testCompile "org.jboss.arquillian.container:arquillian-glassfish-embedded-3.1:${arquillianGlassfishRemoteVersion}"
+
+    runtime     "org.glassfish.main.extras:glassfish-embedded-all:${glassfishVersion}"
 }
 
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
-}
-
-// Override Gradle defaults - a force an exploded JAR view
-sourceSets {
-    main {
-        output.resourcesDir = 'build/classes/main'
-        output.classesDir   = 'build/classes/main'
-    }
-    test {
-        resources {
-            srcDir 'src/test/resources'
-        }
-        resources {
-            srcDir 'src/test/resources-glassfish-embedded'
-        }
-
-        output.resourcesDir = 'build/classes/test'
-        output.classesDir   = 'build/classes/test'
-    }
-}
 

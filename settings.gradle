@@ -7,9 +7,7 @@ include 'appendix01:glassfish-embedded',
         'ch01:xentracker-basic',
         'ch02:arquillian',
         'ch02:standalone',
-        'ch03:ejb'
-
-/*
+        'ch03:ejb',
         'ch04:jpa-fxspot',
         'ch04:jpa-simple',
         'ch06:servlets-basic',
@@ -26,4 +24,6 @@ include 'appendix01:glassfish-embedded',
         'ch11:jpa-maps',
         'ch11:jpa-miscellany',
         'ch11:jpa-storedproc'
+
+/*
 */

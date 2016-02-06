@@ -17,49 +17,26 @@
  *
  *******************************************************************************/
 
-apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'war'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 
 // Define equivalent Maven GAV coordinates.
-group = 'com.javaeehandbook.book1'
 archivesBaseName = 'ch07-websockets-basic'
-version = '1.0'
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url 'https://maven.java.net/content/groups/promoted'
-    }
-    maven {
-        url 'http://repository.jboss.org/nexus/content/groups/public'
-    }
-}
 
 dependencies {
-    providedCompile 'org.glassfish.main.extras:glassfish-embedded-all:4.1'
-    providedCompile 'javax:javaee-api:7.0'
-    providedCompile 'javax:javaee-web-api:7.0'
-    providedCompile 'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
+    providedCompile "org.glassfish.main.extras:glassfish-embedded-all:${glassfishVersion}"
 
-    compile     'org.glassfish.main.extras:glassfish-embedded-all:4.1'
-    compile     'javax:javaee-api:7.0'
+    compile     "org.glassfish.main.extras:glassfish-embedded-all:${glassfishVersion}"
+    compile     "javax:javaee-api:${javaeeVersion}"
+
+    compile     "org.jboss.shrinkwrap:shrinkwrap-api:${shrinkWrapVersion}"
+    compile     "org.jboss.shrinkwrap:shrinkwrap-impl-base:${shrinkWrapVersion}"
+
     compile     'com.javaeehandbook.book1:glassfish-embedded-runner:1.0'
-    compile     'org.jboss.shrinkwrap:shrinkwrap-api:1.0.1'
-    compile     'org.jboss.shrinkwrap:shrinkwrap-impl-base:1.0.1'
-
-    testCompile 'junit:junit:4.11'
 }
 
 war {
     // webXml = file("src/main/webapp/WEB-INF/web.xml")
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
 }
 
 // Override Gradle defaults - a force an exploded JAR view
