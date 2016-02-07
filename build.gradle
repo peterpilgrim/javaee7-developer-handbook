@@ -156,6 +156,12 @@ project(':ch01:xentracker-basic') {
     }
 }
 
+project(':ch08:jaxrs-basic') {
+    dependencies {
+        compile project(':appendix01:glassfish-embedded')
+    }
+}
+
 
 // --------------------------------------------------------------------------------
 // Specific tasks and configuration for the current gradle module
