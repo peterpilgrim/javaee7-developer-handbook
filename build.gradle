@@ -31,6 +31,15 @@ apply plugin: 'java'
 // The name of this project
 project.archivesBaseName = 'javaee7-developer-handbook'
 
+
+// ==========================================================================================
+// Define Utility Functions to read the version number and increment it
+// ==========================================================================================
+
+String getProjectPropertiesFilename() {
+    return "gradle.properties"
+}
+
 // --------------------------------------------------------------------------------
 // Settings for all Java EE 7 projects
 // --------------------------------------------------------------------------------
@@ -49,7 +58,7 @@ allprojects {
 
         arquillianVersion                   = "1.1.11.Final"
         arquillianJunitVersion              = "1.1.11.Final"
-        arquillianPersistenceVersion        = "1.0.0.Alpha7"
+        arquillianPersistenceVersion        = "1.0.0.Alpha6"
         arquillianGlassfishEmbeddedVersion  = "1.0.0.Final-SNAPSHOT"
         arquillianGlassfishManagedVersion   = "1.0.0.CR4"
         arquillianGlassfishRemoteVersion    = "1.0.0.CR4"
@@ -68,6 +77,7 @@ allprojects {
         weldEEEmbeddedVersion               = "1.0.0.CR3" 
         weldSEVersion                       = "2.2.3.Final"
         // weldSEVersion                       = "3.0.0.Alpha14"
+
     }
 
     repositories {
@@ -86,8 +96,9 @@ allprojects {
     // Java version to generate classes
     targetCompatibility = '1.8'
 
+
     task wrapper(type: Wrapper) {
-        gradleVersion = '2.10'
+        gradleVersion = '2.11'
     }
 
     idea {
@@ -100,8 +111,25 @@ allprojects {
             downloadSources = true
         }
     }
-}
 
+    task gradleInfo(description: "reports the Gradle version and information") << {
+        println "=" * 80
+        println "=======================       GRADLE INFORMATION      =========================="
+        println "                    gradle = ${gradle}"
+        println "      gradle.gradleHomeDir = ${gradle.gradleHomeDir}"
+        println "  gradle.gradleUserHomeDir = ${gradle.gradleUserHomeDir}"
+        println "      gradle.gradleVersion = ${gradle.gradleVersion}"
+        println "        gradle.rootProject = ${gradle.rootProject}"
+        println "        gradle.rootProject = ${gradle.rootProject}"
+        println "              project.path = ${project.path}"
+        println "        project.projectDir = ${project.projectDir}"
+        println "           project.rootdir = ${project.rootDir}"
+        println "    buildChapter9JmsAsync  = ${buildChapter9JmsAsync}"
+        println "      buildChapter11JpaAll = ${buildChapter11JpaAll}"
+        println "=" * 80
+        println ""
+    }
+}
 
 
 // --------------------------------------------------------------------------------

@@ -18,12 +18,18 @@ include 'appendix01:glassfish-embedded',
         'ch08:jaxrs-basic',
         'ch09:jms-essentials',
         'ch10:bean-validation',
-        'ch10:bean-validation-arquillian',
-        'ch11:jpa-criteria',
-        'ch11:jpa-entitygraph',
-        'ch11:jpa-maps',
-        'ch11:jpa-miscellany',
-        'ch11:jpa-storedproc'
+        'ch10:bean-validation-arquillian'
 
-/*
-*/
+
+if ( buildChapter11JpaAll == true) {
+    include 'ch11:jpa-criteria',
+            'ch11:jpa-entitygraph',
+            'ch11:jpa-maps',
+            'ch11:jpa-miscellany',
+            'ch11:jpa-storedproc'
+}
+
+if ( buildChapter9JmsAsync == true ) {
+    include 'ch09:jms-async'
+}
+

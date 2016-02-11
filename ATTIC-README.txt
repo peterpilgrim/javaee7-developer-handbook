@@ -137,73 +137,6 @@ useful Gradle tasks.
 
 
 
-ROOT GRADLE PROJECT 
-----------------------
-
-The root `build.gradle' file now can build the subprojects. It is 
-NOT by any stretch of the imagination a standard Gradle 
-multi-module project, however. Here are the necessary commands
-
-Build just the initial project, here is the command:
-
-    % gradle build
-
-
-
-Build everything project in the Java EE 7 Developer Handbook example 
-except for Chapter 11, use this command:
-
-    % gradle build_everything 
-
-
-
-To build and install all projects to the local Ivy repository:
-
-    % gradle install_everything 
-
-
-
-To clean all projects, run this following command: 
-
-    % gradle clean_everything 
-
-
-To clean and build projects, run this following command: 
-
-    % gradle clean_build_everything 
-    // equivalent to `gradle clean build'
-
-    % gradle clean_install_everything
-    // equivalent to `gradle clean install'
-
-
-It certainly helps to know how to list out tasks in a Gradle project. 
-To find about Gradle the available tasks, execute the following command:
-
-    % gradle tasks --all
-
-
-
-
-MISCELLANEOUS
-----------------
-
-I had to disable the multi-module nature of the root Gradle project, 
-because it does not work intuitively for sub modules. With multi-module 
-enables, running `gradle idea' for any of the sub module causes Gradle 
-to copy all the other dependencies into that module, which is definitely 
-not acceptable! 
-
-Sadly, the only thing the root Gradle project can do is build a 
-distribution ZIP file. If you don't belive me, I shared my problem with 
-Luke Daley, the Gradleware committer and he told me that is the way 
-Gradle works. 
-
-
-
-    % gradle myZip
-    
-
 
 ++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++
@@ -249,4 +182,3 @@ Peter Pilgrim, 2013
 
 To send comments, email me : peter.pilgrim@gmail.com
 Web Blog http://www.xenonique.co.uk/blog/
-

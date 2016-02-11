@@ -44,6 +44,10 @@ test {
     // set heap size for the test JVM(s)
     minHeapSize = "128m"
     maxHeapSize = "768m"
+
+    // Ensure that the working directory for the test is the same as the project directory in order to run the Spike Delta container tests
+    // *PP* 11/02/2016
+    workingDir = project.projectDir
 }
 
 task(run, dependsOn: 'classes', type: JavaExec) {
