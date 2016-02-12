@@ -75,7 +75,7 @@ allprojects {
         //'org.slf4j:slf4j-api:1.7.14'
         slf4jVersion                        = "1.7.14"
         weldEEEmbeddedVersion               = "1.0.0.CR3" 
-        weldSEVersion                       = "2.2.3.Final"
+        weldSEVersion                       = "2.3.2.Final"
         // weldSEVersion                       = "3.0.0.Alpha14"
 
     }
