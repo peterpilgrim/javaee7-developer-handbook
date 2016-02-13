@@ -65,6 +65,7 @@ public abstract class AbstractCdiContainerTest {
         System.out.printf("AbstractCdiContainerTest#tearDown() containerRefCount=%d, cdiContainer=%s\n", containerRefCount.get(), cdiContainer );
         if (cdiContainer != null) {
             cdiContainer.getContextControl().stopContext(RequestScoped.class);
+            cdiContainer.getContextControl().startContext(RequestScoped.class);
             containerRefCount.decrementAndGet();
         }
     }
