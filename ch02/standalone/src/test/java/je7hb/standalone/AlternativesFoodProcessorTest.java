@@ -38,6 +38,9 @@ public class AlternativesFoodProcessorTest extends AbstractCdiContainerTest {
 
     @Test
     public void shouldInjectAlternative() {
+        System.out.printf("java.class.path=%s\n", System.getProperty("java.class.path"));
+        System.out.printf("java.home=%s\n", System.getProperty("java.home"));
+        System.out.printf("user.dir=%s\n", System.getProperty("user.dir"));
         assertNotNull(foodProcessor);
         assertEquals("Xenonique", foodProcessor.sayBrand());
     }

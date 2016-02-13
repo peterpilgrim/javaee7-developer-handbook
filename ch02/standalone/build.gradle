@@ -31,7 +31,8 @@ dependencies {
     compile     "org.slf4j:slf4j-simple:${slf4jVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:${deltaspikeVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-weld:${deltaspikeVersion}"
-
+    compile     "org.apache.deltaspike.cdictrl:deltaspike-test-control-module-api:${deltaspikeVersion}"
+    testCompile     "org.apache.deltaspike.cdictrl:deltaspike-test-control-module-impl:${deltaspikeVersion}"
 }
 
 // See also https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
