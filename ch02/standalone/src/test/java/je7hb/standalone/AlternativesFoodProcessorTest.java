@@ -23,7 +23,9 @@ import static org.junit.Assert.*;
 
 import je7hb.standalone.alternatives.FoodProcessor;
 import je7hb.travelfunk.AbstractCdiContainerTest;
+import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.*;
+import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
@@ -32,7 +34,11 @@ import javax.inject.Inject;
  *
  * @author Peter Pilgrim
  */
-public class AlternativesFoodProcessorTest extends AbstractCdiContainerTest {
+
+// https://deltaspike.apache.org/documentation/test-control.html
+
+@RunWith(CdiTestRunner.class)
+public class AlternativesFoodProcessorTest {
 
     private @Inject FoodProcessor foodProcessor;
 

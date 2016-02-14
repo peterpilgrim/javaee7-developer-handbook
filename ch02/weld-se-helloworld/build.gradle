@@ -1,7 +1,7 @@
 /*******************************************************************************
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2013,2014 by Peter Pilgrim, Addiscombe, Surrey, XeNoNiQUe UK
+ * Copyright (c) 2013,2016 by Peter Pilgrim, Addiscombe, Surrey, XeNoNiQUe UK
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU GPL v3.0
@@ -17,24 +17,15 @@
  *
  *******************************************************************************/
 
-archivesBaseName = 'ch02-cdi-standalone'
+archivesBaseName = 'ch02-weld-se-helloworld'
 
 dependencies {    
-    // Weld for Java SE
-
-    // 'org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:1.0.0'
-    // 'org.jboss.weld.se:weld-se-core:3.0.0.Alpha14'
-
-    compile     files("build/class/main/META-INF")
-
     compile     "javax:javaee-api:${javaeeVersion}"
 
-//    compile     "org.jboss.weld.se:weld-se-core:${weldSEVersion}"
-    compile     "org.apache.openwebbeans:openwebbeans-impl:1.6.2"
+    compile     "org.jboss.weld.se:weld-se-core:${weldSEVersion}"
     compile     "org.slf4j:slf4j-simple:${slf4jVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:${deltaspikeVersion}"
-//    compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-weld:${deltaspikeVersion}"
-    compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-owb:${deltaspikeVersion}"
+    compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-weld:${deltaspikeVersion}"
     compile     "org.apache.deltaspike.modules:deltaspike-test-control-module-api:${deltaspikeVersion}"
     testCompile     "org.apache.deltaspike.modules:deltaspike-test-control-module-impl:${deltaspikeVersion}"
 }
@@ -67,6 +58,25 @@ test {
     // Ensure that the working directory for the test is the same as the project directory in order to run the Spike Delta container tests
     // *PP* 11/02/2016
     workingDir = project.projectDir
+}
+
+task(run, dependsOn: 'classes', type: JavaExec) {
+    description = 'Runs the main application'
+    main = 'je7hb.weld.helloworld.HelloWorld'
+    classpath = sourceSets.main.runtimeClasspath
+    args 'Mary', 'Peter', 'Jane'
+}
+
+task(generateScript, dependsOn: 'classes') {
+    description = 'Generates UNIX bash script that launches the program.'
+    if (!System.properties['os.name'].toLowerCase().contains('windows')) {
+        // Not Microsoft Windows
+        new File("HelloWorld").withWriter { out ->
+            out.println("#!/bin/bash")
+            out.println("java -cp ${sourceSets.main.runtimeClasspath.getAsPath()}  je7hb.weld.helloworld.HelloWorld")
+        }
+        "chmod 755 HelloWorld".execute()
+    }
 }
 
 // fini

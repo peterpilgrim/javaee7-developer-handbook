@@ -45,19 +45,21 @@ public abstract class AbstractCdiContainerTest {
 
     @Before
     public final void setUp() throws Exception {
-        containerRefCount.incrementAndGet();
         System.out.printf("AbstractCdiContainerTest#setUp() containerRefCount=%d, cdiContainer=%s\n", containerRefCount.get(), cdiContainer );
 
-        cdiContainer.getContextControl().stopContext(RequestScoped.class);
-        cdiContainer.getContextControl().startContext(RequestScoped.class);
+        if ( cdiContainer != null ) {
+            containerRefCount.incrementAndGet();
+            cdiContainer.getContextControl().stopContext(RequestScoped.class);
+            cdiContainer.getContextControl().startContext(RequestScoped.class);
 
-        // perform injection into the very own test class
-        BeanManager beanManager = cdiContainer.getBeanManager();
-        CreationalContext creationalContext = beanManager.createCreationalContext(null);
+            // perform injection into the very own test class
+            final BeanManager beanManager = cdiContainer.getBeanManager();
+            final CreationalContext creationalContext = beanManager.createCreationalContext(null);
 
-        AnnotatedType annotatedType = beanManager.createAnnotatedType(this.getClass());
-        InjectionTarget injectionTarget = beanManager.createInjectionTarget(annotatedType);
-        injectionTarget.inject(this, creationalContext);
+            final AnnotatedType annotatedType = beanManager.createAnnotatedType(this.getClass());
+            final InjectionTarget injectionTarget = beanManager.createInjectionTarget(annotatedType);
+            injectionTarget.inject(this, creationalContext);
+        }
     }
 
     @After
