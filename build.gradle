@@ -76,7 +76,7 @@ allprojects {
         slf4jVersion                        = "1.7.14"
         weldEEEmbeddedVersion               = "1.0.0.CR3" 
         weldSEVersion                       = "2.3.2.Final"
-        // weldSEVersion                       = "3.0.0.Alpha14"
+        //  weldSEVersion                       = "3.0.0.Alpha14"
 
     }
 

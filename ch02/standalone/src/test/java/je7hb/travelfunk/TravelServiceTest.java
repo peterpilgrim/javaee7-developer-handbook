@@ -21,7 +21,9 @@ package je7hb.travelfunk;
 
 import je7hb.standalone.Economy;
 import je7hb.standalone.Premium;
+import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
@@ -32,7 +34,8 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author Peter Pilgrim
  */
-public class TravelServiceTest extends AbstractCdiContainerTest {
+@RunWith(CdiTestRunner.class)
+public class TravelServiceTest {
 
     @Inject @Premium TravelService premiumTravelService;
     @Inject @Economy TravelService economyTravelService;

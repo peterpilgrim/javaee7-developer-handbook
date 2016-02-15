@@ -19,15 +19,15 @@
 
 package je7hb.standalone;
 
-import static org.junit.Assert.*;
-
 import je7hb.standalone.alternatives.FoodProcessor;
-import je7hb.travelfunk.AbstractCdiContainerTest;
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
-import org.junit.*;
-import org.junit.runner.RunWith;
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
+import org.junit.Test;
 
 import javax.inject.Inject;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * A unit test AlternativesFoodProcessorTest to verify the operation of AlternativesFoodProcessorTest
@@ -37,24 +37,28 @@ import javax.inject.Inject;
 
 // https://deltaspike.apache.org/documentation/test-control.html
 
-@RunWith(CdiTestRunner.class)
-public class AlternativesFoodProcessorTest {
+public class AlternativesFoodProcessorWeldSETest {
 
     private @Inject FoodProcessor foodProcessor;
 
-    @Ignore
     @Test
     public void shouldInjectAlternative() {
+
         System.out.printf("java.class.path=%s\n", System.getProperty("java.class.path"));
         System.out.printf("java.home=%s\n", System.getProperty("java.home"));
         System.out.printf("user.dir=%s\n", System.getProperty("user.dir"));
+
+        Weld weld = new Weld();
+
+        WeldContainer container = weld.initialize();
+
+        foodProcessor = container.select(FoodProcessor.class).get();
+
         assertNotNull(foodProcessor);
         assertEquals("Xenonique", foodProcessor.sayBrand());
+
+        container.shutdown();
     }
 
 
-    @Test
-    public void shouldInjectAnyFoodProcesor() {
-        assertNotNull(foodProcessor);
-    }
 }
