@@ -43,8 +43,6 @@ sourceSets {
 }
 
 
-// 'org.apache.deltaspike.modules:deltaspike-test-control-module-api:1.5.2'
-
 // See also https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
 test {
     // jvmArgs '-XX:MaxPermSize=768m'
