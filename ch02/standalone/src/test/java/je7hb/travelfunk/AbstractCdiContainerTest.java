@@ -21,6 +21,8 @@ package je7hb.travelfunk;
 
 import org.apache.deltaspike.cdise.api.CdiContainer;
 import org.apache.deltaspike.cdise.api.CdiContainerLoader;
+import org.apache.deltaspike.cdise.api.ContextControl;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,8 +51,14 @@ public abstract class AbstractCdiContainerTest {
 
         if ( cdiContainer != null ) {
             containerRefCount.incrementAndGet();
-            cdiContainer.getContextControl().stopContext(RequestScoped.class);
-            cdiContainer.getContextControl().startContext(RequestScoped.class);
+
+            final ContextControl ctxCtrl = BeanProvider.getContextualReference(ContextControl.class);
+
+            //stop the RequestContext to dispose of the @RequestScoped EntityManager
+            ctxCtrl.stopContext(RequestScoped.class);
+
+            //immediately restart the context again
+            ctxCtrl.startContext(RequestScoped.class);
 
             // perform injection into the very own test class
             final BeanManager beanManager = cdiContainer.getBeanManager();
@@ -66,8 +74,16 @@ public abstract class AbstractCdiContainerTest {
     public final void tearDown() throws Exception {
         System.out.printf("AbstractCdiContainerTest#tearDown() containerRefCount=%d, cdiContainer=%s\n", containerRefCount.get(), cdiContainer );
         if (cdiContainer != null) {
-            cdiContainer.getContextControl().stopContext(RequestScoped.class);
-            cdiContainer.getContextControl().startContext(RequestScoped.class);
+            final ContextControl ctxCtrl = BeanProvider.getContextualReference(ContextControl.class);
+
+            //stop the RequestContext to dispose of the @RequestScoped EntityManager
+            ctxCtrl.stopContext(RequestScoped.class);
+
+            //immediately restart the context again
+            ctxCtrl.startContext(RequestScoped.class);
+
+//            cdiContainer.getContextControl().stopContext(RequestScoped.class);
+//            cdiContainer.getContextControl().startContext(RequestScoped.class);
             containerRefCount.decrementAndGet();
         }
     }

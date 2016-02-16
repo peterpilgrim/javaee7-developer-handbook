@@ -28,11 +28,15 @@ dependencies {
     compile     "javax:javaee-api:${javaeeVersion}"
 
     compile     "org.slf4j:slf4j-simple:${slf4jVersion}"
+    compile     "org.apache.deltaspike.core:deltaspike-core-api:${deltaspikeVersion}"
+    compile     "org.apache.deltaspike.core:deltaspike-core-impl:${deltaspikeVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:${deltaspikeVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-weld:${deltaspikeVersion}"
 
 //    compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-owb:${deltaspikeVersion}"
+
     compile     "org.jboss.weld.se:weld-se-core:${weldSEVersion}"
+
 //    compile     "org.apache.openwebbeans:openwebbeans-impl:1.6.2"
 
     compile     "org.apache.deltaspike.modules:deltaspike-test-control-module-api:${deltaspikeVersion}"
