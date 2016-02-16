@@ -42,7 +42,6 @@ public class AlternativesFoodProcessorTest {
 
     private @Inject FoodProcessor foodProcessor;
 
-    @Ignore
     @Test
     public void shouldInjectAlternative() {
         System.out.printf("java.class.path=%s\n", System.getProperty("java.class.path"));
