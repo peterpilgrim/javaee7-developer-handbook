@@ -19,8 +19,9 @@
 
 package je7hb.standalone;
 
-import je7hb.travelfunk.AbstractCdiContainerTest;
+import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
@@ -31,9 +32,9 @@ import static org.junit.Assert.*;
  *
  * @author Peter Pilgrim
  */
-public class CreditProcessorTest extends AbstractCdiContainerTest {
+@RunWith(CdiTestRunner.class)
+public class CreditProcessorTest {
 
-//    private @Inject @Economy Instance<Integer> randomInt;
     private @Inject @Economy CreditProcessor agent;
 
     @Test

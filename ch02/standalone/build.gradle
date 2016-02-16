@@ -42,18 +42,6 @@ dependencies {
 }
 
 
-sourceSets {
-    main {
-        output.resourcesDir = 'build/classes/main'
-        output.classesDir   = 'build/classes/main'
-    }
-    test {
-        output.resourcesDir = 'build/classes/test'
-        output.classesDir   = 'build/classes/test'
-    }
-}
-
-
 // 'org.apache.deltaspike.modules:deltaspike-test-control-module-api:1.5.2'
 
 // See also https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
