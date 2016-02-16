@@ -25,20 +25,19 @@ dependencies {
     // 'org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:1.0.0'
     // 'org.jboss.weld.se:weld-se-core:3.0.0.Alpha14'
 
-    compile     files("build/class/main/META-INF")
-
     compile     "javax:javaee-api:${javaeeVersion}"
-
-    compile     "org.jboss.weld.se:weld-se-core:${weldSEVersion}"
-//    compile     "org.apache.openwebbeans:openwebbeans-impl:1.6.2"
 
     compile     "org.slf4j:slf4j-simple:${slf4jVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:${deltaspikeVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-weld:${deltaspikeVersion}"
 
 //    compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-owb:${deltaspikeVersion}"
+    compile     "org.jboss.weld.se:weld-se-core:${weldSEVersion}"
+//    compile     "org.apache.openwebbeans:openwebbeans-impl:1.6.2"
 
     compile     "org.apache.deltaspike.modules:deltaspike-test-control-module-api:${deltaspikeVersion}"
+
+
     testCompile     "org.apache.deltaspike.modules:deltaspike-test-control-module-impl:${deltaspikeVersion}"
 }
 
