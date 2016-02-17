@@ -17,22 +17,26 @@
  *
  *******************************************************************************/
 
-archivesBaseName = 'ch02-cdi-standalone'
+archivesBaseName = 'ch02-cdi-standalone-owb'
 
-dependencies {
-    // JBoss WELD SE examples
+dependencies {    
+    // Weld for Java SE
     compile     "javax:javaee-api:${javaeeVersion}"
 
     compile     "org.slf4j:slf4j-simple:${slf4jVersion}"
     compile     "org.apache.deltaspike.core:deltaspike-core-api:${deltaspikeVersion}"
     compile     "org.apache.deltaspike.core:deltaspike-core-impl:${deltaspikeVersion}"
     compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:${deltaspikeVersion}"
-    compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-weld:${deltaspikeVersion}"
-    compile     "org.jboss.weld.se:weld-se-core:${weldSEVersion}"
+    compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-owb:${deltaspikeVersion}"
+    compile     "org.apache.openwebbeans:openwebbeans-impl:${openWebBeansVersion}"
+
     compile     "org.apache.deltaspike.modules:deltaspike-test-control-module-api:${deltaspikeVersion}"
 
     testCompile     "org.apache.deltaspike.modules:deltaspike-test-control-module-impl:${deltaspikeVersion}"
 }
+
+
+// 'org.apache.deltaspike.modules:deltaspike-test-control-module-api:1.5.2'
 
 // See also https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
 test {
