@@ -37,7 +37,7 @@ import static org.junit.Assert.assertNotNull;
  */
 public class AlternativesFoodProcessorWeldSETest {
 
-    private @Inject FoodProcessor foodProcessor;
+    private FoodProcessor foodProcessor;
 
     @Test
     public void shouldInjectAlternative() {

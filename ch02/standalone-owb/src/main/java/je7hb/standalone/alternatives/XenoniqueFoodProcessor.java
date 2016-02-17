@@ -27,7 +27,7 @@ import javax.enterprise.inject.Alternative;
  *
  * @author Peter Pilgrim (peter)
  */
-@Priority(1)
+@Priority(10000)
 @Alternative
 public class XenoniqueFoodProcessor implements FoodProcessor {
     @Override

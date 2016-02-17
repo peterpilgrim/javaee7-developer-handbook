@@ -23,7 +23,6 @@ import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import static org.junit.Assert.assertNotNull;
@@ -36,7 +35,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(CdiTestRunner.class)
 public class ExpensiveCreditProcessorTest {
 
-    @Inject @Premium @RequestScoped private CreditProcessor agent;
+    @Inject @Premium  private CreditProcessor agent;
 
     @Test
     public void shouldInjectExpensiveCredit() {

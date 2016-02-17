@@ -46,12 +46,6 @@ public class AlternativesFoodProcessorOWBTest {
     private @Inject FoodProcessor foodProcessor;
 
     @Test
-    public void notice() {
-        System.out.println("FIXME: I am still figuring out the correct API for Open Web Beans");
-    }
-
-    @Ignore
-    @Test
     public void shouldInjectAlternative() {
 
         System.out.printf("java.class.path=%s\n", System.getProperty("java.class.path"));
@@ -62,8 +56,7 @@ public class AlternativesFoodProcessorOWBTest {
         lifecycle.startApplication(this);
 
         final BeanManager beanManager = lifecycle.getBeanManager();
-        beanManager.getBeans(FoodProcessor.class);
-        final Bean<?> bean = beanManager.getBeans("FoodProcessor").iterator().next();
+        final Bean<?> bean = beanManager.getBeans(FoodProcessor.class).iterator().next();
 
         foodProcessor = (FoodProcessor) beanManager.getReference(bean, FoodProcessor.class, beanManager.createCreationalContext(bean));
 

@@ -36,7 +36,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(CdiTestRunner.class)
 public class ExpensiveCreditProcessorTest {
 
-    @Inject @Premium @RequestScoped private CreditProcessor agent;
+    @Inject @Premium private CreditProcessor agent;
 
     @Test
     public void shouldInjectExpensiveCredit() {
