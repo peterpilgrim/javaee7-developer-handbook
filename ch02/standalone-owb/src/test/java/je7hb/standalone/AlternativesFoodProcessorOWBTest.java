@@ -65,6 +65,4 @@ public class AlternativesFoodProcessorOWBTest {
 
         lifecycle.stopApplication(this);
     }
-
-
 }

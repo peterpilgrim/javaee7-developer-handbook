@@ -19,7 +19,6 @@
 
 package je7hb.standalone.alternatives;
 
-import javax.annotation.Priority;
 import javax.enterprise.inject.Alternative;
 
 /**
@@ -27,7 +26,6 @@ import javax.enterprise.inject.Alternative;
  *
  * @author Peter Pilgrim (peter)
  */
-@Priority(10000)
 @Alternative
 public class XenoniqueFoodProcessor implements FoodProcessor {
     @Override
