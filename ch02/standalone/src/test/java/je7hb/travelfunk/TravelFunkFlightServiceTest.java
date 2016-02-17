@@ -19,12 +19,12 @@
 
 package je7hb.travelfunk;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-
-import je7hb.standalone.Economy;
 import je7hb.standalone.Premium;
-import org.junit.*;
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 /**
  * The type TravelFunkFlightServiceTest

@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * A unit test CreditProcessorTest to verify the operation of CreditProcessorTest

@@ -19,7 +19,6 @@
 
 package je7hb.standalone;
 
-import je7hb.travelfunk.AbstractCdiContainerTest;
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;

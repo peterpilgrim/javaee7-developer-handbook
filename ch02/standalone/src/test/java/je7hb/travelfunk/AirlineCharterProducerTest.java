@@ -19,7 +19,9 @@
 
 package je7hb.travelfunk;
 
+import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
@@ -28,7 +30,8 @@ import javax.inject.Inject;
  *
  * @author Peter Pilgrim (peter)
  */
-public class AirlineCharterProducerTest extends AbstractCdiContainerTest {
+@RunWith(CdiTestRunner.class)
+public class AirlineCharterProducerTest {
 
 
     private @Inject Airline charter;

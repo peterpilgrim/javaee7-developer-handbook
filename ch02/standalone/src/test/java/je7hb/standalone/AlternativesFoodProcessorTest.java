@@ -19,15 +19,15 @@
 
 package je7hb.standalone;
 
-import static org.junit.Assert.*;
-
 import je7hb.standalone.alternatives.FoodProcessor;
-import je7hb.travelfunk.AbstractCdiContainerTest;
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
-import org.junit.*;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * A unit test AlternativesFoodProcessorTest to verify the operation of AlternativesFoodProcessorTest
@@ -36,7 +36,6 @@ import javax.inject.Inject;
  */
 
 // https://deltaspike.apache.org/documentation/test-control.html
-
 @RunWith(CdiTestRunner.class)
 public class AlternativesFoodProcessorTest {
 

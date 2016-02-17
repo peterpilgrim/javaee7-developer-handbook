@@ -38,8 +38,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * The type AbstractCdiContainerTest
  *
+ * Consider this class deprecated
+ *
  * @author Peter Pilgrim
  */
+@Deprecated
 public abstract class AbstractCdiContainerTest {
 
     protected static CdiContainer cdiContainer;

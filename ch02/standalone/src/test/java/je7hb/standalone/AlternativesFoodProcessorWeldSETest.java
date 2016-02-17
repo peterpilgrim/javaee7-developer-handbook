@@ -30,13 +30,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * A unit test AlternativesFoodProcessorTest to verify the operation of AlternativesFoodProcessorTest
+ * A unit test AlternativesFoodProcessorTest to verify the operation of AlternativesFoodProcessor.
+ * This test directly uses the Weld SE container API instead of Delta Spike
  *
  * @author Peter Pilgrim
  */
-
-// https://deltaspike.apache.org/documentation/test-control.html
-
 public class AlternativesFoodProcessorWeldSETest {
 
     private @Inject FoodProcessor foodProcessor;
