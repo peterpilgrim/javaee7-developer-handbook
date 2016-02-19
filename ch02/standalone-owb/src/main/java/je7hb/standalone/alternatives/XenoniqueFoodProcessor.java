@@ -19,7 +19,9 @@
 
 package je7hb.standalone.alternatives;
 
+import javax.annotation.Priority;
 import javax.enterprise.inject.Alternative;
+import javax.interceptor.Interceptor;
 
 /**
  * The type XenoniqueFoodProcessor
@@ -27,6 +29,7 @@ import javax.enterprise.inject.Alternative;
  * @author Peter Pilgrim (peter)
  */
 @Alternative
+@Priority(Interceptor.Priority.APPLICATION+100)
 public class XenoniqueFoodProcessor implements FoodProcessor {
     @Override
     public String sayBrand() {
