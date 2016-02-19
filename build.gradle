@@ -54,8 +54,6 @@ allprojects {
     version = '1.0-SNAPSHOT'
 
     ext {
-        // 'org.jboss.arquillian.junit:arquillian-junit-container:1.1.11.Final'
-
         arquillianVersion                   = "1.1.11.Final"
         arquillianJunitVersion              = "1.1.11.Final"
         arquillianPersistenceVersion        = "1.0.0.Alpha6"

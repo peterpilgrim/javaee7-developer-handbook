@@ -1,0 +1,52 @@
+/*******************************************************************************
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+ *
+ * Copyright (c) 2013,2016 by Peter Pilgrim, Addiscombe, Surrey, XeNoNiQUe UK
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU GPL v3.0
+ * which accompanies this distribution, and is available at:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ *
+ * Developers:
+ * Peter Pilgrim -- design, development and implementation
+ *               -- Blog: http://www.xenonique.co.uk/blog/
+ *               -- Twitter: @peter_pilgrim
+ *
+ * Contributors:
+ *
+ *******************************************************************************/
+
+archivesBaseName = 'ch02-standalone-weld-mockito'
+
+dependencies {
+    // JBoss WELD SE examples
+    compile     "javax:javaee-api:${javaeeVersion}"
+
+    compile     "org.slf4j:slf4j-simple:${slf4jVersion}"
+    compile     "org.apache.deltaspike.core:deltaspike-core-api:${deltaspikeVersion}"
+    compile     "org.apache.deltaspike.core:deltaspike-core-impl:${deltaspikeVersion}"
+    compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-api:${deltaspikeVersion}"
+    compile     "org.apache.deltaspike.cdictrl:deltaspike-cdictrl-weld:${deltaspikeVersion}"
+    compile     "org.jboss.weld.se:weld-se-core:${weldSEVersion}"
+    compile     "org.apache.deltaspike.modules:deltaspike-test-control-module-api:${deltaspikeVersion}"
+
+    testCompile     "org.apache.deltaspike.modules:deltaspike-test-control-module-impl:${deltaspikeVersion}"
+}
+
+// See also https://docs.gradle.org/current/dsl/org.gradle.api.tasks.testing.Test.html
+test {
+    // jvmArgs '-XX:MaxPermSize=768m'
+    
+    testLogging.showStandardStreams = true
+
+    // set heap size for the test JVM(s)
+    minHeapSize = "128m"
+    maxHeapSize = "768m"
+
+    // Ensure that the working directory for the test is the same as the project directory in order to run the Spike Delta container tests
+    // *PP* 11/02/2016
+    workingDir = project.projectDir
+}
+
+// fini
