@@ -11,7 +11,7 @@ import java.util.List;
 
 
 /**
- * Example application with JBoss WELD SE
+ DDD* Example application with JBoss WELD SE
  *
  * @author peterpilgrim
  */
